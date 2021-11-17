@@ -1,25 +1,7 @@
 import React from 'react'
 import { SoundmakerControler } from 'SoundmakerController'
 
-const testNotes = JSON.stringify([
-  [
-    {
-      instrument: 'piano',
-      note: 'H'
-    }
-  ],
-  [
-    {
-      instrument: 'piano',
-      note: 'A'
-    }
-  ],
-  [
-    {
-      instrument: 'piano',
-      note: 'G'
-    }
-  ],
+export const testNotes = JSON.stringify([
   [
     {
       instrument: 'piano',
@@ -30,6 +12,24 @@ const testNotes = JSON.stringify([
     {
       instrument: 'piano',
       note: 'E'
+    }
+  ],
+  [
+    {
+      instrument: 'piano',
+      note: 'D'
+    }
+  ],
+  [
+    {
+      instrument: 'piano',
+      note: 'C'
+    }
+  ],
+  [
+    {
+      instrument: 'piano',
+      note: 'G'
     }
   ]
 ])
