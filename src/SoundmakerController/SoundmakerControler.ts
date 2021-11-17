@@ -15,8 +15,26 @@ export class SoundmakerControler {
     currentTime: 0
   }
 
-  constructor(public notes: TAccord[]) {
+  get currentTime() {
+    return this.timeline.currentTime
+  }
+
+  constructor(public track: TAccord[]) {
     this.initTimeline()
+  }
+
+  private eventHandlers: Record<string, Array<() => void>> = {}
+  private handleEvent(event: string) {
+    this.eventHandlers[event]?.forEach((handler) => handler())
+  }
+  public on(event: string, cb: () => void) {
+    if (!this.eventHandlers[event]) {
+      this.eventHandlers[event] = []
+    }
+    this.eventHandlers[event].push(cb)
+    return () => {
+      this.eventHandlers[event] = this.eventHandlers[event].filter((handler) => handler !== cb)
+    }
   }
 
   private initTimeline() {
@@ -26,6 +44,8 @@ export class SoundmakerControler {
       samplesPerSecond,
       currentTime: 0
     }
+    this.handleEvent('currentTimeChange')
+    this.eventHandlers = {}
     log(
       'timeline initialized. currentTime = 0, sampleTime = ',
       this.timeline.sampleTime,
@@ -38,7 +58,7 @@ export class SoundmakerControler {
   // public getNextAccordAtTime(time: number) {
   //   const { sampleTime } = this.timeline
   //   const accordIndex = (time - (time % sampleTime)) / sampleTime
-  //   return this.notes[accordIndex]
+  //   return this.track[accordIndex]
   // }
 
   private getAccordsAtPeriod(_from: number, _to: number) {
@@ -57,14 +77,15 @@ export class SoundmakerControler {
       'to accord',
       lastAccordIndex + 1,
       ' : ',
-      this.notes.slice(firstAccordIndex, lastAccordIndex + 1)
+      this.track.slice(firstAccordIndex, lastAccordIndex + 1)
     )
-    return this.notes.slice(firstAccordIndex, lastAccordIndex + 1)
+    return this.track.slice(firstAccordIndex, lastAccordIndex + 1)
   }
 
   /** @param [from] {number} Время начала в милисекундах */
   public startPlaying(from?: number) {
     this.timeline.currentTime = from ?? 0
+    this.handleEvent('currentTimeChange')
     log('starting player from ', from ?? 0)
     this.interval = window.setInterval(() => this.handleTick(), 1000 / TICKRATE)
   }
@@ -84,12 +105,14 @@ export class SoundmakerControler {
       log('stopping and resetting playback because max track time (', MAX_TRACK_SECONDS * 1000, ') elapsed')
       this.stopPlaying()
       this.timeline.currentTime = 0
+      this.handleEvent('currentTimeChange')
 
       return
     }
 
     play(this.getAccordsAtPeriod(currentTime, Math.floor(currentTime + 1000 / TICKRATE)), sampleTime)
     this.timeline.currentTime += 1000 / TICKRATE
+    this.handleEvent('currentTimeChange')
     log.verbose('set current time to ', this.timeline.currentTime)
   }
 }
