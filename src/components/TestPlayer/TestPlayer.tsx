@@ -51,9 +51,7 @@ export function TestPlayer() {
       </div>
       <div>
         <button onClick={() => controller.startPlaying()}>Проиграть</button>
-        <button disabled={!controller.isPlaying} onClick={controller.stopPlaying}>
-          Остановитес
-        </button>
+        <button onClick={() => controller.stopPlaying()}>Остановитес</button>
       </div>
     </>
   )

@@ -18,12 +18,14 @@ const soundFiles: {
 }
 
 export function play(accords: TAccord[], accordTime: number) {
-  log.prefix('mockPlayer')
   accords.forEach((accord, index) => {
     setTimeout(() => {
       accord.forEach((sound) => {
-        log('playing note', sound.note)
-        soundFiles[sound.instrument][sound.note].play()
+        const audio = soundFiles[sound.instrument][sound.note]
+        if (audio.paused) {
+          log('mockPlayer playing note', sound.note)
+          audio.play()
+        }
       })
     }, index * accordTime)
   })
