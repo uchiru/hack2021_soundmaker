@@ -72,7 +72,7 @@ export function TestPlayer() {
   }, [textarea])
 
   React.useEffect(() => {
-    controller.on('currentTimeChange', () => {
+    controller?.on('currentTimeChange', () => {
       setCurrentProgress(Math.floor(controller.currentTime / 1000))
     })
   }, [controller])
