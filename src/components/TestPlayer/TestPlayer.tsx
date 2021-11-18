@@ -9,6 +9,7 @@ const testNotes = JSON.stringify(testnotes);
 export function TestPlayer() {
   const [textarea, setTextArea] = React.useState(testNotes);
   const [currentProgress, setCurrentProgress] = React.useState(0);
+  const [isPaused, setIsPaused] = React.useState(false);
   const controller = React.useMemo(() => {
     let track;
     try {
@@ -50,8 +51,21 @@ export function TestPlayer() {
         Ошибка
       </div>
       <div style={{ color: 'white' }}>
-        <button onClick={() => controller?.startPlaying()}>Проиграть</button>
-        <button onClick={() => controller?.stopPlaying()}>Остановитес</button>
+        <button onClick={() => controller?.startPlaying()}>▶️</button>
+        <button
+          onClick={() => {
+            if (isPaused) {
+              setIsPaused(false);
+              controller?.resume();
+            } else {
+              setIsPaused(true);
+              controller?.pause();
+            }
+          }}
+        >
+          ⏯️
+        </button>
+        <button onClick={() => controller?.stopPlaying()}>⏹️</button>
       </div>
     </>
   );
