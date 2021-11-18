@@ -9,6 +9,12 @@ import { notes } from './notes';
 
 export function Player() {
   const [currentNotes, setNotes] = React.useState(notes);
+  const [isPlaying, setIsPlaying] = React.useState(false);
+
+  const handleClick = () => {
+    isPlaying ? controller?.stopPlaying() : controller?.startPlaying();
+    setIsPlaying(!isPlaying);
+  }
 
   const controller = React.useMemo(() => {
     const track = currentNotes as TAccord[];
@@ -84,7 +90,7 @@ export function Player() {
 
   return (
     <div className="player">
-      <PlayerControls controller={controller as SoundmakerControler} />
+      <PlayerControls isPlaying={isPlaying} handleClick={handleClick} />
       <Tracks />
       <Notes currentProgress={currentProgress} notes={currentNotes} createNote={createNote} deleteNote={deleteNote} />
     </div>
