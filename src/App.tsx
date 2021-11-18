@@ -1,12 +1,12 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-import { Scene } from './components/PhaserScene/Scene'
-import './App.css'
-import { TestPlayer } from 'components/TestPlayer'
-import { Player } from 'components/Player'
-import { preload } from 'SoundmakerController/mockPlayer'
-
+import { Scene } from './components/PhaserScene/Scene';
+import './App.css';
+import { TestPlayer } from 'components/TestPlayer';
+import { Player } from 'components/Player';
+import { preload } from 'SoundmakerController/mockPlayer';
+import { Intro } from 'components/Intro';
 
 function App(): JSX.Element {
   const [isLoaded, setIsLoaded] = React.useState(false);
@@ -34,7 +34,9 @@ function App(): JSX.Element {
             <Route path="/player">
               <Player />
             </Route>
-            <Route path="/">nothing to see here</Route>
+            <Route path="/">
+              <Intro />
+            </Route>
           </Switch>
         </BrowserRouter>
       )}

@@ -7,17 +7,17 @@ interface iNote {
   note: TNotes;
 }
 
-enum ENotesDictionary {
-  kick = 8,
-  snare = 7,
-  H = 6,
-  A = 5,
-  G = 4,
-  F = 3,
-  E = 2,
-  D = 1,
-  C = 0
-}
+const ENotesDictionary: { [key in TNotes]?: number } = {
+  kick: 8,
+  snare: 7,
+  H: 6,
+  A: 5,
+  G: 4,
+  F: 3,
+  E: 2,
+  D: 1,
+  C: 0
+};
 export default class phaserSceneDefault extends Phaser.Scene {
   sceneSize: {
     footerHeight: number;
@@ -141,16 +141,16 @@ export default class phaserSceneDefault extends Phaser.Scene {
       const tact = this.notesConfig[i];
       for (let j = 0; j < tact.length; j++) {
         const noteData = tact[j];
-        // @ts-ignore
+
         const noteIndex = ENotesDictionary[noteData.note];
         const radius = 20;
         const note = new Note(
           noteData,
           {
-            x: this.trackPosition[noteIndex],
+            x: this.trackPosition[noteIndex ?? 0],
             y: this.startRenderNotesPosition - this.stepNote * i,
             size: radius,
-            color: this.rainbowColor[noteIndex]
+            color: this.rainbowColor[noteIndex ?? 0]
           },
           this
         );

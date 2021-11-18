@@ -1,6 +1,6 @@
 import React from 'react';
 import './Player.css';
-import { SoundmakerControler } from 'SoundmakerController'
+import { SoundmakerControler } from 'SoundmakerController';
 import { PlayerControls } from 'components/PlayerControls';
 import { Tracks } from 'components/Tracks';
 import { Notes } from 'components/Notes';
@@ -16,13 +16,13 @@ export function Player() {
   const handleClick = () => {
     isPlaying ? controller?.stopPlaying() : controller?.startPlaying();
     setIsPlaying(!isPlaying);
-  }
+  };
 
   const controller = React.useMemo(() => {
     const track = currentNotes as TAccord[];
 
-    return track && new SoundmakerControler(track)
-  }, [currentNotes])
+    return track && new SoundmakerControler(track);
+  }, [currentNotes]);
 
   const [currentProgress, setCurrentProgress] = React.useState(0);
 
@@ -43,7 +43,7 @@ export function Player() {
       case 1:
         return EPianoNotes.H;
     }
-  }
+  };
 
   const getDrumNoteName = (note: number): TNotes | undefined => {
     switch (note) {
@@ -52,7 +52,7 @@ export function Player() {
       case 1:
         return EDrumNotes.kick;
     }
-  }
+  };
 
   const createNote = (tick: number, note: number, instrument: string) => {
     const notes = [...currentNotes];
@@ -67,10 +67,10 @@ export function Player() {
     notes[tick].push({
       instrument,
       note: _note
-    })
+    });
 
     setNotes(notes);
-  }
+  };
 
   const removeNotes = () => {
     const notes = [...currentNotes];
@@ -93,10 +93,10 @@ export function Player() {
       if (index === tick) {
         delete arr[note];
       }
-    })
+    });
 
     setNotes(notes);
-  }
+  };
 
   React.useEffect(() => {
     controller?.on('currentTimeChange', () => {

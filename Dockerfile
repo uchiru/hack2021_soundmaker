@@ -16,6 +16,6 @@ RUN NODE_ENV=production yarn build
 # Основа образа для запуска приложения
 FROM uchiru/spa-base:v0.8
 # Устанавливаем переменную окружения
-ENV BASE_PATH=/edit-this-path
+ENV BASE_PATH=/
 # Копируем результат сборки в образ для запуска
 COPY --from=build /app/build /var/www

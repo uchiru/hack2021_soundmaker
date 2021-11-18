@@ -20,7 +20,7 @@ const generateEmtyItems = (count: number, size: number) => {
   }
 
   return arr;
-}
+};
 
 const emptyInstrumentNotes = generateEmtyItems(ticksCount, 7);
 const emptyBeatNotes = generateEmtyItems(ticksCount, 2);
@@ -46,7 +46,7 @@ const getNoteRowStart = (note: TNotes) => {
         return 1;
     }
   }
-}
+};
 
 export function Notes(props: {
   currentProgress: number;
@@ -86,23 +86,23 @@ export function Notes(props: {
             ));
           })}
 
-          {notes.map((accord, accordIndex) => {
-            return accord.map((item, noteIndex) => {
-              return (
-                item.instrument === EInstruments.piano &&
-                <StyledNote
-                  rowStart={getNoteRowStart(item.note as EPianoNotes)}
-                  rowEnd={getNoteRowStart(item.note as EPianoNotes)}
-                  columnStart={accordIndex + 1}
-                  columnEnd={accordIndex + 1}
-                  key={noteIndex}
-                  bg={`var(--color-${item.note})`}
-                  className="note"
-                  onClick={() => deleteNote(accordIndex, noteIndex)}
-                />
-              )
-            });
-          })}
+          {notes.map((accord, accordIndex) =>
+            accord.map(
+              (item, noteIndex) =>
+                item.instrument === EInstruments.piano && (
+                  <StyledNote
+                    rowStart={getNoteRowStart(item.note as EPianoNotes)}
+                    rowEnd={getNoteRowStart(item.note as EPianoNotes)}
+                    columnStart={accordIndex + 1}
+                    columnEnd={accordIndex + 1}
+                    key={noteIndex}
+                    bg={`var(--color-${item.note})`}
+                    className="note"
+                    onClick={() => deleteNote(accordIndex, noteIndex)}
+                  />
+                )
+            )
+          )}
         </StyledNotesBoard>
         <StyledNotesBoard className="notes-board beat-notes" columnCount={ticksCount}>
           {emptyBeatNotes.map((accord, accordIndex) => {
@@ -121,23 +121,23 @@ export function Notes(props: {
             ));
           })}
 
-          {notes.map((accord, accordIndex) => {
-            return accord.map((item, noteIndex) => {
-              return (
-                item.instrument === EInstruments.drum &&
-                <StyledNote
-                  rowStart={getNoteRowStart(item.note as EDrumNotes)}
-                  rowEnd={getNoteRowStart(item.note as EDrumNotes)}
-                  columnStart={accordIndex + 1}
-                  columnEnd={accordIndex + 1}
-                  key={noteIndex}
-                  bg={`var(--color-${item.note})`}
-                  className="note"
-                  onClick={() => deleteNote(accordIndex, noteIndex)}
-                />
-              )
-            });
-          })}
+          {notes.map((accord, accordIndex) =>
+            accord.map(
+              (item, noteIndex) =>
+                item.instrument === EInstruments.drum && (
+                  <StyledNote
+                    rowStart={getNoteRowStart(item.note as EDrumNotes)}
+                    rowEnd={getNoteRowStart(item.note as EDrumNotes)}
+                    columnStart={accordIndex + 1}
+                    columnEnd={accordIndex + 1}
+                    key={noteIndex}
+                    bg={`var(--color-${item.note})`}
+                    className="note"
+                    onClick={() => deleteNote(accordIndex, noteIndex)}
+                  />
+                )
+            )
+          )}
           <div ref={cell}></div>
         </StyledNotesBoard>
       </div>
