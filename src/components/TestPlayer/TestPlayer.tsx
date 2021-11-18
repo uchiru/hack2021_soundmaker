@@ -1,22 +1,27 @@
 import React from 'react';
-import { SoundmakerControler } from 'SoundmakerController';
 import { MAX_TRACK_SECONDS } from 'SoundmakerController/const';
+import { StoreContext } from 'storeContext';
 import testnotes from './testnotes';
 // import {notes} from '../Player/notes';
 
 const testNotes = JSON.stringify(testnotes);
 
 export function TestPlayer() {
+  const { soundmakerController: controller } = React.useContext(StoreContext);
   const [textarea, setTextArea] = React.useState(testNotes);
   const [currentProgress, setCurrentProgress] = React.useState(0);
   const [isPaused, setIsPaused] = React.useState(false);
-  const controller = React.useMemo(() => {
+  const isError = React.useMemo(() => {
     let track;
     try {
       track = JSON.parse(textarea);
     } catch (e) {}
 
-    return track && new SoundmakerControler(track);
+    if (track) {
+      controller.setTrack(track);
+    }
+
+    return !!track;
   }, [textarea]);
 
   React.useEffect(() => {
@@ -33,7 +38,7 @@ export function TestPlayer() {
           onChange={(e) => {
             setTextArea(e.target.value);
           }}
-          style={{ width: 800, height: 400, border: '1px solid', color: controller ? 'black' : 'red' }}
+          style={{ width: 800, height: 400, border: '1px solid', color: isError ? 'black' : 'red' }}
         />
       </div>
       <div style={{ color: 'white' }}>
