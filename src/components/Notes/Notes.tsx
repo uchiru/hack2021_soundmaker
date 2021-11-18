@@ -75,6 +75,8 @@ export function Notes(props: { notes: { instrument: string; note: string }[][] }
                 columnStart={accordIndex + 1}
                 columnEnd={accordIndex + 1}
                 key={noteIndex}
+                needSolidBorder={(accordIndex + 1) % 2 === 0}
+                needDarkerBorder={(accordIndex + 1) % 4 === 0}
               />
             ));
           })}
@@ -88,9 +90,8 @@ export function Notes(props: { notes: { instrument: string; note: string }[][] }
                   columnStart={accordIndex + 1}
                   columnEnd={accordIndex + 1}
                   key={noteIndex}
-                >
-                  {item.note}
-                </StyledNote>
+                  className="note"
+                />
               );
             });
           })}
@@ -104,6 +105,8 @@ export function Notes(props: { notes: { instrument: string; note: string }[][] }
                 columnStart={accordIndex + 1}
                 columnEnd={accordIndex + 1}
                 key={noteIndex}
+                needSolidBorder={(accordIndex + 1) % 2 === 0}
+                needDarkerBorder={(accordIndex + 1) % 4 === 0}
               />
             ));
           })}

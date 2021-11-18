@@ -7,6 +7,15 @@
 
   --field-scroll-offset: 0px;
   --line-position: 0px;
+
+
+  --color-C: #e33059;
+  --color-D: #f7943d;
+  --color-E: #edd929;
+  --color-F: #95c631;
+  --color-G: #11826d;
+  --color-A: #5b37cc;
+  --color-H: #ea57b2;
 }
 
 .player {

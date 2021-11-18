@@ -5,7 +5,12 @@ export const StyledNote = styled.div<{
   rowEnd: number;
   columnStart: number;
   columnEnd: number;
+  needSolidBorder?: boolean;
+  needDarkerBorder?: boolean;
 }>`
-  grid-area: ${({ rowStart, rowEnd, columnStart, columnEnd }) =>
-    `${rowStart} / ${columnStart} / ${rowEnd} / ${columnEnd}`};
+  grid-area: ${({ rowStart, rowEnd, columnStart, columnEnd }) => {
+    return `${rowStart} / ${columnStart} / ${rowEnd} / ${columnEnd}`;
+  }};
+  --border-right-style: ${({ needSolidBorder }) => (needSolidBorder ? 'solid' : '')};
+  --border-right-color: ${({ needDarkerBorder }) => (needDarkerBorder ? 'rgba(0, 0, 0, 0.3)' : '')};
 `;

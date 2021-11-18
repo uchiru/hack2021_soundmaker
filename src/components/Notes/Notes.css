@@ -49,6 +49,34 @@
   background-color: rgba(0, 0, 0, 0.1);
 }
 
+.note:nth-child(1n) {
+  background-color: var(--color-C);
+}
+
+.note:nth-child(2n) {
+  background-color: var(--color-D);
+}
+
+.note:nth-child(3n) {
+  background-color: var(--color-E);
+}
+
+.note:nth-child(4n) {
+  background-color: var(--color-F);
+}
+
+.note:nth-child(5n) {
+  background-color: var(--color-G);
+}
+
+.note:nth-child(6n) {
+  background-color: var(--color-A);
+}
+
+.note:nth-child(7n) {
+  background-color: var(--color-H);
+}
+
 .line {
   --line-color: #f95959;
   --size: 22px;
