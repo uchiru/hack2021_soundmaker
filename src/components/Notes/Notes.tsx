@@ -48,8 +48,16 @@ const getNoteRowStart = (note: TNotes) => {
   }
 }
 
-export function Notes(props: { currentProgress: number; notes: { instrument: string; note: string }[][] }) {
-  const { notes, currentProgress } = props;
+export function Notes(props: {
+  currentProgress: number;
+  createNote: (tick: number, note: number, instrument: string) => void;
+  deleteNote: (tick: number, note: number) => void;
+  notes: {
+    instrument: string;
+    note: string;
+  }[][];
+}) {
+  const { notes, currentProgress, createNote, deleteNote } = props;
 
   const cell = React.useRef<HTMLInputElement>(null);
 
@@ -72,6 +80,8 @@ export function Notes(props: { currentProgress: number; notes: { instrument: str
                 key={noteIndex}
                 needSolidBorder={(accordIndex + 1) % 2 === 0}
                 needDarkerBorder={(accordIndex + 1) % 4 === 0}
+                onClick={() => createNote(accordIndex, noteIndex + 1, EInstruments.piano)}
+                className="note"
               />
             ));
           })}
@@ -88,6 +98,7 @@ export function Notes(props: { currentProgress: number; notes: { instrument: str
                   key={noteIndex}
                   bg={`var(--color-${item.note})`}
                   className="note"
+                  onClick={() => deleteNote(accordIndex, noteIndex)}
                 />
               )
             });
@@ -104,6 +115,8 @@ export function Notes(props: { currentProgress: number; notes: { instrument: str
                 key={noteIndex}
                 needSolidBorder={(accordIndex + 1) % 2 === 0}
                 needDarkerBorder={(accordIndex + 1) % 4 === 0}
+                onClick={() => createNote(accordIndex, noteIndex + 1, EInstruments.drum)}
+                className="note"
               />
             ));
           })}
@@ -120,6 +133,7 @@ export function Notes(props: { currentProgress: number; notes: { instrument: str
                   key={noteIndex}
                   bg={`var(--color-${item.note})`}
                   className="note"
+                  onClick={() => deleteNote(accordIndex, noteIndex)}
                 />
               )
             });
