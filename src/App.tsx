@@ -1,9 +1,11 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-import { Scene } from './components/Scene';
-import './App.css';
-import { TestPlayer } from 'components/TestPlayer';
+
+import { Scene } from './components/Scene'
+import './App.css'
+import { TestPlayer } from 'components/TestPlayer'
+import { Player } from 'components/Player'
 
 function App(): JSX.Element {
   return (
@@ -20,7 +22,11 @@ function App(): JSX.Element {
               onStart={() => console.log('start')}
             />
           </Route>
-          <Route path="/"></Route>
+          <Route path="/player">
+            <Player />
+          </Route>
+          <Route path="/">
+          </Route>
         </Switch>
       </BrowserRouter>
     </div>

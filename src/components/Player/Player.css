@@ -1,0 +1,34 @@
+:root {
+  --instrument-tracks-bg: #38598b;
+  --beat-tracks-bg: #113f67;
+  --instrument-notes-bg: #e7eaf6;
+  --beat-notes-bg: #d1d6fd;
+  --player-controls-bg: #1a2639;
+
+  --field-scroll-offset: 0px;
+  --line-position: 0px;
+
+
+  --color-C: #e33059;
+  --color-D: #f7943d;
+  --color-E: #edd929;
+  --color-F: #95c631;
+  --color-G: #11826d;
+  --color-A: #5b37cc;
+  --color-H: #ea57b2;
+
+  --color-kick: #000;
+  --color-snare: #aaa;
+}
+
+.player {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  grid-template-columns: 100px 1fr;
+  grid-template-rows: 60px 1fr 100px;
+  grid-template-areas:
+    "player-controls player-controls"
+    "instrument-tracks instrument-notes"
+    "beat-tracks instrument-notes";
+}
