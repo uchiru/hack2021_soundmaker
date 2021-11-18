@@ -1,4 +1,4 @@
-import { TNotes, EPianoNotes, EDrumNotes } from '../../SoundmakerController/types';
+import { TNotes, TAccord } from '../../SoundmakerController/types';
 import Phaser from 'phaser';
 import { Note } from './Note';
 import { TICK_TIME } from '../../SoundmakerController/const';
@@ -9,8 +9,11 @@ interface iNote {
   instrument: string;
   note: TNotes;
 }
-
+interface ISceneData {
+  track: TAccord[];
+}
 const ENotesDictionary: { [key in TNotes]?: number } = {
+  cymbal: 9,
   kick: 8,
   snare: 7,
   H: 6,
@@ -34,8 +37,8 @@ export default class phaserSceneDefault extends Phaser.Scene {
   rainbowColor: number[];
   trackPosition: number[];
   startRenderNotesPosition: number;
-  notesConfig: iNote[][];
-  notesGameObject: any;
+  notesConfig: TAccord[];
+  notesGameObject: any[];
   notesCatcherManager: INotesCatcherManager | null;
   catchers?: NotesCollider[];;
   constructor(config: string | Phaser.Types.Scenes.SettingsConfig) {
@@ -52,25 +55,12 @@ export default class phaserSceneDefault extends Phaser.Scene {
     this.trackPosition = [];
     this.startRenderNotesPosition = 0;
     this.stepNote = 0;
-    this.notesConfig = [
-      [],
-      [],
-      [],
-      [
-        { instrument: 'drumm', note: EDrumNotes.kick },
-        { instrument: 'piano', note: EPianoNotes.F },
-        { instrument: 'piano', note: EPianoNotes.C }
-      ],
-      [
-        { instrument: 'drumm', note: EDrumNotes.kick },
-        { instrument: 'piano', note: EPianoNotes.A }
-      ],
-      [{ instrument: 'piano', note: EPianoNotes.G }],
-      [{ instrument: 'piano', note: EPianoNotes.F }],
-      [{ instrument: 'piano', note: EPianoNotes.E }]
-    ];
+    this.notesConfig = [];
     this.notesGameObject = [];
     this.notesCatcherManager = null;
+  }
+  init(data: ISceneData) {
+    this.notesConfig = Array(10).fill([]).concat(data.track);
   }
   preload() {
     console.log('defaultScene preload', this);
@@ -143,26 +133,26 @@ export default class phaserSceneDefault extends Phaser.Scene {
     }
   }
   notesRender() {
-    console.log(this.notesConfig);
     const length = this.notesConfig.length;
     for (let i = 0; i < length; i++) {
       const tact = this.notesConfig[i];
       for (let j = 0; j < tact.length; j++) {
         const noteData = tact[j];
-
-        const noteIndex = ENotesDictionary[noteData.note];
-        const radius = 20;
-        const note = new Note(
-          noteData,
-          {
-            x: this.trackPosition[noteIndex ?? 0],
-            y: this.startRenderNotesPosition - this.stepNote * i,
-            size: radius,
-            color: this.rainbowColor[noteIndex ?? 0]
-          },
-          this
-        );
-        this.notesGameObject.push(note);
+        if (noteData) {
+          const noteIndex = ENotesDictionary[noteData.note];
+          const radius = 20;
+          const note = new Note(
+            noteData,
+            {
+              x: this.trackPosition[noteIndex ?? 0],
+              y: this.startRenderNotesPosition - this.stepNote * i,
+              size: radius,
+              color: this.rainbowColor[noteIndex ?? 0]
+            },
+            this
+          );
+          this.notesGameObject.push(note);
+        }
       }
     }
   }
@@ -171,7 +161,7 @@ export default class phaserSceneDefault extends Phaser.Scene {
       note.start(this.stepNote);
     });
   }
-  reload(notes: iNote[][]) {
+  reload(notes: TAccord[]) {
     this.notesConfig = notes;
     this.scene.restart();
   }

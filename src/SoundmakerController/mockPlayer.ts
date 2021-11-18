@@ -75,7 +75,7 @@ let playingSounds: { [key: string]: HTMLAudioElement } = {};
 
 function removePlayingAudio(e: Event) {
   const audio = e.target as HTMLAudioElement;
-  log('mockPlayer removePlayingAudio' + audio);
+  log.verbose('mockPlayer removePlayingAudio ' + audio.src);
   audio.removeEventListener('ended', removePlayingAudio, false);
   delete playingSounds[audio.id];
 }

@@ -27,11 +27,7 @@ function App(): JSX.Element {
               <TestPlayer />
             </Route>
             <Route path="/scene">
-              <Scene
-                onFail={() => console.log('fail')}
-                onSuccess={() => console.log('success')}
-                onStart={() => console.log('start')}
-              />
+              <Scene />
             </Route>
             <Route path="/player">
               <Player />

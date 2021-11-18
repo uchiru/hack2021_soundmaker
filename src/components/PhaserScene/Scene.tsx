@@ -1,17 +1,21 @@
 import React from 'react';
 import Phaser from 'phaser';
 import phaserSceneDefault from './phaserSceneDefault';
+import { useLocation } from 'react-router-dom';
+import { TAccord } from '../../SoundmakerController/types';
+import { notes } from '../Player/notes';
 
-interface SceneProps {
-  onFail: () => void;
-  onStart: () => void;
-  onSuccess: (newLevel: number) => void;
-}
-
-export function Scene(props: SceneProps) {
-  const { onFail, onSuccess, onStart } = props;
+export function Scene() {
+  const location = useLocation();
+  let track: TAccord[] = [];
+  if (location && location.state) {
+    // @ts-ignore
+    track = location.state.track;
+  } else {
+    track = JSON.parse(JSON.stringify(notes));
+  }
+  console.log(track);
   const gameRef = React.useRef<Phaser.Game | null>(null);
-  const activeSceneRef = React.useRef(null);
   React.useEffect(() => {
     const config: Phaser.Types.Core.GameConfig = {
       type: Phaser.AUTO,
@@ -30,10 +34,10 @@ export function Scene(props: SceneProps) {
           debug: false,
           gravity: { y: 0 }
         }
-      },
-      scene: phaserSceneDefault
+      }
     };
     gameRef.current = new Phaser.Game(config);
+    gameRef.current.scene.add('piano', phaserSceneDefault, true, { track });
   }, []);
 
   return (
