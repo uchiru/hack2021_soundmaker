@@ -2,15 +2,7 @@ import React, { useState } from 'react';
 import './PlayerControls.css'
 import { SoundmakerControler } from '../../SoundmakerController/SoundmakerControler';
 
-export function PlayerControls({
-  controller,
-  removeNotes,
-  setDefaultNotes
-}: {
-  controller: SoundmakerControler;
-  removeNotes: () => void;
-  setDefaultNotes: () => void
-}) {
+export function PlayerControls({ controller }: { controller: SoundmakerControler }) {
   const [isPlaying, setIsPlaying] = useState(false);
 
   const handleClick = () => {
@@ -25,8 +17,6 @@ export function PlayerControls({
       <button className="player-control js-toggle-play-state" type="button" onClick={handleClick}>
         {isPlaying ? <><span>⏹</span> Остановить</> : <><span>▶️</span> Играть</>} трек
       </button>
-      <button className="player-control" type="button" onClick={setDefaultNotes}><span>🔄</span> Восстановить трек</button>
-      <button className="player-control" type="button" onClick={removeNotes}><span>🗑</span> Удалить трек</button>
     </div>
   );
 }

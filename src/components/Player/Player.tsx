@@ -8,22 +8,15 @@ import { TAccord, EPianoNotes, EDrumNotes, TNotes, EInstruments } from '../../So
 import { notes } from './notes';
 
 export function Player() {
-  const controller = React.useMemo(() => {
-    const track = notes as TAccord[];
-
-    return track && new SoundmakerControler(track)
-  }, [notes])
-
-  const [currentProgress, setCurrentProgress] = React.useState(0);
   const [currentNotes, setNotes] = React.useState(notes);
 
-  const removeNotes = () => {
-    setNotes([]);
-  }
+  const controller = React.useMemo(() => {
+    const track = currentNotes as TAccord[];
 
-  const setDefaultNotes = () => {
-    setNotes(notes);
-  }
+    return track && new SoundmakerControler(track)
+  }, [currentNotes])
+
+  const [currentProgress, setCurrentProgress] = React.useState(0);
 
   const getPianoNoteName = (note: number): TNotes | undefined => {
     switch (note) {
@@ -91,11 +84,7 @@ export function Player() {
 
   return (
     <div className="player">
-      <PlayerControls
-        controller={controller as SoundmakerControler}
-        removeNotes={removeNotes}
-        setDefaultNotes={setDefaultNotes}
-      />
+      <PlayerControls controller={controller as SoundmakerControler} />
       <Tracks />
       <Notes currentProgress={currentProgress} notes={currentNotes} createNote={createNote} deleteNote={deleteNote} />
     </div>
