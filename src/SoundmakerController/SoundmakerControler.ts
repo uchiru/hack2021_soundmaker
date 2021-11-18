@@ -1,10 +1,10 @@
 import { EInstruments, ESampleNotes, ITimeline, TAccord } from './types';
-import { BPM, MAX_TRACK_SECONDS, TICK_TIME } from './const';
+import { ADVANCE_TIME, BPM, MAX_TRACK_SECONDS, TICK_TIME } from './const';
 
 import { play } from './mockPlayer';
 import { log } from './logger';
 
-log.level = 2;
+log.level = 1;
 const FART = true;
 
 export class SoundmakerControler {
@@ -61,18 +61,20 @@ export class SoundmakerControler {
 
   private getAccordToPlayAtTime(time: number) {
     const { sampleTime } = this.timeline;
+
+    let accord = null;
+
     const nextAccordIndex = Math.ceil((time - (time % sampleTime)) / sampleTime);
 
-    let accord;
-
-    if (this.lastPlayedAccordIndex >= nextAccordIndex) {
-      log.verbose('skip because accord alrready played (', nextAccordIndex, ')');
-      accord = null;
-    } else {
-      accord = this.track[nextAccordIndex];
+    if (sampleTime - (time % sampleTime) <= ADVANCE_TIME) {
+      if (this.lastPlayedAccordIndex >= nextAccordIndex) {
+        log.verbose('skip because accord alrready played (', nextAccordIndex, ')');
+      } else {
+        accord = this.track[nextAccordIndex];
+      }
     }
 
-    log.verbose('getting accord for time ', time, ' from index ', nextAccordIndex, ': ', accord);
+    log.verbose('got accord for time ', time, ': ', accord);
 
     return {
       accord,
@@ -118,10 +120,10 @@ export class SoundmakerControler {
       }
 
       play(accord, this.isError ? 0.3 : 1);
-    }
 
-    this.lastPlayedAccordIndex = index;
-    log.verbose('set lastPlayedAccordIndex to ', this.lastPlayedAccordIndex);
+      this.lastPlayedAccordIndex = index;
+      log.verbose('set lastPlayedAccordIndex to ', this.lastPlayedAccordIndex);
+    }
 
     this.timeline.currentTime += TICK_TIME;
     this.handleEvent('currentTimeChange');
