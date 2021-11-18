@@ -22,7 +22,7 @@ const ETextButtons: { [key: string]: string } = {
   start: 'Начать',
   pause: 'Пауза',
   clear: 'С начала',
-  back: 'Назад'
+  back: 'Выход'
 };
 interface IButtonPosition {
   x: number;
