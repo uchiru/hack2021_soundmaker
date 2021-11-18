@@ -25,3 +25,32 @@ export const StyledNotesBoard = styled.div<{
     return Array(columnCount).fill(' 1fr').concat();
   }};
 `;
+
+export const StyledLine = styled.div<{
+  position: number;
+  cellWidth?: number;
+}>`
+  --line-color: #f95959;
+  --size: 22px;
+  position: absolute;
+  width: 2px;
+  height: calc(100% - 60px);
+  background-color: var(--line-color);
+  cursor: pointer;
+  z-index: 1;
+  transition: transform 1s linear;
+
+  transform: translateX(var(--line-position));
+  --line-position: ${({ position, cellWidth }) => position * (cellWidth ? cellWidth * 2 : 0) + (cellWidth ?? 0) + 'px'};
+
+  &::before {
+    content: '';
+    width: var(--size);
+    height: var(--size);
+    background-color: var(--line-color);
+    position: absolute;
+    top: calc(-1 * var(--size) / 2);
+    left: calc(-1 * (var(--size) / 2) + 1px);
+    border-radius: 50%;
+  }
+`;

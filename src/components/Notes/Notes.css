@@ -44,27 +44,3 @@
 .note {
   background-color: var(--note-bg, transparent);
 }
-
-.line {
-  --line-color: #f95959;
-  --size: 22px;
-  position: absolute;
-  width: 2px;
-  height: calc(100% - 60px);
-  background-color: var(--line-color);
-  cursor: pointer;
-  z-index: 1;
-
-  transform: translateX(var(--line-position));
-}
-
-.line::before {
-  content: "";
-  width: var(--size);
-  height: var(--size);
-  background-color: var(--line-color);
-  position: absolute;
-  top: calc(-1 * var(--size) / 2);
-  left: calc(-1 * (var(--size) / 2) + 1px);
-  border-radius: 50%;
-}

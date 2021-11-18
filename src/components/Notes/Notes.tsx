@@ -1,6 +1,6 @@
 import React from 'react';
 import './Notes.css';
-import { StyledNote, StyledNotesBoard } from './StyledNotes';
+import { StyledNote, StyledNotesBoard, StyledLine } from './StyledNotes';
 import { EPianoNotes, EDrumNotes, EInstruments, TNotes } from '../../SoundmakerController/types';
 import { MAX_TRACK_SECONDS } from 'SoundmakerController/const';
 
@@ -48,11 +48,18 @@ const getNoteRowStart = (note: TNotes) => {
   }
 }
 
-export function Notes(props: { notes: { instrument: string; note: string }[][] }) {
-  const { notes } = props;
+export function Notes(props: { currentProgress: number; notes: { instrument: string; note: string }[][] }) {
+  const { notes, currentProgress } = props;
+
+  const cell = React.useRef<HTMLInputElement>(null);
+
   return (
     <div className="notes">
-      <div className="line"></div>
+      <StyledLine
+        className="line"
+        position={currentProgress}
+        cellWidth={cell?.current?.getBoundingClientRect().width}
+      />
       <div className="notes-scroller">
         <StyledNotesBoard className="notes-board instrument-notes" columnCount={ticksCount}>
           {emptyInstrumentNotes.map((accord, accordIndex) => {
@@ -117,6 +124,7 @@ export function Notes(props: { notes: { instrument: string; note: string }[][] }
               )
             });
           })}
+          <div ref={cell}></div>
         </StyledNotesBoard>
       </div>
     </div>
