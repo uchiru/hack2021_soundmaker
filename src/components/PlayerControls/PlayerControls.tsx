@@ -1,7 +1,17 @@
 import React from 'react';
 import './PlayerControls.css';
 
-export function PlayerControls({ isPlaying, handleClick, removeNotes, restoreNotes }: { isPlaying: boolean; handleClick: () => void; removeNotes: () => void; restoreNotes: () => void }) {
+export function PlayerControls({
+  isPlaying,
+  handleClick,
+  removeNotes,
+  restoreNotes
+}: {
+  isPlaying: boolean;
+  handleClick: () => void;
+  removeNotes: () => void;
+  restoreNotes: () => void;
+}) {
   return (
     <div className="player-controls">
       <a href="/scene" className="player-control">
@@ -21,9 +31,13 @@ export function PlayerControls({ isPlaying, handleClick, removeNotes, restoreNot
         трек
       </button>
 
-      <button className="player-control" type="button" onClick={restoreNotes}><span>🔄</span> Восстановить трек</button>
+      <button className="player-control" type="button" onClick={restoreNotes}>
+        <span>🔄</span> Восстановить трек
+      </button>
 
-      <button className="player-control" type="button" onClick={removeNotes}><span>🗑</span> Удалить трек</button>
+      <button className="player-control" type="button" onClick={removeNotes}>
+        <span>🗑</span> Удалить трек
+      </button>
     </div>
   );
 }

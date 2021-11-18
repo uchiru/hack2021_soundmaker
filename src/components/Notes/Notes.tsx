@@ -23,7 +23,7 @@ const generateEmtyItems = (count: number, size: number) => {
 };
 
 const emptyInstrumentNotes = generateEmtyItems(ticksCount, 7);
-const emptyBeatNotes = generateEmtyItems(ticksCount, 2);
+const emptyBeatNotes = generateEmtyItems(ticksCount, 3);
 
 const getNoteRowStart = (note: TNotes) => {
   if (note) {
@@ -37,6 +37,7 @@ const getNoteRowStart = (note: TNotes) => {
       case EPianoNotes.F:
         return 4;
       case EPianoNotes.G:
+      case EDrumNotes.cymbal:
         return 3;
       case EPianoNotes.A:
       case EDrumNotes.snare:

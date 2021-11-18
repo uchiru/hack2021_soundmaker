@@ -31,6 +31,7 @@ export class Note {
   }
 
   start(step: number) {
+    // eslint-disable-next-line
     // @ts-ignore
     if (this.gameObject) this.gameObject.body.setVelocityY(step / (TICK_TIME / 1000));
   }

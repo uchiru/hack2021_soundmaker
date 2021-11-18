@@ -9,7 +9,7 @@ const Wrapper = styled.div`
   overflow: hidden;
 `;
 
-const MenuItem = styled(Link)<{ inverseRotate?: boolean }>`
+const MenuItem = styled(Link)<{ $inverseRotate?: boolean }>`
   height: 100vh;
   width: 500vw;
   display: flex;
@@ -21,7 +21,7 @@ const MenuItem = styled(Link)<{ inverseRotate?: boolean }>`
   transition: transform 1s;
 
   &:hover {
-    transform: scale(1.4, 1.4) rotate(${(props) => (props.inverseRotate ? '-10deg' : '10deg')});
+    transform: scale(1.4, 1.4) rotate(${(props) => (props.$inverseRotate ? '-10deg' : '10deg')});
     z-index: 100;
   }
 `;
@@ -32,7 +32,7 @@ export function Intro() {
       <MenuItem to="/player" style={{ background: '#ff6e40' }}>
         Плеер
       </MenuItem>
-      <MenuItem inverseRotate to="/scene" style={{ background: '#1e3d59' }}>
+      <MenuItem $inverseRotate to="/scene" style={{ background: '#1e3d59' }}>
         Игра
       </MenuItem>
     </Wrapper>

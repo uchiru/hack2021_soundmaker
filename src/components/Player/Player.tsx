@@ -47,6 +47,8 @@ export function Player() {
 
   const getDrumNoteName = (note: number): TNotes | undefined => {
     switch (note) {
+      case 3:
+        return EDrumNotes.cymbal;
       case 2:
         return EDrumNotes.snare;
       case 1:
@@ -76,15 +78,15 @@ export function Player() {
     const notes = [...currentNotes];
 
     notes.forEach((arr) => {
-      arr.splice(0, arr.length)
-    })
+      arr.splice(0, arr.length);
+    });
 
     setNotes(notes);
-  }
+  };
 
   const restoreNotes = () => {
     setNotes(JSON.parse(JSON.stringify(cachedNotes)));
-  }
+  };
 
   const deleteNote = (tick: number, note: number) => {
     const notes = [...currentNotes];
@@ -106,7 +108,12 @@ export function Player() {
 
   return (
     <div className="player">
-      <PlayerControls isPlaying={isPlaying} handleClick={handleClick} removeNotes={removeNotes} restoreNotes={restoreNotes} />
+      <PlayerControls
+        isPlaying={isPlaying}
+        handleClick={handleClick}
+        removeNotes={removeNotes}
+        restoreNotes={restoreNotes}
+      />
       <Tracks />
       <Notes currentProgress={currentProgress} notes={currentNotes} createNote={createNote} deleteNote={deleteNote} />
     </div>
