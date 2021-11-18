@@ -1,6 +1,7 @@
 export enum EInstruments {
   piano = 'piano',
-  drum = 'drum'
+  drum = 'drum',
+  fart = 'fart'
 }
 
 export enum EPianoNotes {
@@ -18,17 +19,22 @@ export enum EDrumNotes {
   snare = 'snare'
 }
 
-export type TNotes = EPianoNotes | EDrumNotes
-
-export interface ISound {
-  instrument: EInstruments
-  note: TNotes
+export enum EFartNotes {
+  epic = 'epic'
 }
 
-export type TAccord = ISound[]
+export type TNotes = EPianoNotes | EDrumNotes | EFartNotes;
+
+export interface ISound {
+  instrument: EInstruments;
+  note: TNotes;
+  isPlayed?: boolean;
+}
+
+export type TAccord = ISound[];
 
 export interface ITimeline {
-  sampleTime: number
-  samplesPerSecond: number
-  currentTime: number
+  sampleTime: number;
+  samplesPerSecond: number;
+  currentTime: number;
 }

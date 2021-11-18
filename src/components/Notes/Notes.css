@@ -1,0 +1,70 @@
+.notes {
+  overflow-x: hidden;
+  grid-area: instrument-notes;
+  background-color: #f5f5f5;
+}
+
+.notes-scroller {
+  height: 100%;
+  display: grid;
+  grid-template-rows: 1fr 100px;
+  transform: translateX(var(--field-scroll-offset));
+}
+
+.notes-board {
+  display: grid;
+  width: 1024px;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: var(--template-rows);
+  --border-right-color: rgba(0, 0, 0, 0.1);
+  --border-right-style: dashed;
+  --border-bottom-color: rgba(0, 0, 0, 0.1);
+}
+
+.instrument-notes {
+  --template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  background-color: var(--instrument-notes-bg);
+}
+
+.beat-notes {
+  --template-rows: 1fr 1fr;
+  background-color: var(--beat-notes-bg);
+}
+
+.notes-board > * {
+  cursor: pointer;
+  border-right: 1px var(--border-right-style) var(--border-right-color);
+  border-bottom: 1px solid var(--border-bottom-color);
+}
+
+.notes-board > *:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.note {
+  background-color: var(--note-bg, transparent);
+}
+
+.line {
+  --line-color: #f95959;
+  --size: 22px;
+  position: absolute;
+  width: 2px;
+  height: calc(100% - 60px);
+  background-color: var(--line-color);
+  cursor: pointer;
+  z-index: 1;
+
+  transform: translateX(var(--line-position));
+}
+
+.line::before {
+  content: "";
+  width: var(--size);
+  height: var(--size);
+  background-color: var(--line-color);
+  position: absolute;
+  top: calc(-1 * var(--size) / 2);
+  left: calc(-1 * (var(--size) / 2) + 1px);
+  border-radius: 50%;
+}
