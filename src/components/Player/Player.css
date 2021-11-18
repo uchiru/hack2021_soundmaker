@@ -1,0 +1,22 @@
+:root {
+  --instrument-tracks-bg: #38598b;
+  --beat-tracks-bg: #113f67;
+  --instrument-notes-bg: #e7eaf6;
+  --beat-notes-bg: #d1d6fd;
+  --player-controls-bg: #1a2639;
+
+  --field-scroll-offset: 0px;
+  --line-position: 0px;
+}
+
+.player {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  grid-template-columns: 100px 1fr;
+  grid-template-rows: 60px 1fr 100px;
+  grid-template-areas:
+    "player-controls player-controls"
+    "instrument-tracks instrument-notes"
+    "beat-tracks instrument-notes";
+}

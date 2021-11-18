@@ -1,0 +1,13 @@
+.player-controls {
+  display: flex;
+  grid-area: player-controls;
+  background-color: var(--player-controls-bg);
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 10px;
+}
+
+.player-control:first-of-type {
+  margin-right: auto;
+}

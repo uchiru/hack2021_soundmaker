@@ -1,0 +1,18 @@
+.tracks {
+  display: grid;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.tracks > * {
+  margin: auto;
+}
+
+.instrument-tracks {
+  grid-area: instrument-tracks;
+  background-color: var(--instrument-tracks-bg);
+}
+
+.beat-tracks {
+  grid-area: beat-tracks;
+  background-color: var(--beat-tracks-bg);
+}
