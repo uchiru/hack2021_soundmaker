@@ -15,14 +15,14 @@ export function Scene(props: SceneProps) {
   React.useEffect(() => {
     const config: Phaser.Types.Core.GameConfig = {
       type: Phaser.AUTO,
-      // autoCenter: Phaser.Scale.CENTER_HORIZONTALLY,
-      backgroundColor: '#B3DFFF',
+      backgroundColor: '#000',
       canvasStyle: 'position: absolute; top: 0;',
       scale: {
-        mode: Phaser.Scale.HEIGHT_CONTROLS_WIDTH,
+        mode: Phaser.Scale.FIT,
+        autoCenter: Phaser.Scale.CENTER_BOTH,
         parent: document.getElementById('phaser-wrapper')!,
-        width: 2880,
-        height: 1000
+        width: 1920,
+        height: 1200
       },
       physics: {
         default: 'arcade',
