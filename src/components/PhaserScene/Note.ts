@@ -31,8 +31,9 @@ export class Note {
   }
 
   start(step: number) {
+    console.log(TICK_TIME);
     // eslint-disable-next-line
     // @ts-ignore
-    if (this.gameObject) this.gameObject.body.setVelocityY(step / (TICK_TIME / 1000));
+    if (this.gameObject) this.gameObject.body.setVelocityY(step / 0.5);
   }
 }

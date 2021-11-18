@@ -3,7 +3,6 @@ import Phaser from 'phaser';
 import phaserSceneDefault from './phaserSceneDefault';
 import { useLocation } from 'react-router-dom';
 import { TAccord } from '../../SoundmakerController/types';
-import { SoundmakerControler } from '../../SoundmakerController';
 import { notes } from '../Player/notes';
 
 export function Scene() {
@@ -17,7 +16,6 @@ export function Scene() {
   }
   console.log(track);
   const gameRef = React.useRef<Phaser.Game | null>(null);
-  const activeSceneRef = React.useRef(null);
   React.useEffect(() => {
     const config: Phaser.Types.Core.GameConfig = {
       type: Phaser.AUTO,
@@ -36,10 +34,10 @@ export function Scene() {
           debug: false,
           gravity: { y: 0 }
         }
-      },
-      scene: phaserSceneDefault
+      }
     };
     gameRef.current = new Phaser.Game(config);
+    gameRef.current.scene.add('piano', phaserSceneDefault, true, { track });
   }, []);
 
   return (
