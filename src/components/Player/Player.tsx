@@ -50,6 +50,8 @@ export function Player() {
 
   const getDrumNoteName = (note: number): TNotes | undefined => {
     switch (note) {
+      case 3:
+        return EDrumNotes.cymbal;
       case 2:
         return EDrumNotes.snare;
       case 1:

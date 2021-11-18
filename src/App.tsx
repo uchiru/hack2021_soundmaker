@@ -17,7 +17,9 @@ function App(): JSX.Element {
   return (
     <div className="App">
       {!isLoaded ? (
-        <img src="https://uchiru-five-eleven.s3.eu-central-1.amazonaws.com/common/52dcf1b02b4a9c7a01223f6c2e7334c03d6f5653156798218505e4d47c7afff1.gif" />
+        <div className="preloader">
+          <img src="https://uchiru-five-eleven.s3.eu-central-1.amazonaws.com/common/52dcf1b02b4a9c7a01223f6c2e7334c03d6f5653156798218505e4d47c7afff1.gif" />
+        </div>
       ) : (
         <BrowserRouter basename={process.env.PUBLIC_URL}>
           <Switch>

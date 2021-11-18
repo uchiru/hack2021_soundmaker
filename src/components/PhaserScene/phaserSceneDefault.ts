@@ -1,13 +1,13 @@
 import { TNotes, EPianoNotes, EDrumNotes } from '../../SoundmakerController/types';
 import Phaser from 'phaser';
 import { Note } from './Note';
-import { TICK_TIME } from '../../SoundmakerController/const';
 interface iNote {
   instrument: string;
   note: TNotes;
 }
 
 const ENotesDictionary: { [key in TNotes]?: number } = {
+  cymbal: 9,
   kick: 8,
   snare: 7,
   H: 6,

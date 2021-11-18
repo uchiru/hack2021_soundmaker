@@ -16,6 +16,7 @@ export function Tracks() {
       <div className="tracks beat-tracks">
         <div>kick</div>
         <div>snare</div>
+        <div>cymbal</div>
       </div>
     </>
   );

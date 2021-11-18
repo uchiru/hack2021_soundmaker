@@ -27,7 +27,7 @@
 }
 
 .beat-notes {
-  --template-rows: 1fr 1fr;
+  --template-rows: 1fr 1fr 1fr;
   background-color: var(--beat-notes-bg);
 }
 
