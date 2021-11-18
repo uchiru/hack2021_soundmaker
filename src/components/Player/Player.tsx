@@ -39,6 +39,10 @@ const notes = [
     {
       instrument: 'piano',
       note: 'G'
+    },
+    {
+      instrument: 'drum',
+      note: 'kick'
     }
   ],
   [],
@@ -48,6 +52,53 @@ const notes = [
       note: 'G'
     }
   ],
+  [],
+  [
+    {
+      instrument: 'piano',
+      note: 'F'
+    },
+    {
+      instrument: 'drum',
+      note: 'kick'
+    }
+  ],
+  [
+    {
+      instrument: 'piano',
+      note: 'E'
+    }
+  ],
+  [
+    {
+      instrument: 'piano',
+      note: 'D'
+    }
+  ],
+  [
+    {
+      instrument: 'piano',
+      note: 'C'
+    }
+  ],
+  [
+    {
+      instrument: 'piano',
+      note: 'G'
+    },
+    {
+      instrument: 'drum',
+      note: 'kick'
+    }
+  ],
+  [],
+  [
+    {
+      instrument: 'piano',
+      note: 'G'
+    }
+  ],
+  []
 ]
 
 export function Player() {
