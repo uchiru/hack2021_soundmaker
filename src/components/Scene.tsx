@@ -15,11 +15,11 @@ export function Scene(props: SceneProps) {
   React.useEffect(() => {
     const config: Phaser.Types.Core.GameConfig = {
       type: Phaser.AUTO,
-      backgroundColor: '#0c0Fcc',
+      backgroundColor: '#000',
       canvasStyle: 'position: absolute; top: 0;',
       scale: {
         mode: Phaser.Scale.FIT,
-        autoCenter: Phaser.Scale.CENTER_HORIZONTALLY,
+        autoCenter: Phaser.Scale.CENTER_BOTH,
         parent: document.getElementById('phaser-wrapper')!,
         width: 1920,
         height: 1200
