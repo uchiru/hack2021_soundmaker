@@ -6,7 +6,6 @@ import { Scene } from './components/Scene'
 import './App.css'
 import { TestPlayer } from 'components/TestPlayer'
 import { Player } from 'components/Player'
-import { NotesCatcherManager } from 'components/NotesCatcherManager';
 
 function App(): JSX.Element {
   return (
@@ -27,7 +26,6 @@ function App(): JSX.Element {
             <Player />
           </Route>
           <Route path="/">
-            <NotesCatcherManager/>
           </Route>
         </Switch>
       </BrowserRouter>

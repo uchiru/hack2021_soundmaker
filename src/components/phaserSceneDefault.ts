@@ -1,6 +1,9 @@
 import { TNotes, EPianoNotes, EDrumNotes } from '../SoundmakerController/types';
 import Phaser from 'phaser';
 import { TICK_TIME } from '../SoundmakerController/const';
+import { INotesCatcherManager, NotesCatcherManager } from './NotesCatcherManager/NotesCatcherManager';
+import { NotesCollider } from './NotesCollider/NotesCollider';
+
 interface iNote {
   instrument: string;
   note: TNotes;
@@ -32,6 +35,8 @@ export default class phaserSceneDefault extends Phaser.Scene {
   startRenderNotesPosition: number;
   notesConfig: iNote[][];
   notesGameObject: Phaser.GameObjects.Arc[];
+  notesCatcherManager: INotesCatcherManager | null;
+  catchers?: NotesCollider[];;
   constructor(config: string | Phaser.Types.Scenes.SettingsConfig) {
     super(config);
     this.sceneSize = {
@@ -64,6 +69,7 @@ export default class phaserSceneDefault extends Phaser.Scene {
       [{ instrument: 'piano', note: EPianoNotes.E }]
     ];
     this.notesGameObject = [];
+    this.notesCatcherManager = null;
   }
   preload() {
     console.log('defaultScene preload', this);
@@ -102,6 +108,8 @@ export default class phaserSceneDefault extends Phaser.Scene {
     );
     // Условная нижняя панель
     this.add.rectangle(footerWidth / 2, this.scale.height - footerHeight / 2, footerWidth, footerHeight, 0xff0000);
+
+    this.notesCatcherManager = new NotesCatcherManager(this);
   }
 
   renderGameZone() {

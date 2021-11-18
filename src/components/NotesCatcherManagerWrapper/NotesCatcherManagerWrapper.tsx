@@ -2,12 +2,11 @@ import React from 'react';
 import { TAccord } from 'SoundmakerController/types';
 import { EPianoNotes } from '../../SoundmakerController/types'
 import { NotesCatcher } from './NotesCatcher';
-import { testNotes } from '../TestPlayer';
-import './NotesCatcherManager.css';
+import './NotesCatcherManagerWrapper.css';
 
-export interface INotesCatcherManager {}
+export interface INotesCatcherManagerWrapper {}
 
-export const NotesCatcherManager: React.FC<INotesCatcherManager> = function NotesCathcerManager() {
+export const NotesCatcherManager: React.FC<INotesCatcherManagerWrapper> = function NotesCathcerManagerWrapper() {
 
     React.useEffect(() => {
         document.addEventListener('keydown', onKeyPress);
