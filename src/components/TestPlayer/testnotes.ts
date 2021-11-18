@@ -4,7 +4,8 @@ export default [
   [
     {
       instrument: 'sample',
-      note: 'ambient'
+      note: 'ambient',
+      volume: 0.2
     },
     {
       instrument: 'piano',

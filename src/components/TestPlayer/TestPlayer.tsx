@@ -2,12 +2,14 @@ import React from 'react';
 import { SoundmakerControler } from 'SoundmakerController';
 import { MAX_TRACK_SECONDS } from 'SoundmakerController/const';
 import testnotes from './testnotes';
+// import {notes} from '../Player/notes';
 
 const testNotes = JSON.stringify(testnotes);
 
 export function TestPlayer() {
   const [textarea, setTextArea] = React.useState(testNotes);
   const [currentProgress, setCurrentProgress] = React.useState(0);
+  const [isPaused, setIsPaused] = React.useState(false);
   const controller = React.useMemo(() => {
     let track;
     try {
@@ -34,10 +36,10 @@ export function TestPlayer() {
           style={{ width: 800, height: 400, border: '1px solid', color: controller ? 'black' : 'red' }}
         />
       </div>
-      <div>
+      <div style={{ color: 'white' }}>
         {currentProgress}c / {MAX_TRACK_SECONDS}c
       </div>
-      <div>
+      <div style={{ color: 'white' }}>
         <input
           type="checkbox"
           onChange={(e) => {
@@ -48,9 +50,22 @@ export function TestPlayer() {
         />
         Ошибка
       </div>
-      <div>
-        <button onClick={() => controller?.startPlaying()}>Проиграть</button>
-        <button onClick={() => controller?.stopPlaying()}>Остановитес</button>
+      <div style={{ color: 'white' }}>
+        <button onClick={() => controller?.startPlaying()}>▶️</button>
+        <button
+          onClick={() => {
+            if (isPaused) {
+              setIsPaused(false);
+              controller?.resume();
+            } else {
+              setIsPaused(true);
+              controller?.pause();
+            }
+          }}
+        >
+          ⏯️
+        </button>
+        <button onClick={() => controller?.stopPlaying()}>⏹️</button>
       </div>
     </>
   );

@@ -20,7 +20,7 @@ const generateEmtyItems = (count: number, size: number) => {
   }
 
   return arr;
-}
+};
 
 const emptyInstrumentNotes = generateEmtyItems(ticksCount, 7);
 const emptyBeatNotes = generateEmtyItems(ticksCount, 2);
@@ -46,10 +46,18 @@ const getNoteRowStart = (note: TNotes) => {
         return 1;
     }
   }
-}
+};
 
-export function Notes(props: { currentProgress: number; notes: { instrument: string; note: string }[][] }) {
-  const { notes, currentProgress } = props;
+export function Notes(props: {
+  currentProgress: number;
+  createNote: (tick: number, note: number, instrument: string) => void;
+  deleteNote: (tick: number, note: number) => void;
+  notes: {
+    instrument: string;
+    note: string;
+  }[][];
+}) {
+  const { notes, currentProgress, createNote, deleteNote } = props;
 
   const cell = React.useRef<HTMLInputElement>(null);
 
@@ -72,26 +80,29 @@ export function Notes(props: { currentProgress: number; notes: { instrument: str
                 key={noteIndex}
                 needSolidBorder={(accordIndex + 1) % 2 === 0}
                 needDarkerBorder={(accordIndex + 1) % 4 === 0}
+                onClick={() => createNote(accordIndex, noteIndex + 1, EInstruments.piano)}
+                className="note"
               />
             ));
           })}
 
-          {notes.map((accord, accordIndex) => {
-            return accord.map((item, noteIndex) => {
-              return (
-                item.instrument === EInstruments.piano &&
-                <StyledNote
-                  rowStart={getNoteRowStart(item.note as EPianoNotes)}
-                  rowEnd={getNoteRowStart(item.note as EPianoNotes)}
-                  columnStart={accordIndex + 1}
-                  columnEnd={accordIndex + 1}
-                  key={noteIndex}
-                  bg={`var(--color-${item.note})`}
-                  className="note"
-                />
-              )
-            });
-          })}
+          {notes.map((accord, accordIndex) =>
+            accord.map(
+              (item, noteIndex) =>
+                item.instrument === EInstruments.piano && (
+                  <StyledNote
+                    rowStart={getNoteRowStart(item.note as EPianoNotes)}
+                    rowEnd={getNoteRowStart(item.note as EPianoNotes)}
+                    columnStart={accordIndex + 1}
+                    columnEnd={accordIndex + 1}
+                    key={noteIndex}
+                    bg={`var(--color-${item.note})`}
+                    className="note"
+                    onClick={() => deleteNote(accordIndex, noteIndex)}
+                  />
+                )
+            )
+          )}
         </StyledNotesBoard>
         <StyledNotesBoard className="notes-board beat-notes" columnCount={ticksCount}>
           {emptyBeatNotes.map((accord, accordIndex) => {
@@ -104,26 +115,29 @@ export function Notes(props: { currentProgress: number; notes: { instrument: str
                 key={noteIndex}
                 needSolidBorder={(accordIndex + 1) % 2 === 0}
                 needDarkerBorder={(accordIndex + 1) % 4 === 0}
+                onClick={() => createNote(accordIndex, noteIndex + 1, EInstruments.drum)}
+                className="note"
               />
             ));
           })}
 
-          {notes.map((accord, accordIndex) => {
-            return accord.map((item, noteIndex) => {
-              return (
-                item.instrument === EInstruments.drum &&
-                <StyledNote
-                  rowStart={getNoteRowStart(item.note as EDrumNotes)}
-                  rowEnd={getNoteRowStart(item.note as EDrumNotes)}
-                  columnStart={accordIndex + 1}
-                  columnEnd={accordIndex + 1}
-                  key={noteIndex}
-                  bg={`var(--color-${item.note})`}
-                  className="note"
-                />
-              )
-            });
-          })}
+          {notes.map((accord, accordIndex) =>
+            accord.map(
+              (item, noteIndex) =>
+                item.instrument === EInstruments.drum && (
+                  <StyledNote
+                    rowStart={getNoteRowStart(item.note as EDrumNotes)}
+                    rowEnd={getNoteRowStart(item.note as EDrumNotes)}
+                    columnStart={accordIndex + 1}
+                    columnEnd={accordIndex + 1}
+                    key={noteIndex}
+                    bg={`var(--color-${item.note})`}
+                    className="note"
+                    onClick={() => deleteNote(accordIndex, noteIndex)}
+                  />
+                )
+            )
+          )}
           <div ref={cell}></div>
         </StyledNotesBoard>
       </div>

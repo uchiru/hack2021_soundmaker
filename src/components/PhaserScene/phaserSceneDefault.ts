@@ -1,25 +1,26 @@
-import { TNotes, EPianoNotes, EDrumNotes } from '../SoundmakerController/types';
+import { TNotes, EPianoNotes, EDrumNotes } from '../../SoundmakerController/types';
 import Phaser from 'phaser';
-import { TICK_TIME } from '../SoundmakerController/const';
-import { INotesCatcherManager, NotesCatcherManager } from './NotesCatcherManager/NotesCatcherManager';
-import { NotesCollider } from './NotesCollider/NotesCollider';
+import { Note } from './Note';
+import { TICK_TIME } from '../../SoundmakerController/const';
+import { INotesCatcherManager, NotesCatcherManager } from '../NotesCatcherManager/NotesCatcherManager';
+import { NotesCollider } from '../NotesCollider/NotesCollider';
 
 interface iNote {
   instrument: string;
   note: TNotes;
 }
 
-enum ENotesDictionary {
-  kick = 8,
-  snare = 7,
-  H = 6,
-  A = 5,
-  G = 4,
-  F = 3,
-  E = 2,
-  D = 1,
-  C = 0
-}
+const ENotesDictionary: { [key in TNotes]?: number } = {
+  kick: 8,
+  snare: 7,
+  H: 6,
+  A: 5,
+  G: 4,
+  F: 3,
+  E: 2,
+  D: 1,
+  C: 0
+};
 export default class phaserSceneDefault extends Phaser.Scene {
   sceneSize: {
     footerHeight: number;
@@ -34,7 +35,7 @@ export default class phaserSceneDefault extends Phaser.Scene {
   trackPosition: number[];
   startRenderNotesPosition: number;
   notesConfig: iNote[][];
-  notesGameObject: Phaser.GameObjects.Arc[];
+  notesGameObject: any;
   notesCatcherManager: INotesCatcherManager | null;
   catchers?: NotesCollider[];;
   constructor(config: string | Phaser.Types.Scenes.SettingsConfig) {
@@ -130,6 +131,7 @@ export default class phaserSceneDefault extends Phaser.Scene {
     // линии горизонтальные
     for (let i = 0; i <= 10; i += 1) {
       const y = i * this.stepNote + this.stepNote / 2 + this.sceneSize.headerHeight / 4;
+      // Отладочная сетка
       // this.add.rectangle(
       //   this.sceneSize.gameZoneWidth / 2 + this.sceneSize.gameZoneHorizontalPadding / 2,
       //   y,
@@ -147,24 +149,26 @@ export default class phaserSceneDefault extends Phaser.Scene {
       const tact = this.notesConfig[i];
       for (let j = 0; j < tact.length; j++) {
         const noteData = tact[j];
-        // @ts-ignore
+
         const noteIndex = ENotesDictionary[noteData.note];
         const radius = 20;
-        let circle = this.add.circle(
-          this.trackPosition[noteIndex],
-          this.startRenderNotesPosition - this.stepNote * i,
-          radius,
-          this.rainbowColor[noteIndex]
+        const note = new Note(
+          noteData,
+          {
+            x: this.trackPosition[noteIndex ?? 0],
+            y: this.startRenderNotesPosition - this.stepNote * i,
+            size: radius,
+            color: this.rainbowColor[noteIndex ?? 0]
+          },
+          this
         );
-        circle = this.physics.add.existing(circle, false);
-        this.notesGameObject.push(circle);
+        this.notesGameObject.push(note);
       }
     }
   }
   start() {
     this.notesGameObject.forEach((note) => {
-      // @ts-ignore
-      note.body.setVelocityY(this.stepNote / (TICK_TIME / 1000));
+      note.start(this.stepNote);
     });
   }
   reload(notes: iNote[][]) {

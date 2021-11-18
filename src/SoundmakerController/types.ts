@@ -33,7 +33,7 @@ export type TNotes = EPianoNotes | EDrumNotes | ESampleNotes;
 export interface ISound {
   instrument: EInstruments;
   note: TNotes;
-  isPlayed?: boolean;
+  volume?: number;
 }
 
 export type TAccord = ISound[];

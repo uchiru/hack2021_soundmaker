@@ -1,5 +1,5 @@
 import React from 'react';
-import './Tracks.css'
+import './Tracks.css';
 
 export function Tracks() {
   return (
