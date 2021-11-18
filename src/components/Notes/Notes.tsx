@@ -1,7 +1,7 @@
 import React from 'react';
 import './Notes.css';
 import { StyledNote } from './StyledNotes';
-import { EPianoNotes } from '../../SoundmakerController/types';
+import { EPianoNotes, EDrumNotes, EInstruments } from '../../SoundmakerController/types';
 
 const emptyInstrumentNotes = [
   [0, 0, 0, 0, 0, 0, 0],
@@ -41,7 +41,7 @@ const emptyBeatNotes = [
   [0, 0]
 ];
 
-const getNoteRowStart = (note: EPianoNotes) => {
+const getNoteRowStart = (note: EPianoNotes | EDrumNotes) => {
   switch (note) {
     case EPianoNotes.C:
       return 7;
@@ -54,8 +54,10 @@ const getNoteRowStart = (note: EPianoNotes) => {
     case EPianoNotes.G:
       return 3;
     case EPianoNotes.A:
+    case EDrumNotes.snare:
       return 2;
     case EPianoNotes.H:
+    case EDrumNotes.kick:
       return 1;
   }
 }
@@ -84,6 +86,7 @@ export function Notes(props: { notes: { instrument: string; note: string }[][] }
           {notes.map((accord, accordIndex) => {
             return accord.map((item, noteIndex) => {
               return (
+                item.instrument === EInstruments.piano &&
                 <StyledNote
                   rowStart={getNoteRowStart(item.note as EPianoNotes)}
                   rowEnd={getNoteRowStart(item.note as EPianoNotes) + 1}
@@ -92,7 +95,7 @@ export function Notes(props: { notes: { instrument: string; note: string }[][] }
                   key={noteIndex}
                   className="note"
                 />
-              );
+              )
             });
           })}
         </div>
@@ -109,6 +112,22 @@ export function Notes(props: { notes: { instrument: string; note: string }[][] }
                 needDarkerBorder={(accordIndex + 1) % 4 === 0}
               />
             ));
+          })}
+
+          {notes.map((accord, accordIndex) => {
+            return accord.map((item, noteIndex) => {
+              return (
+                item.instrument === EInstruments.drum &&
+                <StyledNote
+                  rowStart={getNoteRowStart(item.note as EDrumNotes)}
+                  rowEnd={getNoteRowStart(item.note as EDrumNotes) + 1}
+                  columnStart={accordIndex + 1}
+                  columnEnd={accordIndex + 1}
+                  key={noteIndex}
+                  className="note"
+                />
+              )
+            });
           })}
         </div>
       </div>

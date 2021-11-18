@@ -37,44 +37,44 @@
   border-bottom: 1px solid var(--border-bottom-color);
 }
 
-/* .notes-board > *:nth-child(4n) {
-  --border-right-color: rgba(0, 0, 0, 0.3);
-}
-
-.notes-board > *:nth-child(2n) {
-  --border-right-style: solid;
-} */
-
 .notes-board > *:hover {
   background-color: rgba(0, 0, 0, 0.1);
 }
 
-.note:nth-child(1n) {
+.instrument-notes .note:nth-child(1n) {
   background-color: var(--color-C);
 }
 
-.note:nth-child(2n) {
+.instrument-notes .note:nth-child(2n) {
   background-color: var(--color-D);
 }
 
-.note:nth-child(3n) {
+.instrument-notes .note:nth-child(3n) {
   background-color: var(--color-E);
 }
 
-.note:nth-child(4n) {
+.instrument-notes .note:nth-child(4n) {
   background-color: var(--color-F);
 }
 
-.note:nth-child(5n) {
+.instrument-notes .note:nth-child(5n) {
   background-color: var(--color-G);
 }
 
-.note:nth-child(6n) {
+.instrument-notes .note:nth-child(6n) {
   background-color: var(--color-A);
 }
 
-.note:nth-child(7n) {
+.instrument-notes .note:nth-child(7n) {
   background-color: var(--color-H);
+}
+
+.beat-notes .note:nth-child(1n) {
+  background-color: var(--color-kick);
+}
+
+.beat-notes .note:nth-child(2n) {
+  background-color: var(--color-snare);
 }
 
 .line {

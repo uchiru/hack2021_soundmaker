@@ -9,12 +9,20 @@ const notes = [
     {
       instrument: 'piano',
       note: 'H'
+    },
+    {
+      instrument: 'drum',
+      note: 'kick'
     }
   ],
   [
     {
       instrument: 'piano',
       note: 'A'
+    },
+    {
+      instrument: 'drum',
+      note: 'snare'
     }
   ],
   [

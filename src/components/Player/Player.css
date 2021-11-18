@@ -16,6 +16,9 @@
   --color-G: #11826d;
   --color-A: #5b37cc;
   --color-H: #ea57b2;
+
+  --color-kick: #000;
+  --color-snare: #aaa;
 }
 
 .player {
