@@ -13,7 +13,17 @@ export function Player() {
 
     return track && new SoundmakerControler(track)
   }, [notes])
+
   const [currentProgress, setCurrentProgress] = React.useState(0);
+  const [currentNotes, setNotes] = React.useState(notes);
+
+  const removeNotes = () => {
+    setNotes([]);
+  }
+
+  const setDefaultNotes = () => {
+    setNotes(notes);
+  }
 
   React.useEffect(() => {
     controller?.on('currentTimeChange', () => {
@@ -23,9 +33,13 @@ export function Player() {
 
   return (
     <div className="player">
-      <PlayerControls controller={controller as SoundmakerControler} />
+      <PlayerControls
+        controller={controller as SoundmakerControler}
+        removeNotes={removeNotes}
+        setDefaultNotes={setDefaultNotes}
+      />
       <Tracks />
-      <Notes currentProgress={currentProgress} notes={notes} />
+      <Notes currentProgress={currentProgress} notes={currentNotes} />
     </div>
   );
 }
