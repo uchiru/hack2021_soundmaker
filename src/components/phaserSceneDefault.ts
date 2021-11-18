@@ -78,7 +78,7 @@ export default class phaserSceneDefault extends Phaser.Scene {
     this.renderScene();
     this.renderGameZone();
     this.notesRender();
-    setTimeout(this.start, 2500);
+    setTimeout(this.start.bind(this), 2500);
   }
 
   renderScene() {
@@ -154,6 +154,7 @@ export default class phaserSceneDefault extends Phaser.Scene {
     }
   }
   start() {
+    debugger
     this.notesGameObject.forEach((note) => {
       // @ts-ignore
       note.body.setVelocityY(this.stepNote / (TICK_TIME / 1000));
