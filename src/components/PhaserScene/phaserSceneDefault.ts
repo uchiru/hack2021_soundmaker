@@ -1,5 +1,6 @@
 import { TNotes, EPianoNotes, EDrumNotes } from '../../SoundmakerController/types';
 import Phaser from 'phaser';
+import { Note } from './Note';
 import { TICK_TIME } from '../../SoundmakerController/const';
 interface iNote {
   instrument: string;
@@ -31,7 +32,7 @@ export default class phaserSceneDefault extends Phaser.Scene {
   trackPosition: number[];
   startRenderNotesPosition: number;
   notesConfig: iNote[][];
-  notesGameObject: Phaser.GameObjects.Arc[];
+  notesGameObject: any[];
   constructor(config: string | Phaser.Types.Scenes.SettingsConfig) {
     super(config);
     this.sceneSize = {
@@ -143,21 +144,23 @@ export default class phaserSceneDefault extends Phaser.Scene {
         // @ts-ignore
         const noteIndex = ENotesDictionary[noteData.note];
         const radius = 20;
-        let circle = this.add.circle(
-          this.trackPosition[noteIndex],
-          this.startRenderNotesPosition - this.stepNote * i,
-          radius,
-          this.rainbowColor[noteIndex]
+        const note = new Note(
+          noteData,
+          {
+            x: this.trackPosition[noteIndex],
+            y: this.startRenderNotesPosition - this.stepNote * i,
+            size: radius,
+            color: this.rainbowColor[noteIndex]
+          },
+          this
         );
-        circle = this.physics.add.existing(circle, false);
-        this.notesGameObject.push(circle);
+        this.notesGameObject.push(note);
       }
     }
   }
   start() {
     this.notesGameObject.forEach((note) => {
-      // @ts-ignore
-      note.body.setVelocityY(this.stepNote / (TICK_TIME / 1000));
+      note.start(this.stepNote);
     });
   }
   reload(notes: iNote[][]) {
