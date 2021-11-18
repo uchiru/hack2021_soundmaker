@@ -1,1 +1,1 @@
-export { SoundmakerControler } from './SoundmakerControler'
+export { SoundmakerControler } from './SoundmakerControler';
