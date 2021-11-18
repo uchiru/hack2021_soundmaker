@@ -5,6 +5,7 @@ import { SoundmakerControler } from '../../SoundmakerController';
 import { Button, ETypeButtons, EColorButtons } from './Button';
 import ButtonPNG from '../assets/buttons.png';
 import ButtonJSON from '../assets/buttons.json';
+import { store } from 'storeContext';
 import { INotesCatcherManager, NotesCatcherManager } from '../NotesCatcherManager';
 import { NotesCollider } from '../NotesCollider';
 
@@ -40,7 +41,7 @@ export default class phaserSceneDefault extends Phaser.Scene {
   notesConfig: TAccord[];
   verticalStepCount: number;
   notesGameObject: any[];
-  soundController?: SoundmakerControler;
+  soundController: SoundmakerControler = store.soundmakerController;
   notesCatcherManager: INotesCatcherManager | null;
   catchers?: NotesCollider[];
   constructor(config: string | Phaser.Types.Scenes.SettingsConfig) {
@@ -65,7 +66,7 @@ export default class phaserSceneDefault extends Phaser.Scene {
 
   init(data: ISceneData) {
     this.notesConfig = Array(10).fill([]).concat(data.track);
-    this.soundController = new SoundmakerControler(this.notesConfig);
+    this.soundController?.setTrack(this.notesConfig);
   }
   preload() {
     this.load.atlas('buttons', ButtonPNG, ButtonJSON);

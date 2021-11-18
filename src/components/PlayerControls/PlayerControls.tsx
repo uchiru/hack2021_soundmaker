@@ -5,13 +5,17 @@ import { TAccord } from '../../SoundmakerController/types';
 
 export function PlayerControls({
   isPlaying,
+  isPaused,
   handleClick,
+  handlePauseClick,
   removeNotes,
   restoreNotes,
   track
 }: {
   isPlaying: boolean;
+  isPaused: boolean;
   handleClick: () => void;
+  handlePauseClick: () => void;
   removeNotes: () => void;
   restoreNotes: () => void;
   track: TAccord[];
@@ -39,6 +43,20 @@ export function PlayerControls({
           </>
         )}
         трек
+      </button>
+
+      <button className="player-control js-toggle-play-state" type="button" onClick={handlePauseClick}>
+        <span style={{ opacity: isPlaying ? 1 : 0.1 }}>
+          {isPaused ? (
+            <>
+              <span>▶️</span> Продолжить
+            </>
+          ) : (
+            <>
+              <span>⏸️</span> Пауза
+            </>
+          )}
+        </span>
       </button>
 
       <button className="player-control" type="button" onClick={restoreNotes}>

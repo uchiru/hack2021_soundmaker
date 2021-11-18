@@ -8,6 +8,9 @@ log.level = 1;
 const FART = true;
 
 export class SoundmakerControler {
+  public track: TAccord[] = [];
+  public isError = false;
+
   private interval = -1;
   private lastPlayedAccordIndex = -1;
   private isPaused = false;
@@ -22,11 +25,21 @@ export class SoundmakerControler {
     return this.timeline.currentTime;
   }
 
-  constructor(public track: TAccord[]) {
-    this.initTimeline();
+  constructor() {
+    const samplesPerSecond = Math.floor(BPM / 60);
+    this.timeline = {
+      sampleTime: Math.floor(1000 / samplesPerSecond),
+      samplesPerSecond,
+      currentTime: 0
+    };
+    log(
+      'SoundMaker initialized. currentTime = 0, sampleTime = ',
+      this.timeline.sampleTime,
+      'samplesPerSecond = ',
+      samplesPerSecond
+    );
+    this.handleEvent('currentTimeChange');
   }
-
-  public isError = false;
 
   private eventHandlers: Record<string, Array<() => void>> = {};
   private handleEvent(event: string) {
@@ -42,23 +55,18 @@ export class SoundmakerControler {
     };
   }
 
-  private initTimeline() {
-    const samplesPerSecond = Math.floor(BPM / 60);
-    this.timeline = {
-      sampleTime: Math.floor(1000 / samplesPerSecond),
-      samplesPerSecond,
-      currentTime: 0
-    };
-    this.handleEvent('currentTimeChange');
-    this.eventHandlers = {};
+  public setTrack(track: TAccord[]) {
+    this.track = track;
+  }
+
+  private reset() {
+    clearInterval(this.interval);
+    this.interval = -1;
     this.lastPlayedAccordIndex = -1;
+    this.isError = false;
+    this.isPaused = false;
+    pauseSound();
     reset();
-    log(
-      'timeline initialized. currentTime = 0, sampleTime = ',
-      this.timeline.sampleTime,
-      'samplesPerSecond = ',
-      samplesPerSecond
-    );
   }
 
   private getAccordToPlayAtTime(time: number) {
@@ -86,33 +94,34 @@ export class SoundmakerControler {
 
   /** @param [from] {number} Время начала в милисекундах */
   public startPlaying(from?: number) {
-    if (this.isPaused) {
-      this.resume();
-    } else {
-      this.timeline.currentTime = from ?? 0;
-      this.lastPlayedAccordIndex = -1;
-      this.handleEvent('currentTimeChange');
-      log('starting player from ', from ?? 0);
-      this.interval = window.setInterval(() => this.handleTick(), TICK_TIME);
-    }
+    this.reset();
+    this.timeline.currentTime = from ?? 0;
+    this.handleEvent('currentTimeChange');
+    log('starting player from ', from ?? 0);
+    this.interval = window.setInterval(() => this.handleTick(), TICK_TIME);
   }
 
   public stopPlaying() {
     if (this.interval !== -1) {
-      clearInterval(this.interval);
-      this.interval = -1;
+      this.reset();
+      this.timeline.currentTime = 0;
+      this.handleEvent('currentTimeChange');
       log('playing stopped');
     }
   }
 
   public pause() {
-    this.isPaused = true;
-    pauseSound();
+    if (!this.isPaused) {
+      this.isPaused = true;
+      pauseSound();
+    }
   }
 
   public resume() {
-    this.isPaused = false;
-    resumeSound();
+    if (this.isPaused) {
+      this.isPaused = false;
+      resumeSound();
+    }
   }
 
   private handleTick() {
@@ -125,10 +134,6 @@ export class SoundmakerControler {
     if (currentTime >= MAX_TRACK_SECONDS * 1000) {
       log('stopping and resetting playback because max track time (', MAX_TRACK_SECONDS * 1000, ') elapsed');
       this.stopPlaying();
-      this.timeline.currentTime = 0;
-      this.lastPlayedAccordIndex = -1;
-      this.handleEvent('currentTimeChange');
-      reset();
 
       return;
     }
