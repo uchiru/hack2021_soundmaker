@@ -154,10 +154,13 @@ export default class phaserSceneDefault extends Phaser.Scene {
     }
   }
   start() {
-    debugger
     this.notesGameObject.forEach((note) => {
       // @ts-ignore
       note.body.setVelocityY(this.stepNote / (TICK_TIME / 1000));
     });
+  }
+  reload(notes: iNote[][]) {
+    this.notesConfig = notes;
+    this.scene.restart();
   }
 }
