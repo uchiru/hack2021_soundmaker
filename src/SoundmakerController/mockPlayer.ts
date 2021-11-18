@@ -47,9 +47,10 @@ let loadedCb: () => void;
 
 function loadedAudio(e: Event) {
   loadedCount++;
-  console.log(loadedCount);
+  log.verbose('mockPlayer loadedCount = ', loadedCount);
   (e.target as HTMLAudioElement).pause();
   if (loadedCount === samplesCount) {
+    log('mockPlayer loaded all sounds');
     loadedCb?.();
   }
 }
@@ -60,6 +61,7 @@ export function preload(cb?: () => void) {
   }
   Object.values(soundFiles).forEach((samples) => {
     Object.values(samples).forEach((audio) => {
+      log.verbose('mockPlayer start loading sample #' + samplesCount);
       samplesCount++;
       audio.muted = true;
       audio.autoplay = true;
@@ -68,11 +70,45 @@ export function preload(cb?: () => void) {
   });
 }
 
+let id = 1;
+let playingSounds: { [key: string]: HTMLAudioElement } = {};
+
+function removePlayingAudio(e: Event) {
+  const audio = e.target as HTMLAudioElement;
+  log('mockPlayer removePlayingAudio' + audio);
+  audio.removeEventListener('ended', removePlayingAudio, false);
+  delete playingSounds[audio.id];
+}
+
 export function play(accord: TAccord, globalVolume = 1) {
   accord.forEach((sound) => {
     const audio = new Audio(soundFiles[sound.instrument][sound.note].src);
     audio.volume = globalVolume * (sound.volume ?? 1);
     log('mockPlayer playing ', sound.instrument, ' note ', sound.note);
     audio.play();
+    audio.id = `__mock-player-${id++}`;
+    playingSounds[audio.id] = audio;
+    audio.addEventListener('ended', removePlayingAudio, false);
   });
+}
+
+let pausedSounds: HTMLAudioElement[] = [];
+
+export function pauseSound() {
+  Object.values(playingSounds).forEach((playingSound) => {
+    pausedSounds.push(playingSound);
+    playingSound.pause();
+    log.verbose('mockPlayer pausing sound');
+  });
+}
+
+export function resumeSound() {
+  log.verbose('resuming this sounds:', pausedSounds);
+  pausedSounds.forEach((playingSound) => playingSound.play());
+  pausedSounds = [];
+}
+
+export function reset() {
+  playingSounds = {};
+  pausedSounds = [];
 }

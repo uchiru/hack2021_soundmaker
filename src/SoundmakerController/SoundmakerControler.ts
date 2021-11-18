@@ -1,7 +1,7 @@
 import { EInstruments, ESampleNotes, ITimeline, TAccord } from './types';
 import { ADVANCE_TIME, BPM, MAX_TRACK_SECONDS, TICK_TIME } from './const';
 
-import { play } from './mockPlayer';
+import { pauseSound, play, reset, resumeSound } from './mockPlayer';
 import { log } from './logger';
 
 log.level = 1;
@@ -10,6 +10,7 @@ const FART = true;
 export class SoundmakerControler {
   private interval = -1;
   private lastPlayedAccordIndex = -1;
+  private isPaused = false;
 
   timeline: ITimeline = {
     sampleTime: 1000,
@@ -51,6 +52,7 @@ export class SoundmakerControler {
     this.handleEvent('currentTimeChange');
     this.eventHandlers = {};
     this.lastPlayedAccordIndex = -1;
+    reset();
     log(
       'timeline initialized. currentTime = 0, sampleTime = ',
       this.timeline.sampleTime,
@@ -84,11 +86,15 @@ export class SoundmakerControler {
 
   /** @param [from] {number} Время начала в милисекундах */
   public startPlaying(from?: number) {
-    this.timeline.currentTime = from ?? 0;
-    this.lastPlayedAccordIndex = -1;
-    this.handleEvent('currentTimeChange');
-    log('starting player from ', from ?? 0);
-    this.interval = window.setInterval(() => this.handleTick(), TICK_TIME);
+    if (this.isPaused) {
+      this.resume();
+    } else {
+      this.timeline.currentTime = from ?? 0;
+      this.lastPlayedAccordIndex = -1;
+      this.handleEvent('currentTimeChange');
+      log('starting player from ', from ?? 0);
+      this.interval = window.setInterval(() => this.handleTick(), TICK_TIME);
+    }
   }
 
   public stopPlaying() {
@@ -99,7 +105,21 @@ export class SoundmakerControler {
     }
   }
 
+  public pause() {
+    this.isPaused = true;
+    pauseSound();
+  }
+
+  public resume() {
+    this.isPaused = false;
+    resumeSound();
+  }
+
   private handleTick() {
+    if (this.isPaused) {
+      return;
+    }
+
     const { currentTime } = this.timeline;
 
     if (currentTime >= MAX_TRACK_SECONDS * 1000) {
@@ -108,6 +128,7 @@ export class SoundmakerControler {
       this.timeline.currentTime = 0;
       this.lastPlayedAccordIndex = -1;
       this.handleEvent('currentTimeChange');
+      reset();
 
       return;
     }
