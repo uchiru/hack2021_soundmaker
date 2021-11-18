@@ -7,6 +7,8 @@ import { Notes } from 'components/Notes';
 import { TAccord, EPianoNotes, EDrumNotes, TNotes, EInstruments } from '../../SoundmakerController/types';
 import { notes } from './notes';
 
+const cachedNotes = JSON.parse(JSON.stringify(notes));
+
 export function Player() {
   const [currentNotes, setNotes] = React.useState(notes);
   const [isPlaying, setIsPlaying] = React.useState(false);
@@ -74,13 +76,14 @@ export function Player() {
     const notes = [...currentNotes];
 
     notes.forEach((arr) => {
-      // console.log(arr)
-      arr.length = 0;
+      arr.splice(0, arr.length)
     })
 
-    // console.log(notes)
-
     setNotes(notes);
+  }
+
+  const restoreNotes = () => {
+    setNotes(JSON.parse(JSON.stringify(cachedNotes)));
   }
 
   const deleteNote = (tick: number, note: number) => {
@@ -103,7 +106,7 @@ export function Player() {
 
   return (
     <div className="player">
-      <PlayerControls isPlaying={isPlaying} handleClick={handleClick} removeNotes={removeNotes} />
+      <PlayerControls isPlaying={isPlaying} handleClick={handleClick} removeNotes={removeNotes} restoreNotes={restoreNotes} />
       <Tracks />
       <Notes currentProgress={currentProgress} notes={currentNotes} createNote={createNote} deleteNote={deleteNote} />
     </div>
