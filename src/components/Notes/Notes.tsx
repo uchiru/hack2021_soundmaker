@@ -4,7 +4,7 @@ import { StyledNote, StyledNotesBoard } from './StyledNotes';
 import { EPianoNotes, EDrumNotes, EInstruments, TNotes } from '../../SoundmakerController/types';
 import { MAX_TRACK_SECONDS } from 'SoundmakerController/const';
 
-const ticksCount = MAX_TRACK_SECONDS * 4;
+const ticksCount = MAX_TRACK_SECONDS * 2;
 
 const generateEmtyItems = (count: number, size: number) => {
   const arr = [];
