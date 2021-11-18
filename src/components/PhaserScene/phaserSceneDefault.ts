@@ -5,6 +5,14 @@ import { SoundmakerControler } from '../../SoundmakerController';
 import { Button, ETypeButtons, EColorButtons } from './Button';
 import ButtonPNG from '../assets/buttons.png';
 import ButtonJSON from '../assets/buttons.json';
+import { TICK_TIME } from '../../SoundmakerController/const';
+import { INotesCatcherManager, NotesCatcherManager } from '../NotesCatcherManager/NotesCatcherManager';
+import { NotesCollider } from '../NotesCollider/NotesCollider';
+
+interface iNote {
+  instrument: string;
+  note: TNotes;
+}
 interface ISceneData {
   track: TAccord[];
 }
@@ -38,6 +46,8 @@ export default class phaserSceneDefault extends Phaser.Scene {
   verticalStepCount: number;
   notesGameObject: any[];
   soundController?: SoundmakerControler;
+  notesCatcherManager: INotesCatcherManager | null;
+  catchers?: NotesCollider[];
   constructor(config: string | Phaser.Types.Scenes.SettingsConfig) {
     super(config);
     this.sceneSize = {
@@ -54,6 +64,7 @@ export default class phaserSceneDefault extends Phaser.Scene {
     this.stepNote = 0;
     this.notesConfig = [];
     this.notesGameObject = [];
+    this.notesCatcherManager = null;
     this.verticalStepCount = 10;
   }
 
@@ -100,6 +111,8 @@ export default class phaserSceneDefault extends Phaser.Scene {
     );
     // Условная нижняя панель
     this.add.rectangle(footerWidth / 2, this.scale.height - footerHeight / 2, footerWidth, footerHeight, 0xff0000);
+
+    this.notesCatcherManager = new NotesCatcherManager(this);
   }
 
   renderGameZone() {
