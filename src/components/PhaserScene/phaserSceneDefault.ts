@@ -1,6 +1,6 @@
-import { TNotes, EPianoNotes, EDrumNotes } from '../SoundmakerController/types';
+import { TNotes, EPianoNotes, EDrumNotes } from '../../SoundmakerController/types';
 import Phaser from 'phaser';
-import { TICK_TIME } from '../SoundmakerController/const';
+import { TICK_TIME } from '../../SoundmakerController/const';
 interface iNote {
   instrument: string;
   note: TNotes;
@@ -122,6 +122,7 @@ export default class phaserSceneDefault extends Phaser.Scene {
     // линии горизонтальные
     for (let i = 0; i <= 10; i += 1) {
       const y = i * this.stepNote + this.stepNote / 2 + this.sceneSize.headerHeight / 4;
+      // Отладочная сетка
       // this.add.rectangle(
       //   this.sceneSize.gameZoneWidth / 2 + this.sceneSize.gameZoneHorizontalPadding / 2,
       //   y,
