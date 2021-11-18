@@ -13,7 +13,7 @@
 
 .notes-board {
   display: grid;
-  width: 1024px;
+  width: calc(100vw - 100px);
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   grid-template-rows: var(--template-rows);
   --border-right-color: rgba(0, 0, 0, 0.1);

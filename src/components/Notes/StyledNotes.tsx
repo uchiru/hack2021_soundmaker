@@ -17,3 +17,11 @@ export const StyledNote = styled.div<{
   --border-right-color: ${({ needDarkerBorder }) => (needDarkerBorder ? 'rgba(0, 0, 0, 0.3)' : '')};
   --note-bg: ${({ bg }) => bg};
 `;
+
+export const StyledNotesBoard = styled.div<{
+  columnCount: number;
+}>`
+  grid-template-columns: ${({ columnCount }) => {
+    return Array(columnCount).fill(' 1fr').concat();
+  }};
+`;
