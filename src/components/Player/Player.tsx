@@ -70,6 +70,19 @@ export function Player() {
     setNotes(notes);
   }
 
+  const removeNotes = () => {
+    const notes = [...currentNotes];
+
+    notes.forEach((arr) => {
+      // console.log(arr)
+      arr.length = 0;
+    })
+
+    // console.log(notes)
+
+    setNotes(notes);
+  }
+
   const deleteNote = (tick: number, note: number) => {
     const notes = [...currentNotes];
 
@@ -90,7 +103,7 @@ export function Player() {
 
   return (
     <div className="player">
-      <PlayerControls isPlaying={isPlaying} handleClick={handleClick} />
+      <PlayerControls isPlaying={isPlaying} handleClick={handleClick} removeNotes={removeNotes} />
       <Tracks />
       <Notes currentProgress={currentProgress} notes={currentNotes} createNote={createNote} deleteNote={deleteNote} />
     </div>
