@@ -1,14 +1,14 @@
 import React from 'react';
-import { TAccord } from 'SoundmakerController/types';
+import { TAccord, TNotes } from 'SoundmakerController/types';
 import { EPianoNotes } from '../../../SoundmakerController/types'
 
 export interface INotesCatcher {
-    track: TAccord[];
     isColliding: boolean;
+    note: TNotes
 }
 
-export const NotesCatcher: React.FC<INotesCatcher> = function NotesCathcer({track}) {
+export const NotesCatcher: React.FC<INotesCatcher> = function NotesCathcer({isColliding, note}) {
     return <div>
-        NotesCatcher
+        <div>{note}</div>
     </div>
 }
