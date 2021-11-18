@@ -1,4 +1,4 @@
-import { EFartNotes, EInstruments, ITimeline, TAccord } from './types';
+import { EInstruments, ESampleNotes, ITimeline, TAccord } from './types';
 import { BPM, MAX_TRACK_SECONDS, TICK_TIME } from './const';
 
 import { play } from './mockPlayer';
@@ -114,7 +114,7 @@ export class SoundmakerControler {
 
     if (accord) {
       if (FART && this.isError && accord.length) {
-        accord.push({ instrument: EInstruments.fart, note: EFartNotes.epic });
+        accord.push({ instrument: EInstruments.sample, note: ESampleNotes.fart });
       }
 
       play(accord, this.isError ? 0.3 : 1);

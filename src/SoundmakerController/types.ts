@@ -1,7 +1,7 @@
 export enum EInstruments {
   piano = 'piano',
   drum = 'drum',
-  fart = 'fart'
+  sample = 'sample'
 }
 
 export enum EPianoNotes {
@@ -16,14 +16,19 @@ export enum EPianoNotes {
 
 export enum EDrumNotes {
   kick = 'kick',
+  cymbal = 'cymbal',
   snare = 'snare'
 }
 
-export enum EFartNotes {
-  epic = 'epic'
+export enum ESampleNotes {
+  fart = 'fart',
+  wtf2 = 'wtf2',
+  wtf = 'wtf',
+  yeah = 'yeah',
+  ambient = 'ambient'
 }
 
-export type TNotes = EPianoNotes | EDrumNotes | EFartNotes;
+export type TNotes = EPianoNotes | EDrumNotes | ESampleNotes;
 
 export interface ISound {
   instrument: EInstruments;

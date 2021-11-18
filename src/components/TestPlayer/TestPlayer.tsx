@@ -1,83 +1,9 @@
 import React from 'react';
 import { SoundmakerControler } from 'SoundmakerController';
 import { MAX_TRACK_SECONDS } from 'SoundmakerController/const';
+import testnotes from './testnotes';
 
-const testNotes = JSON.stringify([
-  [
-    {
-      instrument: 'piano',
-      note: 'H'
-    },
-    {
-      instrument: 'piano',
-      note: 'A'
-    }
-  ],
-  [
-    {
-      instrument: 'piano',
-      note: 'A'
-    },
-    {
-      instrument: 'piano',
-      note: 'G'
-    }
-  ],
-  [
-    {
-      instrument: 'piano',
-      note: 'G'
-    },
-    {
-      instrument: 'piano',
-      note: 'F'
-    }
-  ],
-  [
-    {
-      instrument: 'piano',
-      note: 'F'
-    },
-    {
-      instrument: 'piano',
-      note: 'E'
-    }
-  ],
-  [
-    {
-      instrument: 'piano',
-      note: 'E'
-    },
-    {
-      instrument: 'piano',
-      note: 'D'
-    }
-  ],
-  [
-    {
-      instrument: 'piano',
-      note: 'D'
-    },
-    {
-      instrument: 'piano',
-      note: 'C'
-    }
-  ],
-  [
-    {
-      instrument: 'piano',
-      note: 'C'
-    },
-    {
-      instrument: 'piano',
-      note: 'E'
-    },
-    {
-      instrument: 'piano',
-      note: 'D'
-    }
-  ]
-]);
+const testNotes = JSON.stringify(testnotes);
 
 export function TestPlayer() {
   const [textarea, setTextArea] = React.useState(testNotes);
