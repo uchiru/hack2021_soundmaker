@@ -1,49 +1,7 @@
 export const notes = [
-  [
-    {
-      instrument: 'piano',
-      note: 'F'
-    },
-    {
-      instrument: 'drum',
-      note: 'kick'
-    }
-  ],
-  [
-    {
-      instrument: 'piano',
-      note: 'E'
-    }
-  ],
-  [
-    {
-      instrument: 'piano',
-      note: 'D'
-    }
-  ],
-  [
-    {
-      instrument: 'piano',
-      note: 'C'
-    }
-  ],
-  [
-    {
-      instrument: 'piano',
-      note: 'G'
-    },
-    {
-      instrument: 'drum',
-      note: 'kick'
-    }
-  ],
   [],
-  [
-    {
-      instrument: 'piano',
-      note: 'G'
-    }
-  ],
+  [],
+  [],
   [],
   [
     {
@@ -94,6 +52,52 @@ export const notes = [
   [
     {
       instrument: 'piano',
+      note: 'F'
+    },
+    {
+      instrument: 'drum',
+      note: 'kick'
+    }
+  ],
+  [
+    {
+      instrument: 'piano',
+      note: 'E'
+    }
+  ],
+  [
+    {
+      instrument: 'piano',
+      note: 'D'
+    }
+  ],
+  [
+    {
+      instrument: 'piano',
+      note: 'C'
+    }
+  ],
+  [
+    {
+      instrument: 'piano',
+      note: 'G'
+    },
+    {
+      instrument: 'drum',
+      note: 'kick'
+    }
+  ],
+  [],
+  [
+    {
+      instrument: 'piano',
+      note: 'G'
+    }
+  ],
+  [],
+  [
+    {
+      instrument: 'piano',
       note: 'D'
     },
     {
@@ -132,13 +136,13 @@ export const notes = [
   [
     {
       instrument: 'piano',
-      note: 'A'
+      note: 'E'
     }
   ],
   [
     {
       instrument: 'piano',
-      note: 'A'
+      note: 'E'
     }
   ],
   [
@@ -160,13 +164,13 @@ export const notes = [
   [
     {
       instrument: 'piano',
-      note: 'G'
+      note: 'E'
     }
   ],
   [
     {
       instrument: 'piano',
-      note: 'G'
+      note: 'F'
     }
   ],
   [
