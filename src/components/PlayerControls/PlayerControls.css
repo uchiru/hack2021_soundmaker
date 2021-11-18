@@ -8,6 +8,22 @@
   padding: 10px;
 }
 
-.player-control:first-of-type {
+.player-control:first-child {
   margin-right: auto;
+}
+
+.player-control {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: var(--instrument-notes-bg);
+  color: var(--player-controls-bg);
+  border: none;
+  text-decoration: none;
+  padding: 5px 10px;
+  font-size: 16px;
+}
+
+.player-control:hover {
+  background-color: #fff;
 }

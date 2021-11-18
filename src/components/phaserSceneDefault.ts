@@ -1,6 +1,21 @@
-interface note {
+import { TNotes, EPianoNotes, EDrumNotes } from '../SoundmakerController/types';
+import Phaser from 'phaser';
+import { TICK_TIME } from '../SoundmakerController/const';
+interface iNote {
   instrument: string;
-  note: string;
+  note: TNotes;
+}
+
+enum ENotesDictionary {
+  kick = 8,
+  snare = 7,
+  H = 6,
+  A = 5,
+  G = 4,
+  F = 3,
+  E = 2,
+  D = 1,
+  C = 0
 }
 export default class phaserSceneDefault extends Phaser.Scene {
   sceneSize: {
@@ -11,10 +26,12 @@ export default class phaserSceneDefault extends Phaser.Scene {
     gameZoneHeight: number;
     gameZoneHorizontalPadding: number;
   };
+  stepNote: number;
   rainbowColor: number[];
   trackPosition: number[];
   startRenderNotesPosition: number;
-  notesConfig: note[][];
+  notesConfig: iNote[][];
+  notesGameObject: Phaser.GameObjects.Arc[];
   constructor(config: string | Phaser.Types.Scenes.SettingsConfig) {
     super(config);
     this.sceneSize = {
@@ -28,13 +45,25 @@ export default class phaserSceneDefault extends Phaser.Scene {
     this.rainbowColor = [0xfe8176, 0xfe9f6d, 0xfddc22, 0x85cd51, 0x8feacd, 0x6d9cf3, 0x9664ed, 0xcecece, 0xf0f0f0];
     this.trackPosition = [];
     this.startRenderNotesPosition = 0;
+    this.stepNote = 0;
     this.notesConfig = [
-      [{ instrument: 'piano', note: 'H' }],
-      [{ instrument: 'piano', note: 'A' }],
-      [{ instrument: 'piano', note: 'G' }],
-      [{ instrument: 'piano', note: 'F' }],
-      [{ instrument: 'piano', note: 'E' }]
+      [],
+      [],
+      [],
+      [
+        { instrument: 'drumm', note: EDrumNotes.kick },
+        { instrument: 'piano', note: EPianoNotes.F },
+        { instrument: 'piano', note: EPianoNotes.C }
+      ],
+      [
+        { instrument: 'drumm', note: EDrumNotes.kick },
+        { instrument: 'piano', note: EPianoNotes.A }
+      ],
+      [{ instrument: 'piano', note: EPianoNotes.G }],
+      [{ instrument: 'piano', note: EPianoNotes.F }],
+      [{ instrument: 'piano', note: EPianoNotes.E }]
     ];
+    this.notesGameObject = [];
   }
   preload() {
     console.log('defaultScene preload', this);
@@ -48,6 +77,8 @@ export default class phaserSceneDefault extends Phaser.Scene {
     this.sceneSize.gameZoneHorizontalPadding = this.scale.width - this.sceneSize.gameZoneWidth;
     this.renderScene();
     this.renderGameZone();
+    this.notesRender();
+    setTimeout(this.start.bind(this), 2500);
   }
 
   renderScene() {
@@ -75,7 +106,7 @@ export default class phaserSceneDefault extends Phaser.Scene {
 
   renderGameZone() {
     const stepHor: number = this.sceneSize.gameZoneWidth / 9;
-    const stepVer: number = this.sceneSize.gameZoneHeight / 10;
+    this.stepNote = this.sceneSize.gameZoneHeight / 10;
     // Линии по которым будет движени
     for (let i = 0; i < 9; i += 1) {
       const x = Math.floor(i * stepHor + stepHor / 2 + this.sceneSize.gameZoneHorizontalPadding / 2);
@@ -90,18 +121,46 @@ export default class phaserSceneDefault extends Phaser.Scene {
     }
     // линии горизонтальные
     for (let i = 0; i <= 10; i += 1) {
-      const y = i * stepVer + stepVer / 2 + this.sceneSize.headerHeight / 4;
-      this.add.rectangle(
-        this.sceneSize.gameZoneWidth / 2 + this.sceneSize.gameZoneHorizontalPadding / 2,
-        y,
-        this.sceneSize.gameZoneWidth,
-        2,
-        0xffffff
-      );
+      const y = i * this.stepNote + this.stepNote / 2 + this.sceneSize.headerHeight / 4;
+      // this.add.rectangle(
+      //   this.sceneSize.gameZoneWidth / 2 + this.sceneSize.gameZoneHorizontalPadding / 2,
+      //   y,
+      //   this.sceneSize.gameZoneWidth,
+      //   2,
+      //   0xffffff
+      // );
       if (i === 10) this.startRenderNotesPosition = y;
     }
   }
   notesRender() {
     console.log(this.notesConfig);
+    const length = this.notesConfig.length;
+    for (let i = 0; i < length; i++) {
+      const tact = this.notesConfig[i];
+      for (let j = 0; j < tact.length; j++) {
+        const noteData = tact[j];
+        // @ts-ignore
+        const noteIndex = ENotesDictionary[noteData.note];
+        const radius = 20;
+        let circle = this.add.circle(
+          this.trackPosition[noteIndex],
+          this.startRenderNotesPosition - this.stepNote * i,
+          radius,
+          this.rainbowColor[noteIndex]
+        );
+        circle = this.physics.add.existing(circle, false);
+        this.notesGameObject.push(circle);
+      }
+    }
+  }
+  start() {
+    this.notesGameObject.forEach((note) => {
+      // @ts-ignore
+      note.body.setVelocityY(this.stepNote / (TICK_TIME / 1000));
+    });
+  }
+  reload(notes: iNote[][]) {
+    this.notesConfig = notes;
+    this.scene.restart();
   }
 }

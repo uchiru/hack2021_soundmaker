@@ -5,101 +5,7 @@ import { PlayerControls } from 'components/PlayerControls';
 import { Tracks } from 'components/Tracks';
 import { Notes } from 'components/Notes';
 import { TAccord } from '../../SoundmakerController/types';
-
-const notes = [
-  [
-    {
-      instrument: 'piano',
-      note: 'F'
-    },
-    {
-      instrument: 'drum',
-      note: 'kick'
-    }
-  ],
-  [
-    {
-      instrument: 'piano',
-      note: 'E'
-    }
-  ],
-  [
-    {
-      instrument: 'piano',
-      note: 'D'
-    }
-  ],
-  [
-    {
-      instrument: 'piano',
-      note: 'C'
-    }
-  ],
-  [
-    {
-      instrument: 'piano',
-      note: 'G'
-    },
-    {
-      instrument: 'drum',
-      note: 'kick'
-    }
-  ],
-  [],
-  [
-    {
-      instrument: 'piano',
-      note: 'G'
-    }
-  ],
-  [],
-  [
-    {
-      instrument: 'piano',
-      note: 'F'
-    },
-    {
-      instrument: 'drum',
-      note: 'kick'
-    }
-  ],
-  [
-    {
-      instrument: 'piano',
-      note: 'E'
-    }
-  ],
-  [
-    {
-      instrument: 'piano',
-      note: 'D'
-    }
-  ],
-  [
-    {
-      instrument: 'piano',
-      note: 'C'
-    }
-  ],
-  [
-    {
-      instrument: 'piano',
-      note: 'G'
-    },
-    {
-      instrument: 'drum',
-      note: 'kick'
-    }
-  ],
-  [],
-  [
-    {
-      instrument: 'piano',
-      note: 'G'
-    }
-  ],
-  []
-]
+import { notes } from './notes';
 
 export function Player() {
   const controller = React.useMemo(() => {
@@ -108,11 +14,32 @@ export function Player() {
     return track && new SoundmakerControler(track)
   }, [notes])
 
+  const [currentProgress, setCurrentProgress] = React.useState(0);
+  const [currentNotes, setNotes] = React.useState(notes);
+
+  const removeNotes = () => {
+    setNotes([]);
+  }
+
+  const setDefaultNotes = () => {
+    setNotes(notes);
+  }
+
+  React.useEffect(() => {
+    controller?.on('currentTimeChange', () => {
+      setCurrentProgress(Math.floor(controller.currentTime / 1000));
+    });
+  }, [controller]);
+
   return (
     <div className="player">
-      <PlayerControls controller={controller as SoundmakerControler} />
+      <PlayerControls
+        controller={controller as SoundmakerControler}
+        removeNotes={removeNotes}
+        setDefaultNotes={setDefaultNotes}
+      />
       <Tracks />
-      <Notes notes={notes} />
+      <Notes currentProgress={currentProgress} notes={currentNotes} />
     </div>
   );
 }
