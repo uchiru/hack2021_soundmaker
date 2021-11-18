@@ -93,6 +93,7 @@ export function Notes(props: { notes: { instrument: string; note: string }[][] }
                   columnStart={accordIndex + 1}
                   columnEnd={accordIndex + 1}
                   key={noteIndex}
+                  bg={`var(--color-${item.note})`}
                   className="note"
                 />
               )
@@ -124,6 +125,7 @@ export function Notes(props: { notes: { instrument: string; note: string }[][] }
                   columnStart={accordIndex + 1}
                   columnEnd={accordIndex + 1}
                   key={noteIndex}
+                  bg={`var(--color-${item.note})`}
                   className="note"
                 />
               )

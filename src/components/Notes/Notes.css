@@ -41,40 +41,8 @@
   background-color: rgba(0, 0, 0, 0.1);
 }
 
-.instrument-notes .note:nth-child(1n) {
-  background-color: var(--color-C);
-}
-
-.instrument-notes .note:nth-child(2n) {
-  background-color: var(--color-D);
-}
-
-.instrument-notes .note:nth-child(3n) {
-  background-color: var(--color-E);
-}
-
-.instrument-notes .note:nth-child(4n) {
-  background-color: var(--color-F);
-}
-
-.instrument-notes .note:nth-child(5n) {
-  background-color: var(--color-G);
-}
-
-.instrument-notes .note:nth-child(6n) {
-  background-color: var(--color-A);
-}
-
-.instrument-notes .note:nth-child(7n) {
-  background-color: var(--color-H);
-}
-
-.beat-notes .note:nth-child(1n) {
-  background-color: var(--color-kick);
-}
-
-.beat-notes .note:nth-child(2n) {
-  background-color: var(--color-snare);
+.note {
+  background-color: var(--note-bg, transparent);
 }
 
 .line {
