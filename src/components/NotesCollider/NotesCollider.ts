@@ -1,4 +1,4 @@
-import phaserSceneDefault from "components/phaserSceneDefault";
+import phaserSceneDefault from "../PhaserScene/phaserSceneDefault";
 import Phaser, { Game } from "phaser"
 import { EPianoNotes } from "SoundmakerController/types";
 
@@ -13,6 +13,7 @@ export class NotesCollider {
         console.log(this.note);
 
         this.body = this.game.add.rectangle(coords.x, coords.y, 100, 100, 0x00ff55);
+        this.game.physics.world.enable(this.body);
     }
 
 

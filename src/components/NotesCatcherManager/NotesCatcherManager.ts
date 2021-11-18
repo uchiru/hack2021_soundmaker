@@ -1,5 +1,5 @@
 import { NotesCollider } from "components/NotesCollider/NotesCollider";
-import phaserSceneDefault from "components/phaserSceneDefault";
+import phaserSceneDefault from "../PhaserScene/phaserSceneDefault";
 import Phaser from "phaser"
 import { EPianoNotes } from "SoundmakerController/types";
 
