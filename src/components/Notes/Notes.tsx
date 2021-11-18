@@ -1,7 +1,7 @@
 import React from 'react';
 import './Notes.css';
 import { StyledNote, StyledNotesBoard } from './StyledNotes';
-import { EPianoNotes, EDrumNotes, EInstruments } from '../../SoundmakerController/types';
+import { EPianoNotes, EDrumNotes, EInstruments, TNotes } from '../../SoundmakerController/types';
 import { MAX_TRACK_SECONDS } from 'SoundmakerController/const';
 
 const ticksCount = MAX_TRACK_SECONDS * 4;
@@ -25,24 +25,26 @@ const generateEmtyItems = (count: number, size: number) => {
 const emptyInstrumentNotes = generateEmtyItems(ticksCount, 7);
 const emptyBeatNotes = generateEmtyItems(ticksCount, 2);
 
-const getNoteRowStart = (note: EPianoNotes | EDrumNotes) => {
-  switch (note) {
-    case EPianoNotes.C:
-      return 7;
-    case EPianoNotes.D:
-      return 6;
-    case EPianoNotes.E:
-      return 5;
-    case EPianoNotes.F:
-      return 4;
-    case EPianoNotes.G:
-      return 3;
-    case EPianoNotes.A:
-    case EDrumNotes.snare:
-      return 2;
-    case EPianoNotes.H:
-    case EDrumNotes.kick:
-      return 1;
+const getNoteRowStart = (note: TNotes) => {
+  if (note) {
+    switch (note) {
+      case EPianoNotes.C:
+        return 7;
+      case EPianoNotes.D:
+        return 6;
+      case EPianoNotes.E:
+        return 5;
+      case EPianoNotes.F:
+        return 4;
+      case EPianoNotes.G:
+        return 3;
+      case EPianoNotes.A:
+      case EDrumNotes.snare:
+        return 2;
+      case EPianoNotes.H:
+      case EDrumNotes.kick:
+        return 1;
+    }
   }
 }
 
@@ -73,7 +75,7 @@ export function Notes(props: { notes: { instrument: string; note: string }[][] }
                 item.instrument === EInstruments.piano &&
                 <StyledNote
                   rowStart={getNoteRowStart(item.note as EPianoNotes)}
-                  rowEnd={getNoteRowStart(item.note as EPianoNotes) + 1}
+                  rowEnd={getNoteRowStart(item.note as EPianoNotes)}
                   columnStart={accordIndex + 1}
                   columnEnd={accordIndex + 1}
                   key={noteIndex}
@@ -105,7 +107,7 @@ export function Notes(props: { notes: { instrument: string; note: string }[][] }
                 item.instrument === EInstruments.drum &&
                 <StyledNote
                   rowStart={getNoteRowStart(item.note as EDrumNotes)}
-                  rowEnd={getNoteRowStart(item.note as EDrumNotes) + 1}
+                  rowEnd={getNoteRowStart(item.note as EDrumNotes)}
                   columnStart={accordIndex + 1}
                   columnEnd={accordIndex + 1}
                   key={noteIndex}

@@ -1,10 +1,10 @@
 import styled from 'styled-components/macro';
 
 export const StyledNote = styled.div<{
-  rowStart: number;
-  rowEnd: number;
-  columnStart: number;
-  columnEnd: number;
+  rowStart: number | undefined;
+  rowEnd: number | undefined;
+  columnStart: number | undefined;
+  columnEnd: number | undefined;
   needSolidBorder?: boolean;
   needDarkerBorder?: boolean;
   bg?: string;
