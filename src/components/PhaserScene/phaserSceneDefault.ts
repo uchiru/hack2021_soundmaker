@@ -5,14 +5,9 @@ import { SoundmakerControler } from '../../SoundmakerController';
 import { Button, ETypeButtons, EColorButtons } from './Button';
 import ButtonPNG from '../assets/buttons.png';
 import ButtonJSON from '../assets/buttons.json';
-import { TICK_TIME } from '../../SoundmakerController/const';
-import { INotesCatcherManager, NotesCatcherManager } from '../NotesCatcherManager/NotesCatcherManager';
-import { NotesCollider } from '../NotesCollider/NotesCollider';
+import { INotesCatcherManager, NotesCatcherManager } from '../NotesCatcherManager';
+import { NotesCollider } from '../NotesCollider';
 
-interface iNote {
-  instrument: string;
-  note: TNotes;
-}
 interface ISceneData {
   track: TAccord[];
 }
@@ -98,8 +93,10 @@ export default class phaserSceneDefault extends Phaser.Scene {
       headerHeight,
       0x3c4d1c
     );
-    new Button(this, ETypeButtons.rect, EColorButtons.blue, 'start', { x: 910, y: 50 }, () => this.start());
-    // new Button(this, ETypeButtons.rect, EColorButtons.blue, 'back', { x: 910, y: 50 }, () => this.linktoPlayer());
+    new Button(this, ETypeButtons.rect, EColorButtons.blue, 'start', { x: 950, y: 50 }, () => this.start());
+    new Button(this, ETypeButtons.rect, EColorButtons.red, 'back', { x: 110, y: 50 }, () => {
+      window.history.back();
+    });
 
     // Условная игровая зона
     this.add.rectangle(
@@ -111,7 +108,6 @@ export default class phaserSceneDefault extends Phaser.Scene {
     );
     // Условная нижняя панель
     this.add.rectangle(footerWidth / 2, this.scale.height - footerHeight / 2, footerWidth, footerHeight, 0xff0000);
-
     this.notesCatcherManager = new NotesCatcherManager(this);
   }
 

@@ -12,8 +12,8 @@ export enum EColorButtons {
 const EColorText: { [key: string]: string } = {
   blue_hover: '#073763',
   blue_normal: '#0C5FAA',
-  red_hover: '',
-  red_normal: '',
+  red_hover: '#660000',
+  red_normal: '#990000',
   green_hover: '',
   green_normal: ''
 };
@@ -65,6 +65,10 @@ export class Button {
       start: {
         x: 46,
         y: 30
+      },
+      back: {
+        x: 46,
+        y: 30
       }
     };
     this.buttonPosition = buttonPosition;
@@ -97,7 +101,7 @@ export class Button {
       this.isPressed = false;
       this.moveUp();
     }
-    this.gameObject?.setTexture('buttons', `${this.spriteKey}_hover`);
+    this.gameObject?.setTexture('buttons', `${this.spriteKey}_hovered`);
     this.phaserText?.setColor(`${EColorText[`${this.color}_hover`]}`);
   }
 
