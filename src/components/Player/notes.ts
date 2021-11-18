@@ -23,6 +23,10 @@ export const notes = [
     {
       instrument: 'piano',
       note: 'D'
+    },
+    {
+      instrument: 'drum',
+      note: 'snare'
     }
   ],
   [
@@ -46,6 +50,10 @@ export const notes = [
     {
       instrument: 'piano',
       note: 'G'
+    },
+    {
+      instrument: 'drum',
+      note: 'snare'
     }
   ],
   [],
@@ -69,6 +77,10 @@ export const notes = [
     {
       instrument: 'piano',
       note: 'D'
+    },
+    {
+      instrument: 'drum',
+      note: 'snare'
     }
   ],
   [
@@ -92,6 +104,10 @@ export const notes = [
     {
       instrument: 'piano',
       note: 'G'
+    },
+    {
+      instrument: 'drum',
+      note: 'snare'
     }
   ],
   [],
@@ -115,6 +131,10 @@ export const notes = [
     {
       instrument: 'piano',
       note: 'F'
+    },
+    {
+      instrument: 'drum',
+      note: 'snare'
     }
   ],
   [
@@ -143,6 +163,10 @@ export const notes = [
     {
       instrument: 'piano',
       note: 'E'
+    },
+    {
+      instrument: 'drum',
+      note: 'snare'
     }
   ],
   [
@@ -171,6 +195,10 @@ export const notes = [
     {
       instrument: 'piano',
       note: 'F'
+    },
+    {
+      instrument: 'drum',
+      note: 'snare'
     }
   ],
   [
@@ -194,7 +222,11 @@ export const notes = [
     {
       instrument: 'piano',
       note: 'C'
+    },
+    {
+      instrument: 'drum',
+      note: 'snare'
     }
   ],
-  [],
+  []
 ]
