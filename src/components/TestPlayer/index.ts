@@ -1,1 +1,1 @@
-export * from './TestPlayer'
+export * from './TestPlayer';

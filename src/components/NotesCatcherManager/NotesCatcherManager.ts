@@ -1,14 +1,13 @@
-import { NotesCollider } from "components/NotesCollider/NotesCollider";
-import phaserSceneDefault from "../PhaserScene/phaserSceneDefault";
-import Phaser from "phaser"
-import { EPianoNotes } from "SoundmakerController/types";
+import { NotesCollider } from 'components/NotesCollider/NotesCollider';
+import phaserSceneDefault from '../PhaserScene/phaserSceneDefault';
+import { EPianoNotes } from 'SoundmakerController/types';
 
 export interface INotesCatcherManager {
     game: phaserSceneDefault;
     catchers: NotesCollider[];
 }
 
-export class NotesCatcherManager<INotesCatcherManager>{
+export class NotesCatcherManager<INotesCatcherManager> {
     game: phaserSceneDefault;
     catchers: NotesCollider[];
     constructor(game: phaserSceneDefault) {

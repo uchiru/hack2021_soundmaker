@@ -9,6 +9,7 @@ export function Scene() {
   const location = useLocation();
   let track: TAccord[] = [];
   if (location && location.state) {
+    // eslint-disable-next-line
     // @ts-ignore
     track = location.state.track;
   } else {

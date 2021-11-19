@@ -1,6 +1,6 @@
 import { TNotes } from '../../SoundmakerController/types';
 import { Scene, GameObjects } from 'phaser';
-import { TICK_TIME } from '../../SoundmakerController/const';
+import { BPM } from '../../SoundmakerController/const';
 interface INoteData {
   instrument: string;
   note: TNotes;
@@ -32,9 +32,14 @@ export class Note {
   }
 
   start(step: number) {
-    console.log(TICK_TIME);
-    // eslint-disable-next-line
+    const time = 1 / Math.floor(BPM / 60);
+    // eslint-disable-next-line\
     // @ts-ignore
-    if (this.gameObject) this.gameObject.body.setVelocityY(step / 0.5);
+    if (this.gameObject) this.gameObject.body.setVelocityY(step / time);
+  }
+
+  pause() {
+    // @ts-ignore
+    if (this.gameObject) this.gameObject.body.setVelocityY(0);
   }
 }

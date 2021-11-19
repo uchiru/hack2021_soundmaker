@@ -1,27 +1,44 @@
 import React from 'react';
 import './Player.css';
-import { SoundmakerControler } from 'SoundmakerController';
 import { PlayerControls } from 'components/PlayerControls';
 import { Tracks } from 'components/Tracks';
 import { Notes } from 'components/Notes';
 import { TAccord, EPianoNotes, EDrumNotes, TNotes, EInstruments } from '../../SoundmakerController/types';
 import { notes } from './notes';
+import { StoreContext } from 'storeContext';
 
 const cachedNotes = JSON.parse(JSON.stringify(notes));
 
 export function Player() {
+  const { soundmakerController: controller } = React.useContext(StoreContext);
+
   const [currentNotes, setNotes] = React.useState(notes);
   const [isPlaying, setIsPlaying] = React.useState(false);
+  const [isPaused, setIsPaused] = React.useState(false);
 
   const handleClick = () => {
     isPlaying ? controller?.stopPlaying() : controller?.startPlaying();
+    if (isPlaying) {
+      setIsPaused(false);
+    }
     setIsPlaying(!isPlaying);
   };
 
-  const controller = React.useMemo(() => {
+  const handlePauseClick = () => {
+    if (!isPlaying) {
+      return;
+    }
+
+    isPaused ? controller?.resume() : controller?.pause();
+    setIsPaused(!isPaused);
+  };
+
+  React.useEffect(() => {
     const track = currentNotes as TAccord[];
 
-    return track && new SoundmakerControler(track);
+    if (track) {
+      controller.setTrack(track);
+    }
   }, [currentNotes]);
 
   const getTrack = () => {
@@ -88,6 +105,8 @@ export function Player() {
   };
 
   const restoreNotes = () => {
+    controller?.stopPlaying();
+    setIsPlaying(false);
     setNotes(JSON.parse(JSON.stringify(cachedNotes)));
   };
 
@@ -104,16 +123,18 @@ export function Player() {
   };
 
   React.useEffect(() => {
-    controller?.on('currentTimeChange', () => {
+    return controller?.on('currentTimeChange', () => {
       setCurrentProgress(Math.floor(controller.currentTime / 1000));
     });
-  }, [controller]);
+  }, []);
 
   return (
     <div className="player">
       <PlayerControls
         isPlaying={isPlaying}
+        isPaused={isPaused}
         handleClick={handleClick}
+        handlePauseClick={handlePauseClick}
         removeNotes={removeNotes}
         restoreNotes={restoreNotes}
         track={getTrack()}
