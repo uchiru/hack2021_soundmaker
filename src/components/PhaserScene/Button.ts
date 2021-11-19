@@ -14,8 +14,8 @@ export const EColorText: { [key: string]: string } = {
   blue_normal: '#0C5FAA',
   red_hover: '#660000',
   red_normal: '#990000',
-  green_hover: '',
-  green_normal: ''
+  green_hover: '#38761D',
+  green_normal: '#172E0B'
 };
 
 const ETextButtons: { [key: string]: string } = {
@@ -84,6 +84,10 @@ export class Button {
       clear: {
         x: 65,
         y: 30
+      },
+      s: {
+        x: 9,
+        y: 15
       }
     };
     this.buttonPosition = buttonPosition;
@@ -95,7 +99,7 @@ export class Button {
   render() {
     const { x, y } = this.buttonPosition;
     this.gameObject = this.game.add
-      .image(x, y, 'buttons', `${this.spriteKey}_normal`)
+      .image(x, y, 'buttons', `${this.spriteKey}_normal.png`)
       .setScale(0.2, 0.2)
       .setInteractive();
     this.gameObject.on('pointerdown', this.onPress, this);
@@ -116,7 +120,7 @@ export class Button {
       this.isPressed = false;
       this.moveUp();
     }
-    this.gameObject?.setTexture('buttons', `${this.spriteKey}_hovered`);
+    this.gameObject?.setTexture('buttons', `${this.spriteKey}_hovered.png`);
     this.phaserText?.setColor(`${EColorText[`${this.color}_hovered`]}`);
   }
 
@@ -125,7 +129,7 @@ export class Button {
       this.isPressed = true;
       this.moveDown();
     }
-    this.gameObject?.setTexture('buttons', `${this.spriteKey}_pressed`);
+    this.gameObject?.setTexture('buttons', `${this.spriteKey}_pressed.png`);
     this.handleClick();
   }
   moveDown() {
@@ -147,7 +151,7 @@ export class Button {
       this.isPressed = false;
       this.moveUp();
     }
-    this.gameObject?.setTexture('buttons', `${this.spriteKey}_normal`);
+    this.gameObject?.setTexture('buttons', `${this.spriteKey}_normal.png`);
     this.phaserText?.setColor(`${EColorText[`${this.color}_normal`]}`);
   }
   changeButton(newText: string) {

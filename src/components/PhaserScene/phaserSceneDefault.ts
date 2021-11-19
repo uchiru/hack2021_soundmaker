@@ -108,7 +108,6 @@ export default class phaserSceneDefault extends Phaser.Scene {
         note.body.destroy();
       }
     );
-    setTimeout(this.start.bind(this), 2500);
     this.renderButtons();
   }
 
@@ -221,6 +220,9 @@ export default class phaserSceneDefault extends Phaser.Scene {
       window.history.back();
     });
     new Button(this, ETypeButtons.rect, EColorButtons.red, 'clear', { x: 350, y: 50 }, () => {
+      setTimeout(this.reload.bind(this), 200);
+    });
+    new Button(this, ETypeButtons.circle, EColorButtons.green, 's', { x: 107, y: 1100 }, () => {
       setTimeout(this.reload.bind(this), 200);
     });
   }
