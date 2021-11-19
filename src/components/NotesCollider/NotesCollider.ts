@@ -7,6 +7,7 @@ export class NotesCollider {
     note: EPianoNotes;
     gameObject: Phaser.GameObjects.Rectangle;
     SIZE: { WIDTH: number, HEIGHT: number };
+    isPressed: boolean;
 
     constructor(
         game: phaserSceneDefault,
@@ -14,6 +15,7 @@ export class NotesCollider {
         coords: { x: number, y: number },
         size: { WIDTH: number, HEIGHT: number }
     ) {
+        this.isPressed = false;
         this.game = game;
         this.note = note;
         this.SIZE = size;

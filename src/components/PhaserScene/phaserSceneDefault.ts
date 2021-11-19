@@ -90,7 +90,9 @@ export default class phaserSceneDefault extends Phaser.Scene {
       this.notesGameObject.map(note => note.gameObject),
       this.notesCatcherManager!.catchers.map(catcher => catcher.gameObject),
       (note, catcher) => {
-        console.log(note.name, catcher.name);
+        const catcherInstanse = this.notesCatcherManager!.catchers.find(catcher => catcher.gameObject.name === note.name);
+        const noteInstanse = this.notesGameObject.find(noteInst => noteInst.data.note === note.name);
+        noteInstanse.ready = true;
         // @ts-ignore
         catcher.body.setEnable(false);
       }
@@ -100,12 +102,20 @@ export default class phaserSceneDefault extends Phaser.Scene {
       this.notesGameObject.map(note => note.gameObject),
       this.destroyers,
       (note, destroyer) => {
-        // note.kill()в
         const catcher = this.notesCatcherManager?.catchers.find(catcher => catcher.gameObject.name === note.name);
-        // @ts-ignore
-        if (catcher) catcher.gameObject.body.setEnable(true);
-        console.log(`collider ${note.name} activated`);
+
+        if (catcher) {
+          // @ts-ignore
+          catcher.gameObject.body.setEnable(true);
+          catcher.isPressed = false;
+        }
+
+        const noteInstanse = this.notesGameObject.find(noteInst => noteInst.data.note === note.name);
+        noteInstanse.ready = false;
+
         note.body.destroy();
+        // @ts-ignore
+        note.setVisible(false);
       }
     );
     this.renderButtons();
@@ -205,6 +215,12 @@ export default class phaserSceneDefault extends Phaser.Scene {
       }
     }
   }
+
+  handleButtonPressCheckNote(noteName: EPianoNotes) {
+    const noteInstanse = this.notesGameObject.find(note => note.data.note === noteName);
+    if (noteInstanse && noteInstanse.ready === true) console.log(`========${noteName}========`);
+  }
+
   renderButtons() {
     const buttonPlay = new Button(
       this,
@@ -223,33 +239,30 @@ export default class phaserSceneDefault extends Phaser.Scene {
         }
       }
     );
-    new Button(this, ETypeButtons.rect, EColorButtons.red, 'back', { x: 110, y: 50 }, 'mouse', () => {
-      window.history.back();
-    });
-    new Button(this, ETypeButtons.rect, EColorButtons.red, 'clear', { x: 350, y: 50 }, 'mouse', () => {
-      setTimeout(this.reload.bind(this), 200);
-    });
-    new Button(this, ETypeButtons.circle, EColorButtons.green, 's', { x: 107, y: 1135 }, 'keyboard', () => {
-      setTimeout(() => {
-        const catcher = this.notesCatcherManager?.catchers.find(catcher => catcher.note === 'C');
-        console.log(catcher);
-      }, 200);
-    });
-    new Button(this, ETypeButtons.circle, EColorButtons.green, 'd', { x: 317, y: 1135 }, 'keyboard', () => {
-    });
-    new Button(this, ETypeButtons.circle, EColorButtons.green, 'f', { x: 527, y: 1135 }, 'keyboard', () => {
-    });
-    new Button(this, ETypeButtons.circle, EColorButtons.green, 'g', { x: 747, y: 1135 }, 'keyboard', () => {
-    });
-    new Button(this, ETypeButtons.circle, EColorButtons.green, 'h', { x: 957, y: 1135 }, 'keyboard', () => {
-    });
-    new Button(this, ETypeButtons.circle, EColorButtons.green, 'j', { x: 1177, y: 1135 }, 'keyboard', () => {
-    });
-    new Button(this, ETypeButtons.circle, EColorButtons.green, 'k', { x: 1387, y: 1135 }, 'keyboard', () => {
+
+    const keyboardKeys = ['S', 'D', 'F', 'G', 'H', 'J', 'K'];
+    const coords: { x: number, y: number }[] = [
+      { x: 107, y: 1135 },
+      { x: 317, y: 1135 },
+      { x: 527, y: 1135 },
+      { x: 747, y: 1135 },
+      { x: 957, y: 1135 },
+      { x: 1177, y: 1135 },
+      { x: 1387, y: 1135 }
+    ]
+    Object.values(EPianoNotes).reverse().forEach((noteName, i) => {
+      new Button(
+        this,
+        ETypeButtons.circle,
+        EColorButtons.green,
+        keyboardKeys[i].toLowerCase(),
+        coords[i],
+        'keyboard',
+        this.handleButtonPressCheckNote.bind(this, noteName),
+      )
     });
   }
   start() {
-    debugger;
     this.notesGameObject.forEach((note) => {
       note.start(this.stepNote);
     });
