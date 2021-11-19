@@ -5,7 +5,7 @@ import { pauseSound, play, reset, resumeSound } from './mockPlayer';
 import { log } from './logger';
 
 log.level = 1;
-const FART = true;
+const FART = false;
 
 export class SoundmakerControler {
   public track: TAccord[] = [];

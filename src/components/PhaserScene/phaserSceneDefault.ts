@@ -280,11 +280,15 @@ export default class phaserSceneDefault extends Phaser.Scene {
   handleButtonPressCheckNote(noteName: EPianoNotes) {
     const noteInstanse = this.notesGameObject.find(note => note.data.note === noteName);
     if (noteInstanse && noteInstanse.ready === true) {
+      noteInstanse.kill(true);
       const index = Math.floor(this.soundController.timeline.currentTime / this.soundController.timeline.sampleTime);
       const specificNote = this.notesConfig[index].find(item => item.note === noteName);
       if (specificNote) specificNote.played = true;
       this.increaseScores();
-    } else this.errorClick();
+    } else {
+      noteInstanse.kill(false);
+      this.errorClick()
+    };
   }
 
   renderButtons() {
