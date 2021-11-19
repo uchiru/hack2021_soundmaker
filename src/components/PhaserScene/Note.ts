@@ -10,13 +10,14 @@ interface INoteView {
   y: number;
   size: number;
   color: number;
+  index?: number;
 }
 
 export class Note {
   game: Scene;
   data: INoteData;
   view: INoteView;
-  gameObject: GameObjects.Arc | undefined;
+  gameObject: GameObjects.Image | undefined;
   constructor(data: INoteData, view: INoteView, game: Scene) {
     this.game = game;
     this.data = data;
@@ -25,9 +26,9 @@ export class Note {
   }
 
   render() {
-    const { x, y, size, color } = this.view;
-    const circle = this.game.add.circle(x, y, size, color);
-    this.gameObject = this.game.physics.add.existing(circle, false);
+    const { x, y, index } = this.view;
+    const img = this.game.add.image(x, y, `note_${index}`).setScale(0.5);
+    this.gameObject = this.game.physics.add.existing(img, false);
     this.gameObject.name = this.data.note;
   }
 
@@ -42,7 +43,5 @@ export class Note {
     // @ts-ignore
     if (this.gameObject) this.gameObject.body.setVelocityY(0);
   }
-  kill() {
-    console.log('kill');
-  }
+  kill() {}
 }

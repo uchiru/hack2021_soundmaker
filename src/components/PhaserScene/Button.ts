@@ -23,13 +23,13 @@ const ETextButtons: { [key: string]: string } = {
   pause: 'Пауза',
   clear: 'С начала',
   back: 'Выход',
-  s: 'S',
-  d: 'D',
-  f: 'F',
-  g: 'G',
-  h: 'H',
-  j: 'J',
-  k: 'K'
+  s: '1',
+  d: '2',
+  f: '3',
+  g: '4',
+  h: '5',
+  j: '6',
+  k: '7'
 };
 interface IButtonPosition {
   x: number;
@@ -128,7 +128,8 @@ export class Button {
     this.gameObject = this.game.add
       .image(x, y, 'buttons', `${this.spriteKey}_normal.png`)
       .setScale(0.2, 0.2)
-      .setInteractive();
+      .setInteractive()
+      .setDepth(1);
     if (this.actionType === 'mouse') {
       this.gameObject.on('pointerdown', this.onPress, this);
       this.gameObject.on('pointerup', this.onHover, this);
@@ -141,10 +142,12 @@ export class Button {
 
     const textX = x - this.buttonPositionTextShift[this.name].x;
     const textY = y - this.buttonPositionTextShift[this.name].y;
-    this.phaserText = this.game.add.text(textX, textY, this.text, {
-      font: '25px Arial Black',
-      color: `${EColorText[`${this.color}_normal`]}`
-    });
+    this.phaserText = this.game.add
+      .text(textX, textY, this.text, {
+        font: '25px Arial Black',
+        color: `${EColorText[`${this.color}_normal`]}`
+      })
+      .setDepth(3);
   }
 
   onHover() {
