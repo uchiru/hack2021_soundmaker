@@ -10,6 +10,7 @@ const FART = true;
 export class SoundmakerControler {
   public track: TAccord[] = [];
   public isError = false;
+  public score = 0;
 
   private interval = -1;
   private lastPlayedAccordIndex = -1;
@@ -26,7 +27,7 @@ export class SoundmakerControler {
   }
 
   constructor() {
-    const samplesPerSecond = Math.floor(BPM / 60);
+    const samplesPerSecond = BPM / 60;
     this.timeline = {
       sampleTime: Math.floor(1000 / samplesPerSecond),
       samplesPerSecond,
@@ -59,10 +60,30 @@ export class SoundmakerControler {
     this.track = track;
   }
 
+  public setBPM(bpm: number) {
+    this.stopPlaying();
+
+    const samplesPerSecond = bpm / 60;
+    this.timeline = {
+      sampleTime: Math.floor(1000 / samplesPerSecond),
+      samplesPerSecond,
+      currentTime: 0
+    };
+    log(
+      'SoundMaker initialized. currentTime = 0, sampleTime = ',
+      this.timeline.sampleTime,
+      'samplesPerSecond = ',
+      samplesPerSecond
+    );
+    this.handleEvent('currentTimeChange');
+  }
+
   private reset() {
     clearInterval(this.interval);
     this.interval = -1;
     this.lastPlayedAccordIndex = -1;
+    this.score = 0;
+    this.handleEvent('currentScoreChange');
     this.isError = false;
     this.isPaused = false;
     pauseSound();
@@ -124,6 +145,11 @@ export class SoundmakerControler {
     }
   }
 
+  public resetscore() {
+    this.score = 0;
+    this.handleEvent('currentScoreChange');
+  }
+
   private handleTick() {
     if (this.isPaused) {
       return;
@@ -143,6 +169,9 @@ export class SoundmakerControler {
     if (accord) {
       if (FART && this.isError && accord.length) {
         accord.push({ instrument: EInstruments.sample, note: ESampleNotes.fart });
+      } else {
+        this.score++;
+        this.handleEvent('currentScoreChange');
       }
 
       play(accord, this.isError ? 0.3 : 1);

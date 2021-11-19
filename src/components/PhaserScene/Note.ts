@@ -54,18 +54,20 @@ export class Note {
 
   start(step: number) {
     const time = 1 / Math.floor(BPM / 60);
-    // eslint-disable-next-line\
+    // eslint-disable-next-line
     // @ts-ignore
     if (this.gameObject) this.gameObject.body.setVelocityY(step / time);
   }
 
   pause() {
+    // eslint-disable-next-line
     // @ts-ignore
     if (this.gameObject) this.gameObject.body.setVelocityY(0);
   }
   kill(result: boolean) {
     let particles;
     if (this.gameObject && this.particlesGreen && this.particlesRed) {
+      // eslint-disable-next-line
       // @ts-ignore
       const { x, y } = this.gameObject.getCenter();
       if (result) {

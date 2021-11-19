@@ -25,6 +25,4 @@ export class NotesCollider {
         // @ts-ignore;
         this.gameObject.name = this.note;
     }
-
-
 }

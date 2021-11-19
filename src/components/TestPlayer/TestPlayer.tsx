@@ -1,5 +1,6 @@
 import React from 'react';
-import { MAX_TRACK_SECONDS } from 'SoundmakerController/const';
+import { Link } from 'react-router-dom';
+import { BPM, MAX_TRACK_SECONDS } from 'SoundmakerController/const';
 import { StoreContext } from 'storeContext';
 import testnotes from './testnotes';
 // import {notes} from '../Player/notes';
@@ -72,6 +73,23 @@ export function TestPlayer() {
         </button>
         <button onClick={() => controller?.stopPlaying()}>⏹️</button>
       </div>
+      <div style={{ color: 'white' }}>
+        <input
+          onChange={(e) => {
+            if (controller) {
+              const newValue = parseInt(e.target.value);
+              if (!Number.isNaN(newValue)) {
+                controller.setBPM(newValue);
+              }
+            }
+          }}
+          defaultValue={BPM}
+        />
+        BPM
+      </div>
+      <Link to="/player" style={{ color: 'white' }}>
+        В плеер
+      </Link>
     </>
   );
 }

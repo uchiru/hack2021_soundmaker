@@ -195,7 +195,9 @@ export class Button {
       this.isPressed = false;
       this.moveUp();
     }
-    if (this.actionType === 'keyboard') this.game.input.keyboard.once(`keydown-${EKeyCodes[this.text]}`, this.onPress, this);
+    if (this.actionType === 'keyboard') {
+      this.game.input.keyboard.once(`keydown-${EKeyCodes[this.text]}`, this.onPress, this);
+    }
     this.gameObject?.setTexture('buttons', `${this.spriteKey}_normal.png`);
     this.phaserText?.setColor(`${EColorText[`${this.color}_normal`]}`);
   }

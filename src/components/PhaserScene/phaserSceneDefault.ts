@@ -105,7 +105,6 @@ export default class phaserSceneDefault extends Phaser.Scene {
     this.load.image('space', SpacePNG);
     this.load.image('explosion_red', explosionRedPNG);
     this.load.image('explosion_green', explosionGreenPNG);
-
   }
   create() {
     this.sceneSize.footerHeight = 200;
@@ -128,9 +127,12 @@ export default class phaserSceneDefault extends Phaser.Scene {
       this.notesGameObject.map((note) => note.gameObject),
       this.notesCatcherManager!.catchers.map((catcher) => catcher.gameObject),
       (note, catcher) => {
-        const catcherInstanse = this.notesCatcherManager!.catchers.find(catcher => catcher.gameObject.name === note.name);
-        const noteInstanse = this.notesGameObject.find(noteInst => noteInst.data.note === note.name);
+        const catcherInstanse = this.notesCatcherManager!.catchers.find(
+          (catcher) => catcher.gameObject.name === note.name
+        );
+        const noteInstanse = this.notesGameObject.find((noteInst) => noteInst.data.note === note.name);
         noteInstanse.ready = true;
+        // eslint-disable-next-line
         // @ts-ignore
         catcher.body.setEnable(false);
       }
@@ -142,9 +144,10 @@ export default class phaserSceneDefault extends Phaser.Scene {
       this.notesGameObject.map((note) => note.gameObject),
       this.destroyers,
       (note, destroyer) => {
-        const catcher = this.notesCatcherManager?.catchers.find(catcher => catcher.gameObject.name === note.name);
+        const catcher = this.notesCatcherManager?.catchers.find((catcher) => catcher.gameObject.name === note.name);
 
         if (catcher) {
+          // eslint-disable-next-line
           // @ts-ignore
           catcher.gameObject.body.setEnable(true);
           catcher.isPressed = false;
@@ -159,6 +162,7 @@ export default class phaserSceneDefault extends Phaser.Scene {
         noteInstanse.ready = false;
 
         note.body.destroy();
+        // eslint-disable-next-line
         // @ts-ignore
         note.setVisible(false);
       }
@@ -173,7 +177,7 @@ export default class phaserSceneDefault extends Phaser.Scene {
     const size = { WIDTH: 100, HEIGHT: 10 };
     const notes = Object.values(EPianoNotes).reverse();
     this.destroyers = notes.map((note, i) => {
-      const y: number = this.game.scale.height - this.sceneSize.footerHeight / 10 * 6;
+      const y: number = this.game.scale.height - (this.sceneSize.footerHeight / 10) * 6;
       const x: number =
         (this.game.scale.width / (notes.length + 2)) * i + size.WIDTH + this.sceneSize.gameZoneHorizontalPadding;
       const rect = this.add.rectangle(x, y, size.WIDTH, size.HEIGHT, 0x0c0c0c);
@@ -303,7 +307,7 @@ export default class phaserSceneDefault extends Phaser.Scene {
     );
 
     const keyboardKeys = ['1', '2', '3', '4', '5', '6', '7'];
-    const coords: { x: number, y: number }[] = [
+    const coords: { x: number; y: number }[] = [
       { x: 107, y: 1135 },
       { x: 317, y: 1135 },
       { x: 527, y: 1135 },
@@ -311,18 +315,20 @@ export default class phaserSceneDefault extends Phaser.Scene {
       { x: 957, y: 1135 },
       { x: 1177, y: 1135 },
       { x: 1387, y: 1135 }
-    ]
-    Object.values(EPianoNotes).reverse().forEach((noteName, i) => {
-      new Button(
-        this,
-        ETypeButtons.circle,
-        EColorButtons.green,
-        keyboardKeys[i].toLowerCase(),
-        coords[i],
-        'keyboard',
-        this.handleButtonPressCheckNote.bind(this, noteName),
-      )
-    });
+    ];
+    Object.values(EPianoNotes)
+      .reverse()
+      .forEach((noteName, i) => {
+        new Button(
+          this,
+          ETypeButtons.circle,
+          EColorButtons.green,
+          keyboardKeys[i].toLowerCase(),
+          coords[i],
+          'keyboard',
+          this.handleButtonPressCheckNote.bind(this, noteName)
+        );
+      });
     new Button(this, ETypeButtons.rect, EColorButtons.red, 'back', { x: 110, y: 50 }, 'mouse', () => {
       window.history.back();
     });
