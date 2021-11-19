@@ -112,6 +112,12 @@ export default class phaserSceneDefault extends Phaser.Scene {
     this.renderGameZone();
     this.notesRender();
     this.renderDestroyers();
+    this.registerCatcherOverlap();
+    this.registerDestroyerOverlap();
+    this.renderButtons();
+  }
+
+  registerCatcherOverlap() {
     this.physics.world.addOverlap(
       this.notesGameObject.map((note) => note.gameObject),
       this.notesCatcherManager!.catchers.map((catcher) => catcher.gameObject),
@@ -123,7 +129,9 @@ export default class phaserSceneDefault extends Phaser.Scene {
         catcher.body.setEnable(false);
       }
     );
+  }
 
+  registerDestroyerOverlap() {
     this.physics.world.addOverlap(
       this.notesGameObject.map((note) => note.gameObject),
       this.destroyers,
@@ -144,7 +152,6 @@ export default class phaserSceneDefault extends Phaser.Scene {
         note.setVisible(false);
       }
     );
-    this.renderButtons();
   }
 
   renderDestroyers() {
