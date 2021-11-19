@@ -4,6 +4,19 @@ import { Note } from './Note';
 import { SoundmakerControler } from '../../SoundmakerController';
 import { Button, ETypeButtons, EColorButtons } from './Button';
 import ButtonPNG from '../assets/buttons.png';
+import Note0PNG from '../assets/notes_0.png';
+import Note1PNG from '../assets/notes_1.png';
+import Note2PNG from '../assets/notes_2.png';
+import Note3PNG from '../assets/notes_3.png';
+import Note4PNG from '../assets/notes_4.png';
+import Note5PNG from '../assets/notes_5.png';
+import Note6PNG from '../assets/notes_6.png';
+import Note7PNG from '../assets/notes_7.png';
+import Note8PNG from '../assets/notes_8.png';
+import SpacePNG from '../assets/space.png';
+import explosionRedPNG from '../assets/red.png';
+import explosionGreenPNG from '../assets/green.png';
+
 import ButtonJSON from '../assets/buttons.json';
 import { store } from 'storeContext';
 import { INotesCatcherManager, NotesCatcherManager } from '../NotesCatcherManager';
@@ -74,10 +87,23 @@ export default class phaserSceneDefault extends Phaser.Scene {
   }
   preload() {
     this.load.atlas('buttons', ButtonPNG, ButtonJSON);
+    this.load.image('note_0', Note0PNG);
+    this.load.image('note_1', Note1PNG);
+    this.load.image('note_2', Note2PNG);
+    this.load.image('note_3', Note3PNG);
+    this.load.image('note_4', Note4PNG);
+    this.load.image('note_5', Note5PNG);
+    this.load.image('note_6', Note6PNG);
+    this.load.image('note_7', Note7PNG);
+    this.load.image('note_8', Note8PNG);
+    this.load.image('space', SpacePNG);
+    this.load.image('explosion_red', explosionRedPNG);
+    this.load.image('explosion_green', explosionGreenPNG);
+
   }
   create() {
     this.sceneSize.footerHeight = 200;
-    this.sceneSize.headerHeight = 100;
+    this.sceneSize.headerHeight = 120;
     this.sceneSize.footerWidth = this.scale.width;
     this.sceneSize.gameZoneWidth = (this.scale.width / (this.scale.width % 9)) * (this.scale.width % 9);
     this.sceneSize.gameZoneHeight = this.scale.height - this.sceneSize.footerHeight - this.sceneSize.headerHeight;
@@ -87,8 +113,8 @@ export default class phaserSceneDefault extends Phaser.Scene {
     this.notesRender();
     this.renderDestroyers();
     this.physics.world.addOverlap(
-      this.notesGameObject.map(note => note.gameObject),
-      this.notesCatcherManager!.catchers.map(catcher => catcher.gameObject),
+      this.notesGameObject.map((note) => note.gameObject),
+      this.notesCatcherManager!.catchers.map((catcher) => catcher.gameObject),
       (note, catcher) => {
         const catcherInstanse = this.notesCatcherManager!.catchers.find(catcher => catcher.gameObject.name === note.name);
         const noteInstanse = this.notesGameObject.find(noteInst => noteInst.data.note === note.name);
@@ -99,7 +125,7 @@ export default class phaserSceneDefault extends Phaser.Scene {
     );
 
     this.physics.world.addOverlap(
-      this.notesGameObject.map(note => note.gameObject),
+      this.notesGameObject.map((note) => note.gameObject),
       this.destroyers,
       (note, destroyer) => {
         const catcher = this.notesCatcherManager?.catchers.find(catcher => catcher.gameObject.name === note.name);
@@ -122,7 +148,7 @@ export default class phaserSceneDefault extends Phaser.Scene {
   }
 
   renderDestroyers() {
-    const size = { WIDTH: 100, HEIGHT: 10 }
+    const size = { WIDTH: 100, HEIGHT: 10 };
     const notes = Object.values(EPianoNotes).reverse();
     this.destroyers = notes.map((note, i) => {
       const y: number = this.game.scale.height - this.sceneSize.footerHeight / 10 * 6;
@@ -131,30 +157,29 @@ export default class phaserSceneDefault extends Phaser.Scene {
       const rect = this.add.rectangle(x, y, size.WIDTH, size.HEIGHT, 0x0c0c0c);
       this.physics.world.enableBody(rect);
       return rect;
-    })
-  };
+    });
+  }
 
   renderScene() {
     const { footerHeight, headerHeight, footerWidth, gameZoneWidth, gameZoneHeight, gameZoneHorizontalPadding } =
       this.sceneSize;
-    // Условная верхняя панель
-    this.add.rectangle(
-      gameZoneWidth / 2 + gameZoneHorizontalPadding / 2,
-      headerHeight / 2,
-      gameZoneWidth,
-      headerHeight,
-      0x3c4d1c
-    );
-    // Условная игровая зона
-    this.add.rectangle(
-      gameZoneWidth / 2 + gameZoneHorizontalPadding / 2,
-      gameZoneHeight / 2 + headerHeight,
-      gameZoneWidth,
-      gameZoneHeight,
-      0x000
-    );
+    this.add
+      .rectangle(
+        gameZoneWidth / 2 + gameZoneHorizontalPadding / 2,
+        headerHeight / 2,
+        gameZoneWidth,
+        headerHeight,
+        0x1a2639
+      )
+      .setDepth(1);
+
+    this.add
+      .image(gameZoneWidth / 2 + gameZoneHorizontalPadding / 2, gameZoneHeight / 2 + headerHeight * 2, 'space')
+      .setDepth(-1);
     // Условная нижняя панель
-    this.add.rectangle(footerWidth / 2, this.scale.height - footerHeight / 2, footerWidth, footerHeight, 0xff0000);
+    this.add
+      .rectangle(footerWidth / 2, this.scale.height - footerHeight / 2, footerWidth, footerHeight, 0x1a2639)
+      .setDepth(1);
     this.notesCatcherManager = new NotesCatcherManager(this);
   }
 
@@ -165,13 +190,13 @@ export default class phaserSceneDefault extends Phaser.Scene {
     for (let i = 0; i < 9; i += 1) {
       const x = Math.floor(i * stepHor + stepHor / 2 + this.sceneSize.gameZoneHorizontalPadding / 2);
       this.trackPosition.push(x);
-      this.add.rectangle(
-        x,
-        this.sceneSize.gameZoneHeight / 2 + this.sceneSize.headerHeight,
-        2,
-        this.sceneSize.gameZoneHeight,
-        this.rainbowColor[i]
-      );
+      // this.add.rectangle(
+      //   x,
+      //   this.sceneSize.gameZoneHeight / 2 + this.sceneSize.headerHeight,
+      //   2,
+      //   this.sceneSize.gameZoneHeight,
+      //   this.rainbowColor[i]
+      // );
     }
     //Отладочная сетка
     // for (let i = 0; i <= this.verticalStepCount; i += 1) {
@@ -195,7 +220,6 @@ export default class phaserSceneDefault extends Phaser.Scene {
       const tact = this.notesConfig[i];
       for (let j = 0; j < tact.length; j++) {
         const noteData = tact[j];
-        console.log(noteData);
         if (noteData) {
           const noteIndex = ENotesDictionary[noteData.note];
           const radius = 20;
@@ -205,7 +229,8 @@ export default class phaserSceneDefault extends Phaser.Scene {
               x: this.trackPosition[noteIndex ?? 0],
               y: this.startRenderNotesPosition - this.stepNote * i,
               size: radius,
-              color: this.rainbowColor[noteIndex ?? 0]
+              color: this.rainbowColor[noteIndex ?? 0],
+              index: noteIndex
             },
             this
           );
@@ -240,7 +265,7 @@ export default class phaserSceneDefault extends Phaser.Scene {
       }
     );
 
-    const keyboardKeys = ['S', 'D', 'F', 'G', 'H', 'J', 'K'];
+    const keyboardKeys = ['1', '2', '3', '4', '5', '6', '7'];
     const coords: { x: number, y: number }[] = [
       { x: 107, y: 1135 },
       { x: 317, y: 1135 },
@@ -260,6 +285,12 @@ export default class phaserSceneDefault extends Phaser.Scene {
         'keyboard',
         this.handleButtonPressCheckNote.bind(this, noteName),
       )
+    });
+    new Button(this, ETypeButtons.rect, EColorButtons.red, 'back', { x: 110, y: 50 }, 'mouse', () => {
+      window.history.back();
+    });
+    new Button(this, ETypeButtons.rect, EColorButtons.red, 'clear', { x: 350, y: 50 }, 'mouse', () => {
+      setTimeout(this.reload.bind(this), 200);
     });
   }
   start() {
