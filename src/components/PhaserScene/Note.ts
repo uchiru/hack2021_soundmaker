@@ -31,7 +31,7 @@ export class Note {
     const { x, y, index } = this.view;
     const img = this.game.add.image(x, y, `note_${index}`).setScale(0.5);
     const particlesGreen = this.game.add.particles('explosion_green');
-    const particlesRed = this.game.add.particles('explosion_green');
+    const particlesRed = this.game.add.particles('explosion_red');
 
     this.particlesGreen = particlesGreen.createEmitter({
       lifespan: 1000,

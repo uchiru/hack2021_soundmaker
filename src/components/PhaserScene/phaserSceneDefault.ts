@@ -92,7 +92,7 @@ export default class phaserSceneDefault extends Phaser.Scene {
     this.load.image('note_2', Note2PNG);
     this.load.image('note_3', Note3PNG);
     this.load.image('note_4', Note4PNG);
-    this.load.image('note_4', Note5PNG);
+    this.load.image('note_5', Note5PNG);
     this.load.image('note_6', Note6PNG);
     this.load.image('note_7', Note7PNG);
     this.load.image('note_8', Note8PNG);
@@ -257,7 +257,6 @@ export default class phaserSceneDefault extends Phaser.Scene {
     new Button(this, ETypeButtons.circle, EColorButtons.green, '1', { x: 107, y: 1135 }, 'keyboard', () => {
       setTimeout(() => {
         const catcher = this.notesCatcherManager?.catchers.find((catcher) => catcher.note === 'C');
-        console.log(catcher);
       }, 200);
     });
     new Button(this, ETypeButtons.circle, EColorButtons.green, '2', { x: 317, y: 1135 }, 'keyboard', () => {});
@@ -268,7 +267,6 @@ export default class phaserSceneDefault extends Phaser.Scene {
     new Button(this, ETypeButtons.circle, EColorButtons.green, '7', { x: 1387, y: 1135 }, 'keyboard', () => {});
   }
   start() {
-    debugger;
     this.notesGameObject.forEach((note) => {
       note.start(this.stepNote);
     });

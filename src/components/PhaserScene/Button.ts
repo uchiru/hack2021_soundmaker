@@ -38,7 +38,7 @@ const EKeyCodes: { [key: string]: string } = {
   '4': 'FOUR',
   '5': 'FIVE',
   '6': 'SIX',
-  '7': 'SEVEN',
+  '7': 'SEVEN'
 };
 interface IButtonPosition {
   x: number;
