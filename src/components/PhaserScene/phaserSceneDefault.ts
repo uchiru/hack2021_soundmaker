@@ -1,4 +1,4 @@
-import { TNotes, TAccord } from '../../SoundmakerController/types';
+import { TNotes, TAccord, EPianoNotes } from '../../SoundmakerController/types';
 import Phaser from 'phaser';
 import { Note } from './Note';
 import { SoundmakerControler } from '../../SoundmakerController';
@@ -44,6 +44,7 @@ export default class phaserSceneDefault extends Phaser.Scene {
   soundController: SoundmakerControler = store.soundmakerController;
   notesCatcherManager: INotesCatcherManager | null;
   catchers?: NotesCollider[];
+  destroyers: Phaser.GameObjects.Rectangle[];
   private isPaused: boolean;
   constructor(config: string | Phaser.Types.Scenes.SettingsConfig) {
     super(config);
@@ -62,6 +63,7 @@ export default class phaserSceneDefault extends Phaser.Scene {
     this.notesConfig = [];
     this.notesGameObject = [];
     this.notesCatcherManager = null;
+    this.destroyers = [];
     this.verticalStepCount = 10;
     this.isPaused = false;
   }
@@ -83,8 +85,43 @@ export default class phaserSceneDefault extends Phaser.Scene {
     this.renderScene();
     this.renderGameZone();
     this.notesRender();
+    this.renderDestroyers();
+    this.physics.world.addOverlap(
+      this.notesGameObject.map(note => note.gameObject),
+      this.notesCatcherManager!.catchers.map(catcher => catcher.body),
+      (note, collider) => {
+        console.log(note.name, collider.name);
+        // @ts-ignore
+        collider.body.setEnable(false);
+      }
+    );
+
+    this.physics.world.addOverlap(
+      this.notesGameObject.map(note => note.gameObject),
+      this.destroyers,
+      (note, destroyer) => {
+        // note.kill()
+        const catcher = this.notesCatcherManager?.catchers.find(catcher => catcher.body.name === note.name);
+        // @ts-ignore
+        if (catcher) catcher.body.body.setEnable(true);
+        console.log(`collider ${note.name} activated`);
+        note.body.destroy();
+      }
+    );
     this.renderButtons();
   }
+
+  renderDestroyers() {
+    const size = { WIDTH: 100, HEIGHT: 10 }
+    const notes = Object.values(EPianoNotes).reverse();
+    this.destroyers = notes.map((note, i) => {
+      const y: number = this.game.scale.height - this.sceneSize.footerHeight / 6;
+      const x: number = this.game.scale.width / (notes.length + 2) * i + size.WIDTH + this.sceneSize.gameZoneHorizontalPadding;
+      const rect = this.add.rectangle(x, y, size.WIDTH, size.HEIGHT, 0x0c0c0c);
+      this.physics.world.enableBody(rect);
+      return rect;
+    })
+  };
 
   renderScene() {
     const { footerHeight, headerHeight, footerWidth, gameZoneWidth, gameZoneHeight, gameZoneHorizontalPadding } =
@@ -162,6 +199,7 @@ export default class phaserSceneDefault extends Phaser.Scene {
             },
             this
           );
+
           this.notesGameObject.push(note);
           console.log(this.notesGameObject);
         }

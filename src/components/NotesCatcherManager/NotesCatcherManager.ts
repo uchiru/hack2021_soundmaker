@@ -3,21 +3,22 @@ import phaserSceneDefault from '../PhaserScene/phaserSceneDefault';
 import { EPianoNotes } from 'SoundmakerController/types';
 
 export interface INotesCatcherManager {
-  game: phaserSceneDefault;
-  catchers: NotesCollider[];
+    game: phaserSceneDefault;
+    catchers: NotesCollider[];
 }
 
 export class NotesCatcherManager<INotesCatcherManager> {
-  game: phaserSceneDefault;
-  catchers: NotesCollider[];
-  constructor(game: phaserSceneDefault) {
-    this.game = game;
+    game: phaserSceneDefault;
+    catchers: NotesCollider[];
+    constructor(game: phaserSceneDefault) {
+        this.game = game;
 
-    const notes = Object.values(EPianoNotes).reverse();
-    this.catchers = notes.map((note, i) => {
-      const y: number = this.game.scale.height - this.game.sceneSize.footerHeight / 2;
-      const x: number = (this.game.scale.width / (notes.length + 2)) * i + 105;
-      return new NotesCollider(game, note, { x, y });
-    });
-  }
+        const notes = Object.values(EPianoNotes).reverse();
+        const size = { WIDTH: 100, HEIGHT: 10 }
+        this.catchers = notes.map((note, i) => {
+            const y: number = this.game.scale.height - this.game.sceneSize.footerHeight / 2;
+            const x: number = this.game.scale.width / (notes.length + 2) * i + size.WIDTH + this.game.sceneSize.gameZoneHorizontalPadding;
+            return new NotesCollider(game, note, { x, y }, size)
+        })
+    }
 }
