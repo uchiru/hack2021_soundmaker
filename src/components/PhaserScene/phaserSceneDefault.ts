@@ -248,18 +248,18 @@ export default class phaserSceneDefault extends Phaser.Scene {
     new Button(this, ETypeButtons.rect, EColorButtons.red, 'clear', { x: 350, y: 50 }, 'mouse', () => {
       setTimeout(this.reload.bind(this), 200);
     });
-    new Button(this, ETypeButtons.circle, EColorButtons.green, 's', { x: 107, y: 1135 }, 'keyboard', () => {
+    new Button(this, ETypeButtons.circle, EColorButtons.green, '1', { x: 107, y: 1135 }, 'keyboard', () => {
       setTimeout(() => {
         const catcher = this.notesCatcherManager?.catchers.find((catcher) => catcher.note === 'C');
         console.log(catcher);
       }, 200);
     });
-    new Button(this, ETypeButtons.circle, EColorButtons.green, 'd', { x: 317, y: 1135 }, 'keyboard', () => {});
-    new Button(this, ETypeButtons.circle, EColorButtons.green, 'f', { x: 527, y: 1135 }, 'keyboard', () => {});
-    new Button(this, ETypeButtons.circle, EColorButtons.green, 'g', { x: 747, y: 1135 }, 'keyboard', () => {});
-    new Button(this, ETypeButtons.circle, EColorButtons.green, 'h', { x: 957, y: 1135 }, 'keyboard', () => {});
-    new Button(this, ETypeButtons.circle, EColorButtons.green, 'j', { x: 1177, y: 1135 }, 'keyboard', () => {});
-    new Button(this, ETypeButtons.circle, EColorButtons.green, 'k', { x: 1387, y: 1135 }, 'keyboard', () => {});
+    new Button(this, ETypeButtons.circle, EColorButtons.green, '2', { x: 317, y: 1135 }, 'keyboard', () => {});
+    new Button(this, ETypeButtons.circle, EColorButtons.green, '3', { x: 527, y: 1135 }, 'keyboard', () => {});
+    new Button(this, ETypeButtons.circle, EColorButtons.green, '4', { x: 747, y: 1135 }, 'keyboard', () => {});
+    new Button(this, ETypeButtons.circle, EColorButtons.green, '5', { x: 957, y: 1135 }, 'keyboard', () => {});
+    new Button(this, ETypeButtons.circle, EColorButtons.green, '6', { x: 1177, y: 1135 }, 'keyboard', () => {});
+    new Button(this, ETypeButtons.circle, EColorButtons.green, '7', { x: 1387, y: 1135 }, 'keyboard', () => {});
   }
   start() {
     debugger;

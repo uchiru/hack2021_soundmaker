@@ -23,13 +23,22 @@ const ETextButtons: { [key: string]: string } = {
   pause: 'Пауза',
   clear: 'С начала',
   back: 'Выход',
-  s: '1',
-  d: '2',
-  f: '3',
-  g: '4',
-  h: '5',
-  j: '6',
-  k: '7'
+  1: '1',
+  2: '2',
+  3: '3',
+  4: '4',
+  5: '5',
+  6: '6',
+  7: '7'
+};
+const EKeyCodes: { [key: string]: string } = {
+  '1': 'ONE',
+  '2': 'TWO',
+  '3': 'THREE',
+  '4': 'FOUR',
+  '5': 'FIVE',
+  '6': 'SIX',
+  '7': 'SEVEN',
 };
 interface IButtonPosition {
   x: number;
@@ -88,31 +97,31 @@ export class Button {
         x: 65,
         y: 30
       },
-      s: {
+      1: {
         x: 9,
         y: 15
       },
-      d: {
+      2: {
         x: 9,
         y: 15
       },
-      f: {
+      3: {
         x: 9,
         y: 15
       },
-      g: {
+      4: {
         x: 9,
         y: 15
       },
-      h: {
+      5: {
         x: 9,
         y: 15
       },
-      j: {
+      6: {
         x: 9,
         y: 15
       },
-      k: {
+      7: {
         x: 9,
         y: 15
       }
@@ -136,8 +145,8 @@ export class Button {
       this.gameObject.on('pointerover', this.onHover, this);
       this.gameObject.on('pointerout', this.onDrop, this);
     } else {
-      this.game.input.keyboard.once(`keydown-${this.text}`, this.onPress, this);
-      this.game.input.keyboard.on(`keyup-${this.text}`, this.onDrop, this);
+      this.game.input.keyboard.once(`keydown-${EKeyCodes[this.text]}`, this.onPress, this);
+      this.game.input.keyboard.on(`keyup-${EKeyCodes[this.text]}`, this.onDrop, this);
     }
 
     const textX = x - this.buttonPositionTextShift[this.name].x;
@@ -186,7 +195,7 @@ export class Button {
       this.isPressed = false;
       this.moveUp();
     }
-    if (this.actionType === 'keyboard') this.game.input.keyboard.once(`keydown-${this.text}`, this.onPress, this);
+    if (this.actionType === 'keyboard') this.game.input.keyboard.once(`keydown-${EKeyCodes[this.text]}`, this.onPress, this);
     this.gameObject?.setTexture('buttons', `${this.spriteKey}_normal.png`);
     this.phaserText?.setColor(`${EColorText[`${this.color}_normal`]}`);
   }
