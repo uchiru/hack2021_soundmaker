@@ -36,4 +36,9 @@ export class Note {
     // @ts-ignore
     if (this.gameObject) this.gameObject.body.setVelocityY(step / time);
   }
+
+  pause() {
+    // @ts-ignore
+    if (this.gameObject) this.gameObject.body.setVelocityY(0);
+  }
 }

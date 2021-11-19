@@ -44,6 +44,7 @@ export default class phaserSceneDefault extends Phaser.Scene {
   soundController: SoundmakerControler = store.soundmakerController;
   notesCatcherManager: INotesCatcherManager | null;
   catchers?: NotesCollider[];
+  private isPaused: boolean;
   constructor(config: string | Phaser.Types.Scenes.SettingsConfig) {
     super(config);
     this.sceneSize = {
@@ -62,6 +63,7 @@ export default class phaserSceneDefault extends Phaser.Scene {
     this.notesGameObject = [];
     this.notesCatcherManager = null;
     this.verticalStepCount = 10;
+    this.isPaused = false;
   }
 
   init(data: ISceneData) {
@@ -81,6 +83,7 @@ export default class phaserSceneDefault extends Phaser.Scene {
     this.renderScene();
     this.renderGameZone();
     this.notesRender();
+    this.renderButtons();
   }
 
   renderScene() {
@@ -94,11 +97,6 @@ export default class phaserSceneDefault extends Phaser.Scene {
       headerHeight,
       0x3c4d1c
     );
-    new Button(this, ETypeButtons.rect, EColorButtons.blue, 'start', { x: 950, y: 50 }, () => this.start());
-    new Button(this, ETypeButtons.rect, EColorButtons.red, 'back', { x: 110, y: 50 }, () => {
-      window.history.back();
-    });
-
     // Условная игровая зона
     this.add.rectangle(
       gameZoneWidth / 2 + gameZoneHorizontalPadding / 2,
@@ -144,11 +142,13 @@ export default class phaserSceneDefault extends Phaser.Scene {
       this.verticalStepCount * this.stepNote + this.stepNote / 2 + this.sceneSize.headerHeight / 4;
   }
   notesRender() {
+    console.log(this.notesConfig);
     const length = this.notesConfig.length;
     for (let i = 0; i < length; i++) {
       const tact = this.notesConfig[i];
       for (let j = 0; j < tact.length; j++) {
         const noteData = tact[j];
+        console.log(noteData);
         if (noteData) {
           const noteIndex = ENotesDictionary[noteData.note];
           const radius = 20;
@@ -163,18 +163,53 @@ export default class phaserSceneDefault extends Phaser.Scene {
             this
           );
           this.notesGameObject.push(note);
+          console.log(this.notesGameObject);
         }
       }
     }
   }
+  renderButtons() {
+    const buttonPlay = new Button(this, ETypeButtons.rect, EColorButtons.blue, 'start', { x: 950, y: 50 }, () => {
+      if (buttonPlay.name === 'start') {
+        this.start();
+        buttonPlay.changeButton('pause');
+      } else {
+        this.pause();
+        buttonPlay.changeButton('start');
+      }
+    });
+    new Button(this, ETypeButtons.rect, EColorButtons.red, 'back', { x: 110, y: 50 }, () => {
+      window.history.back();
+    });
+    new Button(this, ETypeButtons.rect, EColorButtons.red, 'clear', { x: 350, y: 50 }, () => {
+      setTimeout(this.reload.bind(this), 200);
+    });
+  }
   start() {
+    debugger;
     this.notesGameObject.forEach((note) => {
       note.start(this.stepNote);
     });
-    this.soundController?.startPlaying();
+    if (this.isPaused) {
+      this.soundController?.resume();
+    } else {
+      this.soundController?.startPlaying();
+    }
   }
-  reload(notes: TAccord[]) {
-    this.notesConfig = notes;
+  pause() {
+    this.notesGameObject.forEach((note) => {
+      note.pause();
+    });
+    this.isPaused = true;
+    this.soundController?.pause();
+  }
+  reload() {
+    this.stepNote = 0;
+    this.notesConfig = [];
+    this.notesGameObject = [];
+    this.notesCatcherManager = null;
+    this.verticalStepCount = 10;
+    this.isPaused = false;
     this.scene.restart();
   }
 }

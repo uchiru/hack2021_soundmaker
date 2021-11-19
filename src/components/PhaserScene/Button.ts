@@ -9,7 +9,7 @@ export enum EColorButtons {
   blue = 'blue'
 }
 
-const EColorText: { [key: string]: string } = {
+export const EColorText: { [key: string]: string } = {
   blue_hover: '#073763',
   blue_normal: '#0C5FAA',
   red_hover: '#660000',
@@ -22,7 +22,14 @@ const ETextButtons: { [key: string]: string } = {
   start: 'Начать',
   pause: 'Пауза',
   clear: 'С начала',
-  back: 'Выход'
+  back: 'Выход',
+  s: 'S',
+  d: 'D',
+  f: 'F',
+  g: 'G',
+  h: 'H',
+  j: 'J',
+  k: 'K'
 };
 interface IButtonPosition {
   x: number;
@@ -44,9 +51,9 @@ export class Button {
   private phaserText?: Phaser.GameObjects.Text;
   private readonly buttonPosition: IButtonPosition;
   private buttonPositionTextShift: IButtonPositionTextShift;
-  private name: keyof typeof ETextButtons;
+  public name: keyof typeof ETextButtons;
   private isPressed: boolean;
-  private readonly handleClick: () => void;
+  private handleClick: () => void;
   constructor(
     game: Scene,
     type: ETypeButtons,
@@ -68,6 +75,14 @@ export class Button {
       },
       back: {
         x: 46,
+        y: 30
+      },
+      pause: {
+        x: 40,
+        y: 30
+      },
+      clear: {
+        x: 65,
         y: 30
       }
     };
@@ -102,7 +117,7 @@ export class Button {
       this.moveUp();
     }
     this.gameObject?.setTexture('buttons', `${this.spriteKey}_hovered`);
-    this.phaserText?.setColor(`${EColorText[`${this.color}_hover`]}`);
+    this.phaserText?.setColor(`${EColorText[`${this.color}_hovered`]}`);
   }
 
   onPress() {
@@ -134,5 +149,13 @@ export class Button {
     }
     this.gameObject?.setTexture('buttons', `${this.spriteKey}_normal`);
     this.phaserText?.setColor(`${EColorText[`${this.color}_normal`]}`);
+  }
+  changeButton(newText: string) {
+    this.name = newText;
+    const { x, y } = this.buttonPosition;
+    const textX = x - this.buttonPositionTextShift[this.name].x;
+    const textY = y - this.buttonPositionTextShift[this.name].y;
+    this.phaserText?.setText(ETextButtons[this.name]).setPosition(textX, textY);
+    this.moveDown();
   }
 }
