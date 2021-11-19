@@ -10,6 +10,7 @@ const FART = true;
 export class SoundmakerControler {
   public track: TAccord[] = [];
   public isError = false;
+  public score = 0;
 
   private interval = -1;
   private lastPlayedAccordIndex = -1;
@@ -81,6 +82,8 @@ export class SoundmakerControler {
     clearInterval(this.interval);
     this.interval = -1;
     this.lastPlayedAccordIndex = -1;
+    this.score = 0;
+    this.handleEvent('currentScoreChange');
     this.isError = false;
     this.isPaused = false;
     pauseSound();
@@ -142,6 +145,11 @@ export class SoundmakerControler {
     }
   }
 
+  public resetscore() {
+    this.score = 0;
+    this.handleEvent('currentScoreChange');
+  }
+
   private handleTick() {
     if (this.isPaused) {
       return;
@@ -161,6 +169,9 @@ export class SoundmakerControler {
     if (accord) {
       if (FART && this.isError && accord.length) {
         accord.push({ instrument: EInstruments.sample, note: ESampleNotes.fart });
+      } else {
+        this.score++;
+        this.handleEvent('currentScoreChange');
       }
 
       play(accord, this.isError ? 0.3 : 1);

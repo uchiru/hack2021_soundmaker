@@ -19,7 +19,7 @@ export class NotesCatcherManager<INotesCatcherManager> {
       const y: number = this.game.scale.height - (this.game.sceneSize.footerHeight / 10) * 9;
       const x: number =
         (this.game.scale.width / (notes.length + 2)) * i + size.WIDTH + this.game.sceneSize.gameZoneHorizontalPadding;
-      return new NotesCollider(game, note, { x, y }, size)
+      return new NotesCollider(game, note, { x, y }, size);
     });
   }
 }
