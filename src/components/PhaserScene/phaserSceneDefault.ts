@@ -135,7 +135,7 @@ export default class phaserSceneDefault extends Phaser.Scene {
     const size = { WIDTH: 100, HEIGHT: 10 };
     const notes = Object.values(EPianoNotes).reverse();
     this.destroyers = notes.map((note, i) => {
-      const y: number = this.game.scale.height - this.sceneSize.footerHeight / 6;
+      const y: number = this.game.scale.height - this.sceneSize.footerHeight / 10 * 6;
       const x: number =
         (this.game.scale.width / (notes.length + 2)) * i + size.WIDTH + this.sceneSize.gameZoneHorizontalPadding;
       const rect = this.add.rectangle(x, y, size.WIDTH, size.HEIGHT, 0x0c0c0c);
