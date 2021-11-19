@@ -71,7 +71,7 @@ export class Note {
       // @ts-ignore
       const { x, y } = this.gameObject.getCenter();
       if (result) {
-        console.log(result)
+        console.log(result);
         // particles = this.particlesGreen;
       } else {
         console.log(result);

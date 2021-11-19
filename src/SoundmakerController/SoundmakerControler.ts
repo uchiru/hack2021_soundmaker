@@ -174,7 +174,7 @@ export class SoundmakerControler {
         this.handleEvent('currentScoreChange');
       }
 
-      play(accord, this.isError ? 0.3 : 1);
+      play(accord, this.isError ? 0.15 : 1);
 
       this.lastPlayedAccordIndex = index;
       log.verbose('set lastPlayedAccordIndex to ', this.lastPlayedAccordIndex);
