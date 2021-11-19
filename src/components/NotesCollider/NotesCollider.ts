@@ -20,7 +20,7 @@ export class NotesCollider {
     this.note = note;
     this.SIZE = size;
 
-    this.gameObject = this.game.add.rectangle(coords.x, coords.y, this.SIZE.WIDTH, this.SIZE.HEIGHT, 0xff0000);
+    this.gameObject = this.game.add.rectangle(coords.x, coords.y, this.SIZE.WIDTH, this.SIZE.HEIGHT);
     this.game.physics.world.enableBody(this.gameObject);
     // @ts-ignore;
     this.gameObject.name = this.note;

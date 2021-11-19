@@ -153,9 +153,9 @@ export default class phaserSceneDefault extends Phaser.Scene {
           catcher.isPressed = false;
         }
 
-        const noteInstanse = this.notesGameObject.find(noteInst => noteInst.data.note === note.name);
+        const noteInstanse = this.notesGameObject.find((noteInst) => noteInst.data.note === note.name);
         const index = Math.floor(this.soundController.timeline.currentTime / this.soundController.timeline.sampleTime);
-        const specificNote = this.notesConfig[index].find(item => item.note === note.name);
+        const specificNote = this.notesConfig[index].find((item) => item.note === note.name);
         if (!specificNote?.played) {
           this.fart();
         }
@@ -268,7 +268,7 @@ export default class phaserSceneDefault extends Phaser.Scene {
   }
 
   increaseScores() {
-    this.scores += 10
+    this.scores += 10;
     this.soundController.isError = false;
   }
 
@@ -278,17 +278,15 @@ export default class phaserSceneDefault extends Phaser.Scene {
   }
 
   handleButtonPressCheckNote(noteName: EPianoNotes) {
-    const noteInstanse = this.notesGameObject.find(note => note.data.note === noteName);
+    const noteInstanse = this.notesGameObject.find((note) => note.data.note === noteName);
     if (noteInstanse && noteInstanse.ready === true) {
-      noteInstanse.kill(true);
       const index = Math.floor(this.soundController.timeline.currentTime / this.soundController.timeline.sampleTime);
-      const specificNote = this.notesConfig[index].find(item => item.note === noteName);
+      const specificNote = this.notesConfig[index].find((item) => item.note === noteName);
       if (specificNote) specificNote.played = true;
       this.increaseScores();
     } else {
-      noteInstanse.kill(false);
-      this.errorClick()
-    };
+      this.errorClick();
+    }
   }
 
   renderButtons() {

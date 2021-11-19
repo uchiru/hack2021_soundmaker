@@ -64,22 +64,4 @@ export class Note {
     // @ts-ignore
     if (this.gameObject) this.gameObject.body.setVelocityY(0);
   }
-  kill(result: boolean) {
-    // let particles;
-    if (this.gameObject && this.particlesGreen && this.particlesRed) {
-      // eslint-disable-next-line
-      // @ts-ignore
-      const { x, y } = this.gameObject.getCenter();
-      if (result) {
-        console.log(result)
-        // particles = this.particlesGreen;
-      } else {
-        console.log(result);
-        // particles = this.particlesRed;
-      }
-      // particles.setPosition(x, y);
-      // particles.start();
-      // setTimeout(particles.stop.bind(this), 300);
-    }
-  }
 }
