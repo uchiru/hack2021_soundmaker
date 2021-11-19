@@ -207,22 +207,30 @@ export default class phaserSceneDefault extends Phaser.Scene {
     }
   }
   renderButtons() {
-    const buttonPlay = new Button(this, ETypeButtons.rect, EColorButtons.blue, 'start', { x: 950, y: 50 }, () => {
-      if (buttonPlay.name === 'start') {
-        this.start();
-        buttonPlay.changeButton('pause');
-      } else {
-        this.pause();
-        buttonPlay.changeButton('start');
+    const buttonPlay = new Button(
+      this,
+      ETypeButtons.rect,
+      EColorButtons.blue,
+      'start',
+      { x: 950, y: 50 },
+      'mouse',
+      () => {
+        if (buttonPlay.name === 'start') {
+          this.start();
+          buttonPlay.changeButton('pause');
+        } else {
+          this.pause();
+          buttonPlay.changeButton('start');
+        }
       }
-    });
-    new Button(this, ETypeButtons.rect, EColorButtons.red, 'back', { x: 110, y: 50 }, () => {
+    );
+    new Button(this, ETypeButtons.rect, EColorButtons.red, 'back', { x: 110, y: 50 }, 'mouse', () => {
       window.history.back();
     });
-    new Button(this, ETypeButtons.rect, EColorButtons.red, 'clear', { x: 350, y: 50 }, () => {
+    new Button(this, ETypeButtons.rect, EColorButtons.red, 'clear', { x: 350, y: 50 }, 'mouse', () => {
       setTimeout(this.reload.bind(this), 200);
     });
-    new Button(this, ETypeButtons.circle, EColorButtons.green, 's', { x: 107, y: 1100 }, () => {
+    new Button(this, ETypeButtons.circle, EColorButtons.green, 's', { x: 107, y: 1100 }, 'keyboard', () => {
       setTimeout(() => {
         const catcher = this.notesCatcherManager?.catchers.find(catcher => catcher.note === 'C');
         console.log(catcher);
