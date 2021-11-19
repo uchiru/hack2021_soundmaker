@@ -47,6 +47,8 @@ export default class phaserSceneDefault extends Phaser.Scene {
     gameZoneHeight: number;
     gameZoneHorizontalPadding: number;
   };
+  coeff: number;
+  scores: number;
   stepNote: number;
   rainbowColor: number[];
   trackPosition: number[];
@@ -58,6 +60,7 @@ export default class phaserSceneDefault extends Phaser.Scene {
   notesCatcherManager: INotesCatcherManager | null;
   catchers?: NotesCollider[];
   destroyers: Phaser.GameObjects.Rectangle[];
+  notesPlayed: [boolean[]];
   private isPaused: boolean;
   constructor(config: string | Phaser.Types.Scenes.SettingsConfig) {
     super(config);
@@ -79,6 +82,9 @@ export default class phaserSceneDefault extends Phaser.Scene {
     this.destroyers = [];
     this.verticalStepCount = 10;
     this.isPaused = false;
+    this.coeff = 1;
+    this.scores = 0;
+    this.notesPlayed = [[]];
   }
 
   init(data: ISceneData) {
@@ -145,6 +151,11 @@ export default class phaserSceneDefault extends Phaser.Scene {
         }
 
         const noteInstanse = this.notesGameObject.find(noteInst => noteInst.data.note === note.name);
+        const index = Math.floor(this.soundController.timeline.currentTime / this.soundController.timeline.sampleTime);
+        const specificNote = this.notesConfig[index].find(item => item.note === note.name);
+        if (!specificNote?.played) {
+          this.fart();
+        }
         noteInstanse.ready = false;
 
         note.body.destroy();
@@ -152,6 +163,10 @@ export default class phaserSceneDefault extends Phaser.Scene {
         note.setVisible(false);
       }
     );
+  }
+
+  fart() {
+    this.soundController.isError = true;
   }
 
   renderDestroyers() {
@@ -248,9 +263,24 @@ export default class phaserSceneDefault extends Phaser.Scene {
     }
   }
 
+  increaseScores() {
+    this.scores += 10
+    this.soundController.isError = false;
+  }
+
+  errorClick() {
+    this.soundController.isError = true;
+    this.coeff = 1;
+  }
+
   handleButtonPressCheckNote(noteName: EPianoNotes) {
     const noteInstanse = this.notesGameObject.find(note => note.data.note === noteName);
-    if (noteInstanse && noteInstanse.ready === true) console.log(`========${noteName}========`);
+    if (noteInstanse && noteInstanse.ready === true) {
+      const index = Math.floor(this.soundController.timeline.currentTime / this.soundController.timeline.sampleTime);
+      const specificNote = this.notesConfig[index].find(item => item.note === noteName);
+      if (specificNote) specificNote.played = true;
+      this.increaseScores();
+    } else this.errorClick();
   }
 
   renderButtons() {

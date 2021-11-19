@@ -34,6 +34,7 @@ export interface ISound {
   instrument: EInstruments;
   note: TNotes;
   volume?: number;
+  played?: boolean;
 }
 
 export type TAccord = ISound[];
