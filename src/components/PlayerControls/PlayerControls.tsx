@@ -32,7 +32,7 @@ export function PlayerControls({
         <span>😈</span> Челендж
       </Link>
 
-      <button className="player-control js-toggle-play-state" type="button" onClick={handleClick}>
+      <button className="player-control" type="button" onClick={handleClick}>
         {isPlaying ? (
           <>
             <span>⏹</span> Остановить&nbsp;
@@ -45,18 +45,21 @@ export function PlayerControls({
         трек
       </button>
 
-      <button className="player-control js-toggle-play-state" type="button" onClick={handlePauseClick}>
-        <span style={{ opacity: isPlaying ? 1 : 0.1 }}>
-          {isPaused ? (
-            <>
-              <span>▶️</span> Продолжить
-            </>
-          ) : (
-            <>
-              <span>⏸️</span> Пауза
-            </>
-          )}
-        </span>
+      <button
+        className="player-control"
+        type="button"
+        onClick={handlePauseClick}
+        style={{ opacity: isPlaying ? 1 : 0.5 }}
+      >
+        {isPaused ? (
+          <>
+            <span>▶️</span> Продолжить
+          </>
+        ) : (
+          <>
+            <span>⏸️</span> Пауза
+          </>
+        )}
       </button>
 
       <button className="player-control" type="button" onClick={restoreNotes}>
