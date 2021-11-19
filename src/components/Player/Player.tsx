@@ -94,7 +94,7 @@ export function Player() {
     } else {
       _note = getDrumNoteName(note)?.toString() ?? '';
     }
-    debugger;
+
     notes[tick].push({
       instrument,
       note: _note
