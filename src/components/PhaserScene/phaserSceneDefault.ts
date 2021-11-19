@@ -14,6 +14,9 @@ import Note6PNG from '../assets/notes_6.png';
 import Note7PNG from '../assets/notes_7.png';
 import Note8PNG from '../assets/notes_8.png';
 import SpacePNG from '../assets/space.png';
+import explosionRedPNG from '../assets/red.png';
+import explosionGreenPNG from '../assets/green.png';
+
 import ButtonJSON from '../assets/buttons.json';
 import { store } from 'storeContext';
 import { INotesCatcherManager, NotesCatcherManager } from '../NotesCatcherManager';
@@ -94,6 +97,9 @@ export default class phaserSceneDefault extends Phaser.Scene {
     this.load.image('note_7', Note7PNG);
     this.load.image('note_8', Note8PNG);
     this.load.image('space', SpacePNG);
+    this.load.image('explosion_red', explosionRedPNG);
+    this.load.image('explosion_green', explosionGreenPNG);
+
   }
   create() {
     this.sceneSize.footerHeight = 200;
