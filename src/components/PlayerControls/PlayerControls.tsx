@@ -35,11 +35,11 @@ export function PlayerControls({
       <button className="player-control js-toggle-play-state" type="button" onClick={handleClick}>
         {isPlaying ? (
           <>
-            <span>⏹</span> Остановить
+            <span>⏹</span> Остановить&nbsp;
           </>
         ) : (
           <>
-            <span>▶️</span> Играть
+            <span>▶️</span> Играть&nbsp;
           </>
         )}
         трек
