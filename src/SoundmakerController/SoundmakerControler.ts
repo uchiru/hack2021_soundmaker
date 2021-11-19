@@ -26,7 +26,7 @@ export class SoundmakerControler {
   }
 
   constructor() {
-    const samplesPerSecond = Math.floor(BPM / 60);
+    const samplesPerSecond = BPM / 60;
     this.timeline = {
       sampleTime: Math.floor(1000 / samplesPerSecond),
       samplesPerSecond,
@@ -57,6 +57,24 @@ export class SoundmakerControler {
 
   public setTrack(track: TAccord[]) {
     this.track = track;
+  }
+
+  public setBPM(bpm: number) {
+    this.stopPlaying();
+
+    const samplesPerSecond = bpm / 60;
+    this.timeline = {
+      sampleTime: Math.floor(1000 / samplesPerSecond),
+      samplesPerSecond,
+      currentTime: 0
+    };
+    log(
+      'SoundMaker initialized. currentTime = 0, sampleTime = ',
+      this.timeline.sampleTime,
+      'samplesPerSecond = ',
+      samplesPerSecond
+    );
+    this.handleEvent('currentTimeChange');
   }
 
   private reset() {
