@@ -15,7 +15,7 @@ export function Player() {
   const { soundmakerController: controller } = React.useContext(StoreContext);
 
   const prefilledNotes = () => {
-    for (let i = 0; i < ticksCount - notes.length; i++) {
+    while (notes.length < ticksCount) {
       notes.push([]);
     }
     return notes;
