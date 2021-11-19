@@ -6,14 +6,14 @@ export class NotesCollider {
   game: phaserSceneDefault;
   note: EPianoNotes;
   gameObject: Phaser.GameObjects.Rectangle;
-  SIZE: { WIDTH: number, HEIGHT: number };
+  SIZE: { WIDTH: number; HEIGHT: number };
   isPressed: boolean;
 
   constructor(
     game: phaserSceneDefault,
     note: EPianoNotes,
-    coords: { x: number, y: number },
-    size: { WIDTH: number, HEIGHT: number }
+    coords: { x: number; y: number },
+    size: { WIDTH: number; HEIGHT: number }
   ) {
     this.isPressed = false;
     this.game = game;
@@ -22,7 +22,8 @@ export class NotesCollider {
 
     this.gameObject = this.game.add.rectangle(coords.x, coords.y, this.SIZE.WIDTH, this.SIZE.HEIGHT);
     this.game.physics.world.enableBody(this.gameObject);
-    // @ts-ignore;
+    // eslint-disable-next-line
+    // @ts-ignore
     this.gameObject.name = this.note;
   }
 }
