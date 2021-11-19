@@ -53,13 +53,15 @@ export class Button {
   private buttonPositionTextShift: IButtonPositionTextShift;
   public name: keyof typeof ETextButtons;
   private isPressed: boolean;
-  private handleClick: () => void;
+  private readonly handleClick: () => void;
+  private readonly actionType: 'mouse' | 'keyboard';
   constructor(
     game: Scene,
     type: ETypeButtons,
     color: EColorButtons,
     textType: keyof typeof ETextButtons,
     buttonPosition: IButtonPosition,
+    actionType: 'mouse' | 'keyboard',
     handleClick: () => void
   ) {
     this.game = game;
@@ -67,6 +69,7 @@ export class Button {
     this.type = type;
     this.text = ETextButtons[textType];
     this.name = textType;
+    this.actionType = actionType;
     this.spriteKey = `button_${this.type}-${this.color}`;
     this.buttonPositionTextShift = {
       start: {
@@ -102,10 +105,15 @@ export class Button {
       .image(x, y, 'buttons', `${this.spriteKey}_normal.png`)
       .setScale(0.2, 0.2)
       .setInteractive();
-    this.gameObject.on('pointerdown', this.onPress, this);
-    this.gameObject.on('pointerup', this.onHover, this);
-    this.gameObject.on('pointerover', this.onHover, this);
-    this.gameObject.on('pointerout', this.onDrop, this);
+    if (this.actionType === 'mouse') {
+      this.gameObject.on('pointerdown', this.onPress, this);
+      this.gameObject.on('pointerup', this.onHover, this);
+      this.gameObject.on('pointerover', this.onHover, this);
+      this.gameObject.on('pointerout', this.onDrop, this);
+    } else {
+      this.game.input.keyboard.once(`keydown-${this.text}`, this.onPress, this);
+      this.game.input.keyboard.on(`keyup-${this.text}`, this.onDrop, this);
+    }
 
     const textX = x - this.buttonPositionTextShift[this.name].x;
     const textY = y - this.buttonPositionTextShift[this.name].y;
@@ -151,6 +159,7 @@ export class Button {
       this.isPressed = false;
       this.moveUp();
     }
+    if (this.actionType === 'keyboard') this.game.input.keyboard.once(`keydown-${this.text}`, this.onPress, this);
     this.gameObject?.setTexture('buttons', `${this.spriteKey}_normal.png`);
     this.phaserText?.setColor(`${EColorText[`${this.color}_normal`]}`);
   }

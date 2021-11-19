@@ -41,4 +41,7 @@ export class Note {
     // @ts-ignore
     if (this.gameObject) this.gameObject.body.setVelocityY(0);
   }
+  kill() {
+    console.log('kill');
+  }
 }
