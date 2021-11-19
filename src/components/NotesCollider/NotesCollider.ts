@@ -5,7 +5,7 @@ import { EPianoNotes } from 'SoundmakerController/types';
 export class NotesCollider {
     game: phaserSceneDefault;
     note: EPianoNotes;
-    body: Phaser.GameObjects.Rectangle;
+    gameObject: Phaser.GameObjects.Rectangle;
     SIZE: { WIDTH: number, HEIGHT: number };
 
     constructor(
@@ -18,10 +18,10 @@ export class NotesCollider {
         this.note = note;
         this.SIZE = size;
 
-        this.body = this.game.add.rectangle(coords.x, coords.y, this.SIZE.WIDTH, this.SIZE.HEIGHT, 0x000000);
-        this.game.physics.world.enableBody(this.body);
+        this.gameObject = this.game.add.rectangle(coords.x, coords.y, this.SIZE.WIDTH, this.SIZE.HEIGHT, 0x000000);
+        this.game.physics.world.enableBody(this.gameObject);
         // @ts-ignore;
-        this.body.name = this.note;
+        this.gameObject.name = this.note;
     }
 
 

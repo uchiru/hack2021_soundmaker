@@ -88,11 +88,11 @@ export default class phaserSceneDefault extends Phaser.Scene {
     this.renderDestroyers();
     this.physics.world.addOverlap(
       this.notesGameObject.map(note => note.gameObject),
-      this.notesCatcherManager!.catchers.map(catcher => catcher.body),
-      (note, collider) => {
-        console.log(note.name, collider.name);
+      this.notesCatcherManager!.catchers.map(catcher => catcher.gameObject),
+      (note, catcher) => {
+        console.log(note.name, catcher.name);
         // @ts-ignore
-        collider.body.setEnable(false);
+        catcher.body.setEnable(false);
       }
     );
 
@@ -101,9 +101,9 @@ export default class phaserSceneDefault extends Phaser.Scene {
       this.destroyers,
       (note, destroyer) => {
         // note.kill()
-        const catcher = this.notesCatcherManager?.catchers.find(catcher => catcher.body.name === note.name);
+        const catcher = this.notesCatcherManager?.catchers.find(catcher => catcher.gameObject.name === note.name);
         // @ts-ignore
-        if (catcher) catcher.body.body.setEnable(true);
+        if (catcher) catcher.gameObject.body.setEnable(true);
         console.log(`collider ${note.name} activated`);
         note.body.destroy();
       }
@@ -223,7 +223,10 @@ export default class phaserSceneDefault extends Phaser.Scene {
       setTimeout(this.reload.bind(this), 200);
     });
     new Button(this, ETypeButtons.circle, EColorButtons.green, 's', { x: 107, y: 1100 }, () => {
-      setTimeout(this.reload.bind(this), 200);
+      setTimeout(() => {
+        const catcher = this.notesCatcherManager?.catchers.find(catcher => catcher.note === 'C');
+        console.log(catcher);
+      }, 200);
     });
   }
   start() {
