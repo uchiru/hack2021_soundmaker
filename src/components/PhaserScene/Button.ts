@@ -91,6 +91,26 @@ export class Button {
       s: {
         x: 9,
         y: 15
+      },
+      d: {
+        x: 9,
+        y: 15
+      },
+      f: {
+        x: 9,
+        y: 15
+      },
+      g: {
+        x: 9,
+        y: 15
+      },
+      h: {
+        x: 9,
+        y: 15
+      },
+      j: {
+        x: 9,
+        y: 15
       }
     };
     this.buttonPosition = buttonPosition;

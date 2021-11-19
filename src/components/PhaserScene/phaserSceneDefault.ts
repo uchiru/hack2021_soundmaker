@@ -233,6 +233,9 @@ export default class phaserSceneDefault extends Phaser.Scene {
     new Button(this, ETypeButtons.circle, EColorButtons.green, 's', { x: 107, y: 1100 }, 'keyboard', () => {
       console.log('Me pressed');
     });
+    new Button(this, ETypeButtons.circle, EColorButtons.green, 'd', { x: 207, y: 1100 }, 'keyboard', () => {
+      console.log('Me pressed');
+    });
   }
   start() {
     debugger;
