@@ -184,6 +184,9 @@ export default class phaserSceneDefault extends Phaser.Scene {
     new Button(this, ETypeButtons.rect, EColorButtons.red, 'clear', { x: 350, y: 50 }, () => {
       setTimeout(this.reload.bind(this), 200);
     });
+    new Button(this, ETypeButtons.circle, EColorButtons.green, 's', { x: 107, y: 1100 }, () => {
+      setTimeout(this.reload.bind(this), 200);
+    });
   }
   start() {
     debugger;
