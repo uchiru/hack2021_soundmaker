@@ -100,7 +100,7 @@ export default class phaserSceneDefault extends Phaser.Scene {
       this.notesGameObject.map(note => note.gameObject),
       this.destroyers,
       (note, destroyer) => {
-        // note.kill()
+        // note.kill()в
         const catcher = this.notesCatcherManager?.catchers.find(catcher => catcher.gameObject.name === note.name);
         // @ts-ignore
         if (catcher) catcher.gameObject.body.setEnable(true);
@@ -116,7 +116,8 @@ export default class phaserSceneDefault extends Phaser.Scene {
     const notes = Object.values(EPianoNotes).reverse();
     this.destroyers = notes.map((note, i) => {
       const y: number = this.game.scale.height - this.sceneSize.footerHeight / 6;
-      const x: number = this.game.scale.width / (notes.length + 2) * i + size.WIDTH + this.sceneSize.gameZoneHorizontalPadding;
+      const x: number =
+        (this.game.scale.width / (notes.length + 2)) * i + size.WIDTH + this.sceneSize.gameZoneHorizontalPadding;
       const rect = this.add.rectangle(x, y, size.WIDTH, size.HEIGHT, 0x0c0c0c);
       this.physics.world.enableBody(rect);
       return rect;
@@ -179,7 +180,6 @@ export default class phaserSceneDefault extends Phaser.Scene {
       this.verticalStepCount * this.stepNote + this.stepNote / 2 + this.sceneSize.headerHeight / 4;
   }
   notesRender() {
-    console.log(this.notesConfig);
     const length = this.notesConfig.length;
     for (let i = 0; i < length; i++) {
       const tact = this.notesConfig[i];
@@ -201,7 +201,6 @@ export default class phaserSceneDefault extends Phaser.Scene {
           );
 
           this.notesGameObject.push(note);
-          console.log(this.notesGameObject);
         }
       }
     }
@@ -230,14 +229,23 @@ export default class phaserSceneDefault extends Phaser.Scene {
     new Button(this, ETypeButtons.rect, EColorButtons.red, 'clear', { x: 350, y: 50 }, 'mouse', () => {
       setTimeout(this.reload.bind(this), 200);
     });
-    new Button(this, ETypeButtons.circle, EColorButtons.green, 's', { x: 107, y: 1100 }, 'keyboard', () => {
+    new Button(this, ETypeButtons.circle, EColorButtons.green, 's', { x: 107, y: 1135 }, 'keyboard', () => {
       setTimeout(() => {
         const catcher = this.notesCatcherManager?.catchers.find(catcher => catcher.note === 'C');
         console.log(catcher);
       }, 200);
     });
-    new Button(this, ETypeButtons.circle, EColorButtons.green, 'd', { x: 207, y: 1100 }, 'keyboard', () => {
-      console.log('Me pressed');
+    new Button(this, ETypeButtons.circle, EColorButtons.green, 'd', { x: 317, y: 1135 }, 'keyboard', () => {
+    });
+    new Button(this, ETypeButtons.circle, EColorButtons.green, 'f', { x: 527, y: 1135 }, 'keyboard', () => {
+    });
+    new Button(this, ETypeButtons.circle, EColorButtons.green, 'g', { x: 747, y: 1135 }, 'keyboard', () => {
+    });
+    new Button(this, ETypeButtons.circle, EColorButtons.green, 'h', { x: 957, y: 1135 }, 'keyboard', () => {
+    });
+    new Button(this, ETypeButtons.circle, EColorButtons.green, 'j', { x: 1177, y: 1135 }, 'keyboard', () => {
+    });
+    new Button(this, ETypeButtons.circle, EColorButtons.green, 'k', { x: 1387, y: 1135 }, 'keyboard', () => {
     });
   }
   start() {
