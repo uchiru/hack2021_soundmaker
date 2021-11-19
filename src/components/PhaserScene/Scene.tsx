@@ -14,7 +14,6 @@ export function Scene() {
   } else {
     track = JSON.parse(JSON.stringify(notes));
   }
-  console.log(track);
   const gameRef = React.useRef<Phaser.Game | null>(null);
   React.useEffect(() => {
     const config: Phaser.Types.Core.GameConfig = {

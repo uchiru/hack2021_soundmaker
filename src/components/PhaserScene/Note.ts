@@ -28,6 +28,7 @@ export class Note {
     const { x, y, size, color } = this.view;
     const circle = this.game.add.circle(x, y, size, color);
     this.gameObject = this.game.physics.add.existing(circle, false);
+    this.gameObject.name = this.data.note;
   }
 
   start(step: number) {
