@@ -6,13 +6,22 @@ import { Notes } from 'components/Notes';
 import { TAccord, EPianoNotes, EDrumNotes, TNotes, EInstruments } from '../../SoundmakerController/types';
 import { notes } from './notes';
 import { StoreContext } from 'storeContext';
+import { MAX_TRACK_SECONDS } from 'SoundmakerController/const';
 
 const cachedNotes = JSON.parse(JSON.stringify(notes));
+const ticksCount = MAX_TRACK_SECONDS * 2;
 
 export function Player() {
   const { soundmakerController: controller } = React.useContext(StoreContext);
 
-  const [currentNotes, setNotes] = React.useState(notes);
+  const prefilledNotes = () => {
+    for (let i = 0; i < ticksCount - notes.length; i++) {
+      notes.push([]);
+    }
+    return notes;
+  };
+
+  const [currentNotes, setNotes] = React.useState(prefilledNotes);
   const [isPlaying, setIsPlaying] = React.useState(false);
   const [isPaused, setIsPaused] = React.useState(false);
 
@@ -85,7 +94,7 @@ export function Player() {
     } else {
       _note = getDrumNoteName(note)?.toString() ?? '';
     }
-
+    debugger;
     notes[tick].push({
       instrument,
       note: _note
