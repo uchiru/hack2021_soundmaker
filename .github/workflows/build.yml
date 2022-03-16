@@ -6,35 +6,20 @@ on:
 jobs:
   build:
     env:
-      REGISTRY: registry-awsuchi.runit.cc
-      REGISTRY_CA_CRT:     '${{ secrets.REGISTRY_UCHI_CA_CRT }}'
-      REGISTRY_CLIENT_CRT: '${{ secrets.REGISTRY_UCHI_CLIENT_CRT }}'
-      REGISTRY_CLIENT_KEY: '${{ secrets.REGISTRY_UCHI_CLIENT_KEY }}'
+      REGISTRY: ba-registry-uchiru.runit.cc
+      REGISTRY_USERNAME:     '${{ secrets.REGISTRY_UCHI_USERNAME }}'
+      REGISTRY_PASSWORD: '${{ secrets.REGISTRY_UCHI_PASSWORD }}'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Setup push secrets
-        run: |
-          sudo mkdir -p /etc/buildkit
-          cat <<EOF | sudo tee /etc/buildkit/buildkitd.toml > /dev/null
-          [registry."$REGISTRY"]
-            ca=["/etc/docker/certs.d/$REGISTRY/ca.crt"]
-            [[registry."$REGISTRY".keypair]]
-              key="/etc/docker/certs.d/$REGISTRY/client.key"
-              cert="/etc/docker/certs.d/$REGISTRY/client.cert"
-          EOF
-
-          sudo mkdir -p /etc/docker/certs.d/$REGISTRY/
-          echo $REGISTRY_CA_CRT     | base64 -d | sudo tee /etc/docker/certs.d/$REGISTRY/ca.crt      >/dev/null
-          echo $REGISTRY_CLIENT_CRT | base64 -d | sudo tee /etc/docker/certs.d/$REGISTRY/client.cert >/dev/null
-          echo $REGISTRY_CLIENT_KEY | base64 -d | sudo tee /etc/docker/certs.d/$REGISTRY/client.key  >/dev/null
+      - name: Setup registry credentials
+        run: docker login $REGISTRY --username $REGISTRY_USERNAME --password $REGISTRY_PASSWORD
 
       - name: Set up Docker Buildx
+        id: buildx
         uses: docker/setup-buildx-action@v1
-        with:
-          config: /etc/buildkit/buildkitd.toml
 
       - name: Calculate metadata
         id: meta
